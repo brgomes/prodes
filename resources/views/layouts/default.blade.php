@@ -33,18 +33,21 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="fas fa-user"></i> {{ __('content.my-profile') }}</a>
                             </li>
-                            <!--<li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbar-language" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="far fa-flag"></i>
-                                    Español
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbar-language">
-                                    <a class="dropdown-item" href="#">English</a>
-                                    <a class="dropdown-item" href="#"><strong>Español</strong></a>
-                                    <a class="dropdown-item" href="#">Português</a>
-                                </div>
-                            </li>-->
+                        @endif
 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbar-language" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="far fa-flag"></i>
+                                Español
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbar-language">
+                                <a class="dropdown-item" href="#">English</a>
+                                <a class="dropdown-item" href="#"><strong>Español</strong></a>
+                                <a class="dropdown-item" href="#">Português</a>
+                            </div>
+                        </li>
+
+                        @if (Auth::check())
                             @can('admin')
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbar-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,5 +84,6 @@
 
         <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/funcs_1.0.js') }}"></script>
     </body>
 </html>
