@@ -12,7 +12,9 @@
 */
 
 Route::group(['middleware' => 'auth'], function() {
-	Route::get('/', 'IndexController@index')->name('index');
+	Route::get('/home', 'IndexController@index')->name('index');
 });
 
 Auth::routes();
+
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
