@@ -15,6 +15,12 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/home', 'IndexController@index')->name('index');
 });
 
-Auth::routes();
+Route::group(['prefix' => parseLocale()], function() {
+	Auth::routes();
 
-Route::prefix(parseLocale())->get('/', 'Auth\LoginController@showLoginForm')->name('login');
+	Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+
+	Route::post('/', 'Auth\LoginController@login')->name('login');
+});
+
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');

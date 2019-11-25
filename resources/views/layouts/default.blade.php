@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100">
+<html lang="{{ app()->getLocale() }}" class="h-100">
     <head>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('fontawesome-5.11.2/css/all.min.css') }}"  media="screen,projection"/>
@@ -38,9 +38,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbar-language" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-flag"></i>
-                                @if (App::getLocale() == 'en')
+                                @if (app()->getLocale() == 'en')
                                     English
-                                @elseif (App::getLocale() == 'pt-BR')
+                                @elseif (app()->getLocale() == 'pt-BR')
                                     Português
                                 @else
                                     Espãnol
@@ -48,21 +48,21 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbar-language">
                                 <a class="dropdown-item" href="{{ url('/en') }}">
-                                    @if (App::getLocale() == 'en')
+                                    @if (app()->getLocale() == 'en')
                                         <strong>English</strong>
                                     @else
                                         English
                                     @endif
                                 </a>
                                 <a class="dropdown-item" href="{{ url('/es') }}">
-                                    @if (App::getLocale() == 'es')
+                                    @if (app()->getLocale() == 'es')
                                         <strong>Español</strong>
                                     @else
                                         Español
                                     @endif
                                 </a>
                                 <a class="dropdown-item" href="{{ url('/pt-BR') }}">
-                                    @if (App::getLocale() == 'pt-BR')
+                                    @if (app()->getLocale() == 'pt-BR')
                                         <strong>Português</strong>
                                     @else
                                         Português
@@ -96,6 +96,8 @@
 
         <main role="main" class="flex-shrink-0">
             <div class="container">
+                @include('includes._alerts')
+
                 @yield('content')
             </div>
         </main>
