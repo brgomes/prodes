@@ -38,12 +38,36 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbar-language" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-flag"></i>
-                                Español
+                                @if (App::getLocale() == 'en')
+                                    English
+                                @elseif (App::getLocale() == 'pt-BR')
+                                    Português
+                                @else
+                                    Espãnol
+                                @endif
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbar-language">
-                                <a class="dropdown-item" href="#">English</a>
-                                <a class="dropdown-item" href="#"><strong>Español</strong></a>
-                                <a class="dropdown-item" href="#">Português</a>
+                                <a class="dropdown-item" href="{{ url('/en') }}">
+                                    @if (App::getLocale() == 'en')
+                                        <strong>English</strong>
+                                    @else
+                                        English
+                                    @endif
+                                </a>
+                                <a class="dropdown-item" href="{{ url('/es') }}">
+                                    @if (App::getLocale() == 'es')
+                                        <strong>Español</strong>
+                                    @else
+                                        Español
+                                    @endif
+                                </a>
+                                <a class="dropdown-item" href="{{ url('/pt-BR') }}">
+                                    @if (App::getLocale() == 'pt-BR')
+                                        <strong>Português</strong>
+                                    @else
+                                        Português
+                                    @endif
+                                </a>
                             </div>
                         </li>
 
