@@ -129,7 +129,19 @@ return [
     |
     */
 
+    /*'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
+    ],*/
+
     'custom' => [
+        'password' => [
+            'min' => 'The :attribute must be at least :min characters.',
+        ],
+        'email' => [
+            'unique' => 'The :attribute has already been taken.',
+        ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
@@ -146,6 +158,39 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'address'               => 'address',
+        'age'                   => 'age',
+        'body'                  => 'body',
+        'city'                  => 'city',
+        'content'               => 'content',
+        'country'               => 'country',
+        'date'                  => 'date',
+        'day'                   => 'day',
+        'description'           => 'description',
+        'email'                 => 'email',
+        'excerpt'               => 'excerpt',
+        'first_name'            => 'first_name',
+        'gender'                => 'gender',
+        'hour'                  => 'hour',
+        'last_name'             => 'last_name',
+        'message'               => 'message',
+        'minute'                => 'minute',
+        'mobile'                => 'mobile',
+        'month'                 => 'month',
+        'name'                  => 'name',
+        'password'              => 'password',
+        'password_confirmation' => 'password confirmation',
+        'phone'                 => 'phone',
+        'price'                 => 'price',
+        'second'                => 'second',
+        'sex'                   => 'sex',
+        'subject'               => 'subject',
+        'terms'                 => 'terms',
+        'time'                  => 'time',
+        'title'                 => 'title',
+        'username'              => 'username',
+        'year'                  => 'year',
+    ],
 
 ];

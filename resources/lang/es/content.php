@@ -10,6 +10,10 @@ return [
 	'registrar'			=> 'Registrarse',
 	'voltar'			=> 'Volver',
 	'desenvolvido-por'	=> 'Creado por',
+	'recuperar-senha'	=> 'Recuperar contraseña',
+	'redefinir-senha'	=> 'Restablecer contraseña',
+	'ola'				=> 'Holla',
+	'confirme-senha'	=> 'Repita la contraseña',
 
 	'apostas'			=> 'Apuestas',
 	'classificacao'		=> 'Clasificación',

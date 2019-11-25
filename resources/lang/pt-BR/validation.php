@@ -127,7 +127,19 @@ return [
     |
     */
 
+    /*'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
+    ],*/
+
     'custom' => [
+        'password' => [
+            'min' => 'O campo :attribute deve ter pelo menos :min caracteres.',
+        ],
+        'email' => [
+            'unique' => 'O :attribute já está em uso.',
+        ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],

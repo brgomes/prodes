@@ -10,6 +10,10 @@ return [
 	'registrar'			=> 'Sign up',
 	'voltar'			=> 'Back',
 	'desenvolvido-por'	=> 'Developed by',
+	'recuperar-senha'	=> 'Recover password',
+	'redefinir-senha'	=> 'Reset password',
+	'ola'				=> 'Hello',
+	'confirme-senha'	=> 'Confirm password',
 
 	'apostas'			=> 'Bets',
 	'classificacao'		=> 'Ranking',

@@ -2,31 +2,30 @@
 
 @section('content')
 
-<h1 class="page-header">Recuperar senha</h1>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>{{ __('content.recuperar-senha') }}</h3>
 
-{!! Form::open(['route' => 'password.email', 'class' => 'form-horizontal']) !!}
+            {!! Form::open(['route' => 'password.email']) !!}
+                <div class="form-group">
+                    <label for="email">{{ __('content.username') }}</label>
+                    {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
+                </div>
 
-    @if (session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-    @endif
-
-    <div class="form-group">
-        <label for="email" class="col-md-2 control-label">E-mail</label>
-        <div class="col-sm-4">
-            {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
+                <div class="row">
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success">
+                            {{  __('content.recuperar-senha') }}
+                        </button>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="{{ url('/' . app()->getLocale()) }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-circle-left"></i> {{ __('content.voltar') }}
+                        </a>
+                    </div>
+                </div>
+            {!! Form::close() !!}
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-6">
-            <button type="submit" class="btn btn-primary">
-                Enviar link recuperação de senha
-            </button>
-        </div>
-    </div>
-
-{!! Form::close() !!}
 
 @endsection

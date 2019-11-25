@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -26,4 +28,38 @@ class ResetPasswordController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+
+    /*public function reset(Request $request)
+    {
+        $request->validate($this->rules(), $this->validationErrorMessages());
+
+        $this->broker()->validator(function (array $credentials){
+            [$password, $confirm] = [
+                $credentials['password'],
+                $credentials['password_confirmation'],
+            ];
+
+            return $password === $confirm && mb_strlen($password) >= 8;
+        });
+            
+        $response = $this->broker()->reset(
+            $this->credentials($request), function ($user, $password) {
+                $this->resetPassword($user, $password);
+            }
+        );
+
+        return $response == Password::PASSWORD_RESET
+                    ? $this->sendResetResponse($request, $response)
+                    : $this->sendResetFailedResponse($request, $response);
+    }
+
+    protected function rules()
+    {
+        return [
+            'token'    => 'required',
+            'email'     => 'required|email',
+            'password'  => 'required|confirmed|min:8',
+            //'password'  => 'required|confirmed|min:6|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+        ];
+    }*/
 }

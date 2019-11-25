@@ -9,5 +9,6 @@
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
+database.sql
 npm-debug.log
 yarn-error.log

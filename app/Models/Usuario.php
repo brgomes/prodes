@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ResetPassword;
 
 class Usuario extends Authenticatable
 {
@@ -31,6 +32,16 @@ class Usuario extends Authenticatable
     public function getAuthPassword()
     {
         return $this->senha;
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['senha'] = $value;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 
     public function pais()

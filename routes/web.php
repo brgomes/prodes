@@ -16,7 +16,7 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 Route::group(['prefix' => parseLocale()], function() {
-	Auth::routes();
+	Auth::routes(['verify' => true]);
 
 	Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 
