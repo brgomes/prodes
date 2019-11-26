@@ -20,6 +20,7 @@ return [
 	'masculino'			=> 'Masculino',
 	'feminino'			=> 'Feminino',
 	'pais'				=> 'País',
+	'verificar-email'	=> 'Verificar e-mail',
 
 	'apostas'			=> 'Apostas',
 	'classificacao'		=> 'Classificação',

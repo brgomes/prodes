@@ -2,22 +2,15 @@
 
 namespace App\Notifications;
 
-use App\Mail\ResetPassword as Mailable;
+use App\Mail\VerifyMail as Mailable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ResetPassword extends Notification
+class VerifyMail extends Notification
 {
     use Queueable;
-
-    private $_token;
-
-    public function __construct($token)
-    {
-        $this->_token = $token;
-    }
 
     public function via($notifiable)
     {
@@ -26,9 +19,10 @@ class ResetPassword extends Notification
 
     public function toMail($notifiable)
     {
-        $subject = __('content.redefinir-senha');
+        //$subject = __('content.redefinir-senha');
+        $subject = 'Verificar endereço de e-mail';
 
-        return (new Mailable($this->_token, $notifiable))->from('sobgestao@brgomes.com', config('app.name'))->subject($subject)->to($notifiable->email);
+        return (new Mailable($notifiable))->from('sobgestao@brgomes.com', config('app.name'))->subject($subject)->to($notifiable->email);
     }
 
     public function toArray($notifiable)

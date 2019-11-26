@@ -11,24 +11,18 @@ class VerifyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($user)
+    private $_notifiable;
+
+    public function __construct($notifiable)
     {
-        $this->user = $user;
+        $this->_notifiable = $notifiable;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        return $this->view('emails.verifyUser');
+        return $this->markdown('emails.verify-mail', [
+            'usuario'   => $this->_notifiable,
+            'url'       => route('custom.verify', $this->_notifiable->verifyUser->token),
+        ]);
     }
 }

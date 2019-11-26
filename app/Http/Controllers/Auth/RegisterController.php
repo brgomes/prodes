@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerifyMail;
 use App\Models\Pais;
 use App\Models\Usuario;
+use App\Models\VerifyUser;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Mail;
 
 class RegisterController extends Controller
 {
@@ -92,21 +96,26 @@ class RegisterController extends Controller
             'token'     => str_random(40)
         ]);
 
-        Mail::to($user->email)->send(new VerifyMail($user));
-
         return $user;
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        $this->guard()->logout();
+
+        return redirect('/')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
     }
 
     public function verifyUser($token)
     {
-        $verifyUser = VerifyUser::where('token', $token)->first();
+        $verifyUser = VerifyUser::with('usuario')->where('token', $token)->first();
 
         if (isset($verifyUser)) {
-            $user = $verifyUser->user;
+            $usuario = $verifyUser->usuario;
 
-            if (!$user->email_verified_at) {
-                $verifyUser->user->email_verified_at = Carbon::now();
-                $verifyUser->user->save();
+            if (!$usuario->email_verified_at) {
+                $usuario->email_verified_at = Carbon::now();
+                $usuario->save();
 
                 $status = 'Your e-mail is verified. You can now login.';
             }else{
@@ -117,12 +126,5 @@ class RegisterController extends Controller
         }
 
         return redirect('/')->with('status', $status);
-    }
-
-    protected function registered(Request $request, $user)
-    {
-        $this->guard()->logout();
-
-        return redirect('/')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
     }
 }

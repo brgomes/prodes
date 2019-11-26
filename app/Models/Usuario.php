@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\ResetPassword;
+use App\Notifications\VerifyMail;
 
 class Usuario extends Authenticatable implements MustVerifyEmail
 {
@@ -37,6 +38,16 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyMail());
+    }
+
+    public function verifyUser()
+    {
+        return $this->hasOne(VerifyUser::class, 'user_id');
     }
 
     public function pais()

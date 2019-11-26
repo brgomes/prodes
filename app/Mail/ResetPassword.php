@@ -22,7 +22,7 @@ class ResetPassword extends Mailable
 
     public function build()
     {
-        return $this->markdown('auth.passwords.message', [
+        return $this->markdown('emails.reset-password', [
             'url'     => url(config('app.url') . route('password.reset', $this->_token, false)),
             'usuario' => $this->_notifiable
         ]);
