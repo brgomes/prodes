@@ -1,6 +1,6 @@
 @component('mail::message')
 
-# {{ __('content.ola') }}, {{ $usuario->nome }}
+# {{ __('content.ola') }}, {{ $usuario->primeironome }}
 
 {{ __('email.redefinicao-senha-linha1') }}
 
