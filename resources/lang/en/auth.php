@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed'        => 'These credentials do not match our records.',
+    'throttle'      => 'Too many login attempts. Please try again in :seconds seconds.',
+    'need_verify'   => 'You need to confirm your account. We have sent you an activation code, please check your email.',
 
 ];

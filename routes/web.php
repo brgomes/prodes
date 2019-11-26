@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => ['auth','verified']], function() {
 	Route::get('/home', 'IndexController@index')->name('index');
 });
 
@@ -21,6 +21,9 @@ Route::group(['prefix' => parseLocale()], function() {
 	Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 
 	Route::post('/', 'Auth\LoginController@login')->name('login');
+
+	Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+

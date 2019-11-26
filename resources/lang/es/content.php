@@ -14,6 +14,12 @@ return [
 	'redefinir-senha'	=> 'Restablecer contraseña',
 	'ola'				=> 'Holla',
 	'confirme-senha'	=> 'Repita la contraseña',
+	'primeiro-nome'		=> 'Primer nombre',
+	'sobrenome'			=> 'Apellido',
+	'sexo'				=> 'Sexo',
+	'masculino'			=> 'Masculino',
+	'feminino'			=> 'Femenino',
+	'pais'				=> 'Pais',
 
 	'apostas'			=> 'Apuestas',
 	'classificacao'		=> 'Clasificación',

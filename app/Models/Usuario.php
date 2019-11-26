@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\ResetPassword;
 
-class Usuario extends Authenticatable
+class Usuario extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -15,21 +15,16 @@ class Usuario extends Authenticatable
 
     protected $fillable = [
         'primeironome', 'sobrenome', 'sexo', 'timezone', 'pais_id', 'email',
-        'senha', 'datasenha', 'ativo', 'admin', 'ultimoacesso', 'foto',
+        'password', 'datasenha', 'ativo', 'admin', 'ultimoacesso', 'foto',
     ];
 
-    protected $hidden = ['senha', 'remember_token'];
+    protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function getAuthPassword()
+    /*public function getAuthPassword()
     {
         return $this->senha;
     }
@@ -37,7 +32,7 @@ class Usuario extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['senha'] = $value;
-    }
+    }*/
 
     public function sendPasswordResetNotification($token)
     {

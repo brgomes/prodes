@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\Pais;
+use App\Models\Usuario;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -40,6 +42,19 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        if (app()->getLocale() == 'pt-BR') {
+            $paises = Pais::orderBy('nomePT')->pluck('nomePT', 'id')->prepend('-- SELECIONE --', '');
+        } elseif (app()->getLocale() == 'en') {
+            $paises = Pais::orderBy('nomeEN')->pluck('nomeEN', 'id')->prepend('-- SELECT --', '');
+        } else {
+            $paises = Pais::orderBy('nomeES')->pluck('nomeES', 'id')->prepend('-- SELECCIONE --', '');
+        }
+
+        return view('auth.register', compact('paises'));
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,9 +64,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'primeironome'  => ['required', 'string', 'max:30'],
+            'sobrenome'     => ['required', 'string', 'max:120'],
+            'sexo'          => ['required', 'in:M,F'],
+            'pais_id'       => ['required', 'exists:pais,id'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:usuario'],
+            'password'      => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -63,10 +81,48 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $data['password']   = Hash::make($data['password']);
+        $data['ativo']      = 1;
+        $data['admin']      = 0;
+
+        $user = Usuario::create($data);
+
+        $verifyUser = VerifyUser::create([
+            'user_id'   => $user->id,
+            'token'     => str_random(40)
         ]);
+
+        Mail::to($user->email)->send(new VerifyMail($user));
+
+        return $user;
+    }
+
+    public function verifyUser($token)
+    {
+        $verifyUser = VerifyUser::where('token', $token)->first();
+
+        if (isset($verifyUser)) {
+            $user = $verifyUser->user;
+
+            if (!$user->email_verified_at) {
+                $verifyUser->user->email_verified_at = Carbon::now();
+                $verifyUser->user->save();
+
+                $status = 'Your e-mail is verified. You can now login.';
+            }else{
+                $status = 'Your e-mail is already verified. You can now login.';
+            }
+        } else {
+            return redirect('/')->with('warning', 'Sorry your email cannot be identified.');
+        }
+
+        return redirect('/')->with('status', $status);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        $this->guard()->logout();
+
+        return redirect('/')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
     }
 }

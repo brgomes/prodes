@@ -12,17 +12,20 @@ class UsuarioSeeder extends Seeder
      */
     public function run()
     {
+        $now = Carbon::now();
+
         DB::table('usuario')->insert([
-            'primeironome' 	=> 'Bruno',
-            'sobrenome'		=> 'Roberto Gomes',
-            'sexo'			=> 'M',
-            'timezone'		=> 'America/Araguaina',
-            'pais_id'		=> 33,
-            'email' 		=> 'bruno@brgomes.com',
-            'senha' 		=> bcrypt('1'),
-            'datasenha'		=> Carbon::now(),
-            'ativo'			=> true,
-            'admin'			=> true,
+            'primeironome'      => 'Bruno',
+            'sobrenome'         => 'Roberto Gomes',
+            'sexo'              => 'M',
+            'timezone'          => 'America/Araguaina',
+            'pais_id'           => 33,
+            'email'             => 'bruno.gpi@gmail.com',
+            'password'          => bcrypt('1'),
+            'datasenha'         => $now,
+            'ativo'			    => true,
+            'admin'             => true,
+            'email_verified_at' => $now,
         ]);
     }
 }
