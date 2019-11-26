@@ -28,7 +28,7 @@ class ResetPassword extends Notification
     {
         $subject = __('content.redefinir-senha');
 
-        return (new Mailable($this->_token, $notifiable))->from('sobgestao@brgomes.com', config('app.name'))->subject($subject)->to($notifiable->email);
+        return (new Mailable($this->_token, $notifiable))->from(config('mail.username'), config('app.name'))->subject($subject)->to($notifiable->email);
     }
 
     public function toArray($notifiable)

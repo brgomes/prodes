@@ -103,7 +103,7 @@ class RegisterController extends Controller
     {
         $this->guard()->logout();
 
-        return redirect('/')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
+        return redirect()->route('login')->with('status', __('content.email-verificacao-enviado'));
     }
 
     public function verifyUser($token)
@@ -117,14 +117,14 @@ class RegisterController extends Controller
                 $usuario->email_verified_at = Carbon::now();
                 $usuario->save();
 
-                $status = 'Your e-mail is verified. You can now login.';
+                $status = __('content.email-verificado');
             }else{
-                $status = 'Your e-mail is already verified. You can now login.';
+                $status = __('content.email-ja-verificado');
             }
         } else {
-            return redirect('/')->with('warning', 'Sorry your email cannot be identified.');
+            return redirect()->route('login')->with('warning', __('content.email-verificacao-404'));
         }
 
-        return redirect('/')->with('status', $status);
+        return redirect()->route('login')->with('status', $status);
     }
 }

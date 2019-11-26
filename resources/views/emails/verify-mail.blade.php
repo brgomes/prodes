@@ -1,6 +1,6 @@
 @component('mail::message')
 
-# {{ __('content.ola') }}, {{ $usuario->nome }}
+# {{ __('content.ola') }}, {{ $usuario->primeironome }}
 
 {{ __('email.verificacao-email-linha1') }}
 
@@ -8,7 +8,7 @@
 {{ __('content.verificar-email') }}
 @endcomponent
 
-{{ __('email.verificacao-email-linha2') }}<br>
+{!! __('email.verificacao-email-linha2') !!}
 
 {{ config('app.name') }}
 

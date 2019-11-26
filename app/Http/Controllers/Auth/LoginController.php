@@ -38,6 +38,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /*public function showLoginForm()
+    {
+
+    }*/
+
     public function authenticated(Request $request, $user)
     {
         if (!$user->email_verified_at) {
