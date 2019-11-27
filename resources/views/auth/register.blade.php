@@ -34,6 +34,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="timezone">{{ __('content.timezone') }}</label>
+                    {!! Form::select('timezone', [], null, ['class' => 'form-control', 'id' => 'timezone', 'required']) !!}
+                </div>
+
+                <div class="form-group">
                     <label for="email">{{ __('content.username') }}</label>
                     {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email', 'required']) !!}
                 </div>
@@ -49,7 +54,6 @@
                 </div>
 
                 <button type="submit" class="btn btn-success">
-                    {!! Form::hidden('timezone', null, ['id' => 'timezone']) !!}
                     {{ __('content.registrar') }}
                 </button>
             {!! Form::close() !!}
@@ -57,3 +61,11 @@
     </div>
 
 @endsection
+
+
+@push('js')
+    <script type="text/javascript" src="{{ asset('js/timezones.full.min.js') }}"></script>
+    <script type="text/javascript">
+        $('#timezone').timezones();
+    </script>
+@endpush

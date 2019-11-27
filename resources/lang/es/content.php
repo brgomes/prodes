@@ -20,6 +20,7 @@ return [
 	'masculino'					=> 'Masculino',
 	'feminino'					=> 'Femenino',
 	'pais'						=> 'Pais',
+	'timezone'					=> 'Zona horaria',
 	'verificar-email'			=> 'Verificar dirección de correo electrónico',
 	'email-verificacao-enviado'	=> 'Te enviamos un código de activación. Revise su correo electrónico y haga clic en el enlace para verificar.',
 	'email-verificado'			=> 'Su correo electrónico ha sido verificado. Ahora puedes iniciar sesión.',

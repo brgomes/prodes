@@ -8,6 +8,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-    	echo 'logado';
+    	return view('index');
     }
 }

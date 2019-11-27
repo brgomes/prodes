@@ -35,23 +35,25 @@
                             </li>
                         @endif
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbar-language" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="far fa-flag"></i>
-                                @if (app()->getLocale() == 'en')
-                                    English
-                                @elseif (app()->getLocale() == 'pt-BR')
-                                    Português
-                                @else
-                                    Espãnol
-                                @endif
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbar-language">
-                                <a class="dropdown-item" href="{{ url('/en') }}">English</a>
-                                <a class="dropdown-item" href="{{ url('/es') }}">Español</a>
-                                <a class="dropdown-item" href="{{ url('/pt-BR') }}">Português</a>
-                            </div>
-                        </li>
+                        @if (!Auth::check())
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbar-language" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="far fa-flag"></i>
+                                    @if (app()->getLocale() == 'en')
+                                        English
+                                    @elseif (app()->getLocale() == 'pt-BR')
+                                        Português
+                                    @else
+                                        Espãnol
+                                    @endif
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbar-language">
+                                    <a class="dropdown-item" href="{{ url('/en') }}">English</a>
+                                    <a class="dropdown-item" href="{{ url('/es') }}">Español</a>
+                                    <a class="dropdown-item" href="{{ url('/pt-BR') }}">Português</a>
+                                </div>
+                            </li>
+                        @endif
 
                         @if (Auth::check())
                             @can('admin')
@@ -68,7 +70,7 @@
                             @endcan
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fas fa-power-off"></i> {{ __('content.logout') }}</a>
+                                <a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-power-off"></i> {{ __('content.logout') }}</a>
                             </li>
                         @endif
                     </ul>
@@ -77,7 +79,7 @@
         </header>
 
         <main role="main" class="flex-shrink-0">
-            <div class="container">
+            <div class="container pb-3">
                 @include('includes._alerts')
 
                 @yield('content')
@@ -93,5 +95,7 @@
         <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/funcs_1.0.js') }}"></script>
+
+        @stack('js')
     </body>
 </html>
