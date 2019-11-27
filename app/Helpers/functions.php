@@ -24,6 +24,23 @@ function parseLocale()
     return '/';
 }
 
+function hoursTimezone($timezone)
+{
+    $dateTimeZoneApp    = new \DateTimeZone($timezone);
+    $dateTimeZoneUtc    = new \DateTimeZone('UTC');
+    $dateTimeApp        = new \DateTime('now', $dateTimeZoneApp);
+    $dateTimeUtc        = new \DateTime('now', $dateTimeZoneUtc);
+    $hourOffset         = round($dateTimeZoneApp->getOffset($dateTimeUtc) / 3600);
+
+    if ($hourOffset > 0) {
+        $offsetString = '+' . str_pad($hourOffset, 2, '0', STR_PAD_LEFT) . ':00';
+    } else {
+        $offsetString = '-' . str_pad(abs($hourOffset), 2, '0', STR_PAD_LEFT) . ':00';
+    }
+
+    return $offsetString;
+}
+
 function apiRequest($method, $url, array $options = [])
 {
     $user   = auth()->user();

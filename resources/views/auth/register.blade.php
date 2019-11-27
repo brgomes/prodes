@@ -50,7 +50,7 @@
 
                 <div class="form-group">
                     <label for="password-confirm">{{ __('content.confirme-senha') }}</label>
-                    {!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password-confirm', 'required']) !!}
+                    {!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password_confirmation', 'required']) !!}
                 </div>
 
                 <button type="submit" class="btn btn-success">

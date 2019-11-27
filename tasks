@@ -1,5 +1,9 @@
-- Criar layout da área protegida do sistema
+- Cadastro de usuários
 
-- Criar página para alteração do perfil do usuário
+- Cadastro de ligas
 
-- Fazer o cadastro de usuários
+- Cadastro de rodadas nas ligas
+
+- Cadastro de partidas nas rodadas das ligas
+
+- Fazer a classificação no campeonato ser a página inicial da área protegida

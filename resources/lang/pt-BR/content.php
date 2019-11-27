@@ -30,10 +30,18 @@ return [
 	'apostas'					=> 'Apostas',
 	'classificacao'				=> 'Classificação',
 	'historico'					=> 'Histórico',
-	'my-profile'				=> 'Meu perfil',
+	'meu-perfil'				=> 'Meu perfil',
 	'logout'					=> 'Sair',
 
 	'menu-admin'				=> 'Administração',
+	'menu-ligas'				=> 'Ligas',
 	'menu-rodadas'				=> 'Rodadas',
 	'menu-usuarios'				=> 'Usuários',
+
+	'mudar-senha'				=> 'Mudar senha',
+	'idioma'					=> 'Linguagem',
+	'salvar'					=> 'Salvar',
+	'senha-atual'				=> 'Senha atual',
+	'nova-senha'				=> 'Nova senha',
+	'confirme-nova-senha'		=> 'Confirme a nova senha',
 ];

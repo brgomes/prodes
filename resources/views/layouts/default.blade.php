@@ -31,7 +31,7 @@
                                 <a class="nav-link" href="#"><i class="fas fa-history"></i> {{ __('content.historico') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fas fa-user"></i> {{ __('content.my-profile') }}</a>
+                                <a class="nav-link" href="{{ route('perfil') }}"><i class="fas fa-user"></i> {{ __('content.meu-perfil') }}</a>
                             </li>
                         @endif
 
@@ -63,7 +63,9 @@
                                         {{ __('content.menu-admin') }}
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbar-admin">
+                                        <a class="dropdown-item" href="#">{{ __('content.menu-ligas') }}</a>
                                         <a class="dropdown-item" href="#">{{ __('content.menu-rodadas') }}</a>
+                                        <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">{{ __('content.menu-usuarios') }}</a>
                                     </div>
                                 </li>

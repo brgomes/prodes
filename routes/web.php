@@ -13,6 +13,10 @@
 
 Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('/home', 'IndexController@index')->name('index');
+
+	Route::get('/perfil', 'IndexController@perfil')->name('perfil');
+	Route::post('/perfil/salvar', 'IndexController@salvarPerfil')->name('salvar-perfil');
+	Route::post('/perfil/senha', 'IndexController@salvarSenha')->name('salvar-senha');
 });
 
 Route::group(['prefix' => parseLocale()], function() {

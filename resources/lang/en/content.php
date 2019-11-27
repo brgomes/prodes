@@ -30,10 +30,18 @@ return [
 	'apostas'					=> 'Bets',
 	'classificacao'				=> 'Ranking',
 	'historico'					=> 'Historic',
-	'my-profile'				=> 'Profile',
+	'meu-perfil'				=> 'Profile',
 	'logout'					=> 'Logout',
 
 	'menu-admin'				=> 'Administration',
+	'menu-ligas'				=> 'Leagues',
 	'menu-rodadas'				=> 'Rounds',
 	'menu-usuarios'				=> 'Users',
+
+	'mudar-senha'				=> 'Change password',
+	'idioma'					=> 'Language',
+	'salvar'					=> 'Save',
+	'senha-atual'				=> 'Current password',
+	'nova-senha'				=> 'New password',
+	'confirme-nova-senha'		=> 'Confirm new password',
 ];

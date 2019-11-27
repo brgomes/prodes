@@ -81,4 +81,15 @@ class LoginController extends Controller
             ->withInput($request->only($this->username(), 'remember'))
             ->withErrors($errors);
     }
+
+    public function logout(Request $request)
+    {
+        $locale = auth()->user()->locale;
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/' . $locale);
+    }
 }
