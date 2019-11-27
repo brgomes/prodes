@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -52,5 +54,31 @@ class LoginController extends Controller
         }
 
         return redirect()->intended($this->redirectPath());
+    }
+
+    protected function credentials(Request $request) {
+        return array_merge($request->only($this->username(), 'password'), ['ativo' => 1]);
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $errors = [$this->username() => __('auth.failed')];
+        $user = Usuario::where($this->username(), $request->{$this->username()})->first();
+
+        if (!$user) {
+            $errors = [$this->username() => trans('auth.email')];
+        } elseif (!Hash::check($request->password, $user->password)) {
+            $errors = ['password' => trans('auth.password')];
+        } elseif (Hash::check($request->password, $user->password) && $user->ativo != 1) {
+            $errors = [$this->username() => trans('auth.disabled')];
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json($errors, 422);
+        }
+
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors);
     }
 }

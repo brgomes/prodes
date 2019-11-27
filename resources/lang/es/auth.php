@@ -15,4 +15,7 @@ return [
     'failed'        => 'Estas credenciales no coinciden con nuestros registros.',
     'throttle'      => 'Demasiados intentos de acceso. Por favor intente nuevamente en :seconds segundos.',
     'need_verify'   => 'Necesitas confirmar tu cuenta. Le hemos enviado un código de activación, revise su correo electrónico.',
+    'email'         => 'No se encontró el correo electrónico que ingresó.',
+    'password'      => 'La contraseña que ingresó es incorrecta.',
+    'disabled'      => 'El usuario no está activo.',
 ];

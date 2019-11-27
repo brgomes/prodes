@@ -13,7 +13,7 @@
     <body class="d-flex flex-column h-100">
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="{{ url('/') }}">Prodes</a>
+                <a class="navbar-brand" href="{{ route('login') }}">Prodes</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -47,27 +47,9 @@
                                 @endif
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbar-language">
-                                <a class="dropdown-item" href="{{ url('/en') }}">
-                                    @if (app()->getLocale() == 'en')
-                                        <strong>English</strong>
-                                    @else
-                                        English
-                                    @endif
-                                </a>
-                                <a class="dropdown-item" href="{{ url('/es') }}">
-                                    @if (app()->getLocale() == 'es')
-                                        <strong>Español</strong>
-                                    @else
-                                        Español
-                                    @endif
-                                </a>
-                                <a class="dropdown-item" href="{{ url('/pt-BR') }}">
-                                    @if (app()->getLocale() == 'pt-BR')
-                                        <strong>Português</strong>
-                                    @else
-                                        Português
-                                    @endif
-                                </a>
+                                <a class="dropdown-item" href="{{ url('/en') }}">English</a>
+                                <a class="dropdown-item" href="{{ url('/es') }}">Español</a>
+                                <a class="dropdown-item" href="{{ url('/pt-BR') }}">Português</a>
                             </div>
                         </li>
 
