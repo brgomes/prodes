@@ -57,6 +57,12 @@ return [
 	'rodadas'					=> 'Rounds',
 	'nova-liga'					=> 'New league',
 	'nova-rodada'				=> 'New round',
+	'cancelar'					=> 'Cancel',
+	'minhas-ligas'				=> 'My leagues',
+	'rodadas-jogadas'			=> 'Rounds played',
+	'rodadas-vencidas'			=> 'Won rounds',
+	'pesquisar'					=> 'Search',
+	'pesquisar-liga'			=> 'Search league',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

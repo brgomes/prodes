@@ -57,6 +57,12 @@ return [
 	'rodadas'					=> 'Rodadas',
 	'nova-liga'					=> 'Nova liga',
 	'nova-rodada'				=> 'Nova rodada',
+	'cancelar'					=> 'Cancelar',
+	'minhas-ligas'				=> 'Minhas ligas',
+	'rodadas-jogadas'			=> 'Rodadas jogadas',
+	'rodadas-vencidas'			=> 'Rodadas vencidas',
+	'pesquisar'					=> 'Pesquisar',
+	'pesquisar-liga'			=> 'Pesquisar liga',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

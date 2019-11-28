@@ -3,37 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LigaValidationRequest;
 use App\Models\Liga;
+use App\Models\LigaClassificacao;
+use DB;
 use Illuminate\Http\Request;
 
 class LigaController extends Controller
 {
+    protected $liga;
+    protected $ligaClassificacao;
+
+    public function __construct(Liga $liga, LigaClassificacao $ligaClassificacao)
+    {
+        $this->liga                 = $liga;
+        $this->ligaClassificacao    = $ligaClassificacao;
+    }
+
     public function index()
     {
-        $ligas = Liga::with('rodadas')->get();
+        $ligas = LigaClassificacao::addSelect(['datafim' => Liga::select('datafim')
+                    ->where('id', 'liga_classificacao.id')
+                ])
+                ->with('liga')->orderBy('datafim', 'DESC')->get();
 
         return view('ligas.index', compact('ligas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(LigaValidationRequest $request)
     {
-        //
-    }
+        $data = $request->all();
+        $user = auth()->user();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $data['created_by'] = $user->id;
+        $data['updated_by'] = $user->id;
+
+        DB::beginTransaction();
+
+        if ($liga = $this->liga->create($data)) {
+            // Insere o usuário na classificação da liga como admin
+            $data = [
+                'liga_id'           => $liga->id,
+                'usuario_id'        => $user->id,
+                'admin'             => 1,
+                'rodadasjogadas'    => 0,
+            ];
+
+            if ($this->ligaClassificacao->create($data)) {
+                DB::commit();
+
+                return redirect()->route('ligas.index');
+            }
+        }
+
+        DB::rollback();
+
+        return redirect()->back()->with('error', __('message.erro'));
     }
 
     /**

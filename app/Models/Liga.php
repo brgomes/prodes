@@ -11,6 +11,6 @@ class Liga extends Model
 
     public function rodadas()
     {
-        return $this->hasMany(Rodada::class);
+        return $this->hasMany(LigaRodada::class);
     }
 }

@@ -1,6 +1,11 @@
-- Cadastro de ligas
+- Ao abrir um liga pode-se exibir a classificação geral, adicionar rodadas, definir administradores, chamar a consolidação (se admin)
 
-- No momento em que o usuário cadastra uma liga ele é inserido na mesmo como administrador
+- A edição de uma liga é feita chamando um modal (se admin)
+
+- Criar código da liga para pesquisar
+
+- A exclusão de uma liga deve ser disponibilizada na página da liga, no final, e exibido um modal de confirmação,
+como em https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php
 
 - Cadastro de rodadas nas ligas
 
@@ -21,5 +26,5 @@
 
 
 
-=========================
+================================
 - Cadastrar foto do usuário
