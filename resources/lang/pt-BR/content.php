@@ -44,4 +44,10 @@ return [
 	'senha-atual'				=> 'Senha atual',
 	'nova-senha'				=> 'Nova senha',
 	'confirme-nova-senha'		=> 'Confirme a nova senha',
+	'nome'						=> 'Nome',
+	'email'						=> 'E-mail',
+	'ultimo-acesso'				=> 'Último acesso',
+	'ativo'						=> 'Ativo',
+	'administrador'				=> 'Administrador',
+	'created-at'				=> 'Data criação',
 ];

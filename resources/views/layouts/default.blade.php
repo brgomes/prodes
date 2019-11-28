@@ -4,6 +4,7 @@
         <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('fontawesome-5.11.2/css/all.min.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/style_1.0.css') }}"  media="screen,projection"/>
+        @stack('css')
 
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -21,16 +22,16 @@
                     <ul class="navbar-nav mr-auto">
 
                         @if (Auth::check())
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#"><i class="fas fa-futbol"></i> {{ __('content.apostas') }}</a>
+                            <li class="nav-item {{ request()->is('home') ? 'active' : '' }}">
+                                <a class="nav-link" href="#"><i class="fas fa-trophy"></i> {{ __('content.classificacao') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fas fa-trophy"></i> {{ __('content.classificacao') }}</a>
+                                <a class="nav-link" href="#"><i class="fas fa-futbol"></i> {{ __('content.apostas') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="fas fa-history"></i> {{ __('content.historico') }}</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item {{ request()->is('perfil*') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('perfil') }}"><i class="fas fa-user"></i> {{ __('content.meu-perfil') }}</a>
                             </li>
                         @endif
@@ -65,8 +66,11 @@
                                     <div class="dropdown-menu" aria-labelledby="navbar-admin">
                                         <a class="dropdown-item" href="#">{{ __('content.menu-ligas') }}</a>
                                         <a class="dropdown-item" href="#">{{ __('content.menu-rodadas') }}</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">{{ __('content.menu-usuarios') }}</a>
+
+                                        @can('superadmin')
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ route('admin.usuarios.index') }}">{{ __('content.menu-usuarios') }}</a>
+                                        @endcan
                                     </div>
                                 </li>
                             @endcan
