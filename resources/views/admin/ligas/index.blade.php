@@ -4,22 +4,29 @@
 
 	<div class="wrapper">
 		<div class="wrapper-title">
-			<h2>{{ __('content.menu-usuarios') }}</h2>
+			<div class="row">
+                <div class="col-sm-6">
+					<h2>{{ __('content.menu-ligas') }}</h2>
+				</div>
+				<div class="col-sm-6">
+					<a href="#" class="btn btn-success" data-toggle="modal">
+						<i class="fas fa-plus-circle"></i> {{ __('content.nova-liga') }}
+					</a>
+				</div>
+            </div>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th>{{ __('content.nome') }}</th>
-						<th>{{ __('content.email') }}</th>
-						<th>{{ __('content.idioma') }}</th>
-						<th>{{ __('content.timezone') }}</th>
-						<th>{{ __('content.ultimo-acesso') }}</th>
-						<th>{{ __('content.created-at') }}</th>
+						<th>{{ __('content.data-inicial') }}</th>
+						<th>{{ __('content.data-final') }}</th>
+						<th>{{ __('content.rodadas') }}</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach ($usuarios as $usuario)
+					@foreach ($ligas as $liga)
 						<tr>
 							<td>
 								<span class="{{ $usuario->bandeira }}" title="{{ $usuario->pais->nome }}"></span>

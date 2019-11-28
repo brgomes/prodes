@@ -21,6 +21,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
 	Route::resource('usuarios', 'UsuarioController', ['as' => 'admin']);
+
+	Route::resource('ligas', 'LigaController', ['as' => 'admin']);
 });
 
 Route::group(['prefix' => parseLocale()], function() {

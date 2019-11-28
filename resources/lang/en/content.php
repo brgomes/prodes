@@ -50,6 +50,12 @@ return [
 	'ativo'						=> 'Active',
 	'administrador'				=> 'Administrator',
 	'created-at'				=> 'Date created',
+	'data-inicial'				=> 'Initial date',
+	'data-final'				=> 'Final date',
+	'data-consolidacao'			=> 'Consolidation date',
+	'rodadas'					=> 'Rounds',
+	'nova-liga'					=> 'New league',
+	'nova-rodada'				=> 'New round',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

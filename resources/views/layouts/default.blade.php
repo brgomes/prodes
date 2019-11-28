@@ -3,8 +3,8 @@
     <head>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('fontawesome-5.11.2/css/all.min.css') }}"  media="screen,projection"/>
-        <link type="text/css" rel="stylesheet" href="{{ asset('css/style_1.0.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/loader.css') }}" media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/style_1.0.css') }}"  media="screen,projection"/>
         @stack('css')
 
         <!--Let browser know website is optimized for mobile-->
@@ -20,7 +20,7 @@
         </div>
 
         <header>
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-prode">
                 <a class="navbar-brand" href="{{ route('login') }}">Prodes</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -71,7 +71,7 @@
                                         {{ __('content.menu-admin') }}
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbar-admin">
-                                        <a class="dropdown-item" href="#">{{ __('content.menu-ligas') }}</a>
+                                        <a class="dropdown-item {{ request()->is('admin/ligas*') ? 'active' : '' }}" href="{{ route('admin.ligas.index') }}">{{ __('content.menu-ligas') }}</a>
                                         <a class="dropdown-item" href="#">{{ __('content.menu-rodadas') }}</a>
 
                                         @can('superadmin')
@@ -99,7 +99,7 @@
             </div>
         </main>
 
-        <footer class="footer mt-auto py-3 bg-dark text-light">
+        <footer class="footer mt-auto py-3 bg-prode text-light">
             <div class="container">
                 <span>{{ trans('content.desenvolvido-por') }} <a href="http://www.brgomes.com" target="_blank" class="text-light">brgomes.com</a></span>
             </div>
