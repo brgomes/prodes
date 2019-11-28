@@ -12,17 +12,15 @@
 */
 
 Route::group(['middleware' => ['auth', 'verified']], function() {
-	Route::get('home', 'IndexController@index')->name('index');
-
 	Route::get('perfil', 'IndexController@perfil')->name('perfil');
 	Route::post('perfil/salvar', 'IndexController@salvarPerfil')->name('salvar-perfil');
 	Route::post('perfil/senha', 'IndexController@salvarSenha')->name('salvar-senha');
+
+	Route::resource('ligas', 'LigaController');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
 	Route::resource('usuarios', 'UsuarioController', ['as' => 'admin']);
-
-	Route::resource('ligas', 'LigaController', ['as' => 'admin']);
 });
 
 Route::group(['prefix' => parseLocale()], function() {

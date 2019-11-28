@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Liga;
@@ -12,7 +12,7 @@ class LigaController extends Controller
     {
         $ligas = Liga::with('rodadas')->get();
 
-        return view('admin.ligas.index', compact('ligas'));
+        return view('ligas.index', compact('ligas'));
     }
 
     /**

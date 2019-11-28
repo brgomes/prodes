@@ -53,6 +53,7 @@ return [
 	'data-inicial'				=> 'Fecha inicial',
 	'data-final'				=> 'Fecha final',
 	'data-consolidacao'			=> 'Fecha consolidación',
+	'ligas'						=> 'Ligas',
 	'rodadas'					=> 'Fechas',
 	'nova-liga'					=> 'Nueva liga',
 	'nova-rodada'				=> 'Nueva fecha',

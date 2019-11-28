@@ -26,7 +26,6 @@ class UsuarioSeeder extends Seeder
             'datasenha'         => $now,
             'ativo'			    => true,
             'admin'             => true,
-            'superadmin'        => true,
             'email_verified_at' => $now,
         ]);
     }

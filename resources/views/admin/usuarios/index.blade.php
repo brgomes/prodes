@@ -25,10 +25,8 @@
 								<span class="{{ $usuario->bandeira }}" title="{{ $usuario->pais->nome }}"></span>
 								<a href="#">{{ $usuario->primeironome . ' ' . $usuario->sobrenome }}</a>
 
-								@if ($usuario->superadmin)
-									<span class="fas fa-star text-warning" title="Superadmin"></span>
-								@elseif ($usuario->admin)
-									<span class="far fa-star text-warning" title="Admin"></span>
+								@if ($usuario->admin)
+									<span class="fas fa-star text-warning" title="Admin"></span>
 								@endif
 							</td>
 							<td>{{ $usuario->email }}</td>
