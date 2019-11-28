@@ -58,7 +58,7 @@
 
                         @if (Auth::check())
                             @can('admin')
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown {{ request()->is('admin*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbar-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-tools"></i>
                                         {{ __('content.menu-admin') }}
@@ -69,7 +69,7 @@
 
                                         @can('superadmin')
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{ route('admin.usuarios.index') }}">{{ __('content.menu-usuarios') }}</a>
+                                            <a class="dropdown-item {{ request()->is('admin/usuarios*') ? 'active' : '' }}" href="{{ route('admin.usuarios.index') }}">{{ __('content.menu-usuarios') }}</a>
                                         @endcan
                                     </div>
                                 </li>

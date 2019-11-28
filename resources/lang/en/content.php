@@ -50,4 +50,10 @@ return [
 	'ativo'						=> 'Active',
 	'administrador'				=> 'Administrator',
 	'created-at'				=> 'Date created',
+
+	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
+	'formato-datahora'			=> 'm/d/Y H:i',
+	'formato-data'				=> 'm/d/Y',
+	'formato-hora-completo'		=> 'H:i:s',
+	'formato-hora'				=> 'H:i',
 ];

@@ -24,8 +24,8 @@
 						<td>{{ $usuario->email }}</td>
 						<td>{{ $usuario->locale }}</td>
 						<td>{{ $usuario->timezone }}</td>
-						<td>{{ $usuario->ultimoacesso }}</td>
-						<td>{{ $usuario->created_at }}</td>
+						<td>{{ datetime($usuario->ultimoacesso,  __('content.formato-datahora-completo')) }}</td>
+						<td>{{ datetime($usuario->created_at, __('content.formato-datahora-completo')) }}</td>
 					</tr>
 				@endforeach
 			</tbody>
