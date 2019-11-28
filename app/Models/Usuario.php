@@ -54,4 +54,9 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Pais::class, 'pais_id');
     }
+
+    public function getBandeiraAttribute()
+    {
+        return 'flag-icon flag-icon-' . mb_strtolower($this->pais->iso3);
+    }
 }

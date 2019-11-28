@@ -18,8 +18,14 @@
 				@foreach ($usuarios as $usuario)
 					<tr>
 						<td>
-							<span class="flag-icon flag-icon-{{ mb_strtolower($usuario->pais->iso3) }}" title="{{ $usuario->pais->nomePT }}"></span>
+							<span class="{{ $usuario->bandeira }}" title="{{ $usuario->pais->nome }}"></span>
 							{{ $usuario->primeironome . ' ' . $usuario->sobrenome }}
+
+							@if ($usuario->superadmin)
+								<span class="fas fa-star text-warning" title="Superadmin"></span>
+							@elseif ($usuario->admin)
+								<span class="far fa-star text-warning" title="Admin"></span>
+							@endif
 						</td>
 						<td>{{ $usuario->email }}</td>
 						<td>{{ $usuario->locale }}</td>

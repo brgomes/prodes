@@ -4,6 +4,7 @@
         <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('fontawesome-5.11.2/css/all.min.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/style_1.0.css') }}"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/loader.css') }}" media="screen,projection"/>
         @stack('css')
 
         <!--Let browser know website is optimized for mobile-->
@@ -11,7 +12,13 @@
 
         <title>Prodes</title>
     </head>
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100 loaded">
+        <div id="loader-wrapper">
+            <div id="loader"></div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+        </div>
+
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <a class="navbar-brand" href="{{ route('login') }}">Prodes</a>
