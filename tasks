@@ -1,4 +1,14 @@
-- Na página da liga exibir espaço bem trabalhado no css com as informações da liga (nome, datas e regulamento) e link para voltar e consolidar
+- Editar partidas
+
+- Excluir partidas
+
+- Exibir classificação na página da rodada (somente após consolidação)
+
+- Cadastro de apostas
+
+- Consolidar rodadas
+
+- Consolidar liga
 
 - Ao abrir um liga pode-se exibir a classificação geral, adicionar rodadas, definir administradores, chamar a consolidação (se admin)
 
@@ -6,16 +16,6 @@
 
 - A exclusão de uma liga deve ser disponibilizada na página da liga, no final, e exibido um modal de confirmação,
 como em https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php
-
-- Cadastro de rodadas nas ligas
-
-- Cadastro de partidas nas rodadas das ligas
-
-- Fazer a classificação no campeonato ser a página inicial da área protegida
-
-- Cadastro de apostas
-
-- Consolidar rodada e liga
 
 
 

@@ -12,10 +12,6 @@
 						</div>
 						<div class="col-sm-6">
 							@if ($classificacao->admin)
-								<button class="btn btn-danger" data-toggle="modal" data-target="#consolidar">
-									<i class="fas fa-check-circle"></i> {{ __('content.consolidar') }}
-								</button>
-
 								<button class="btn btn-success" data-toggle="modal" data-target="#novaPartida">
 									<i class="fas fa-plus-circle"></i> {{ __('content.nova-partida') }}
 								</button>
@@ -40,9 +36,14 @@
 						<tbody>
 							@foreach ($rodada->partidas as $partida)
 								<tr>
-									<td>{{ datetime($partida->datapartida, __('content.formato-datahora')) }}</td>
-									<td><a href="#">{!! $partida->descricao !!}</a></td>
-									<td>{{ $partida->sigla }}</td>
+									<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
+									<td>
+										<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
+										{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
+									</td>
+									<td>{{ $item->pontos }}</td>
+									<td>{{ $item->rodadasjogadas }}</td>
+									<td>@if ($item->aproveitamento) {{ $item->aproveitamento }} @else - @endif</td>
 								</tr>
 							@endforeach
 						</tbody>
@@ -53,7 +54,7 @@
 			@if ($classificacao->admin)
             	{{ Form::open(['route' => 'partidas.store']) }}
 					<div class="modal fade" id="novaPartida">
-			  			<div class="modal-dialog">
+			  			<div class="modal-dialog modal-lg">
 			    			<div class="modal-content">
 			      				<div class="modal-header">
 			        				<h5 class="modal-title">{{ __('content.nova-partida') }}</h5>

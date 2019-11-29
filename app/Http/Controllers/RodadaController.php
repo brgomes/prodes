@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RodadaValidationRequest;
+use App\Models\Liga;
+use App\Models\LigaClassificacao;
 use App\Models\LigaRodada;
 use Illuminate\Http\Request;
 
@@ -15,21 +17,25 @@ class RodadaController extends Controller
         $this->ligaRodada = $ligaRodada;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function rodada($id)
     {
-        //
+        $rodada = LigaRodada::with('liga')->find($id);
+
+        if (!$rodada) {
+            return null;
+        }
+
+        $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
+                            ->where('liga_id', $rodada->liga_id)
+                            ->first();
+
+        if (!$classificacao) {
+            return null;
+        }
+
+        return $rodada;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -50,15 +56,19 @@ class RodadaController extends Controller
         return redirect()->back()->with('error', __('message.erro'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $rodada = $this->rodada($id);
+
+        if (!$rodada) {
+            return redirect()->back();
+        }
+
+        $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
+                            ->where('liga_id', $rodada->liga_id)
+                            ->first();
+
+        return view('rodadas.show', compact('rodada', 'classificacao'));
     }
 
     /**
