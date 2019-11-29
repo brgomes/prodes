@@ -44,7 +44,7 @@ body {
 }
 
 
-main > .container {
+main > .container, main > .container_fluid {
     padding-top: 80px;
 }
 

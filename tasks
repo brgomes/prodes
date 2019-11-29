@@ -1,8 +1,8 @@
+- Na página da liga exibir espaço bem trabalhado no css com as informações da liga (nome, datas e regulamento) e link para voltar e consolidar
+
 - Ao abrir um liga pode-se exibir a classificação geral, adicionar rodadas, definir administradores, chamar a consolidação (se admin)
 
-- A edição de uma liga é feita chamando um modal (se admin)
-
-- Criar código da liga para pesquisar
+- Implementar busca de ligas
 
 - A exclusão de uma liga deve ser disponibilizada na página da liga, no final, e exibido um modal de confirmação,
 como em https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php

@@ -18,3 +18,10 @@
 		{!! Form::date('datafim', null, ['class' => 'form-control', 'id' => 'datafim', 'required']) !!}
 	</div>
 </div>
+
+<div class="form-group row">
+	<label class="col-sm-3 col-form-label" for="regulamento">{{ __('content.regulamento') }}</label>
+	<div class="col-sm-9">
+		{!! Form::textarea('regulamento', null, ['class' => 'form-control', 'id' => 'regulamento']) !!}
+	</div>
+</div>

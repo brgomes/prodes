@@ -17,6 +17,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('perfil/senha', 'IndexController@salvarSenha')->name('salvar-senha');
 
 	Route::resource('ligas', 'LigaController');
+	Route::get('ligas/consolidar/{id}', 'LigaController@consolidar')->name('ligas.consolidar');
+
+	Route::post('rodadas/store/{liga_id}', 'RodadaController@store')->name('rodadas.store');
+	Route::get('rodadas/{id}', 'RodadaController@show')->name('rodadas.show');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

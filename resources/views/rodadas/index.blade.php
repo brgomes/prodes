@@ -18,7 +18,7 @@
 
 		{{ Form::open(['route' => 'ligas.store']) }}
 			<div class="modal fade" id="novaLiga">
-	  			<div class="modal-dialog modal-lg">
+	  			<div class="modal-dialog">
 	    			<div class="modal-content">
 	      				<div class="modal-header">
 	        				<h5 class="modal-title">{{ __('content.nova-liga') }}</h5>
@@ -74,7 +74,7 @@
 							</td>
 							<td>
 								<a href="#" data-toggle="modal" data-target="#modalEditarLiga{{ $liga->liga->id }}"><i class="fas fa-pencil-alt text-success" title="{{ __('content.editar') }}"></i></a>
-								@include('ligas._edit', ['liga' => $liga->liga, 'name' => 'modalEditarLiga'])
+								@include('ligas.edit', ['liga' => $liga->liga, 'name' => 'modalEditarLiga'])
 							</td>
 						</tr>
 					@endforeach

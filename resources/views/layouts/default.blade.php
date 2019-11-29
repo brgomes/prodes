@@ -81,7 +81,7 @@
 
                     @if (Auth::check())
                         <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="{{ __('content.pesquisar-liga') }}" aria-label="{{ __('content.pesquisar-liga') }}">
+                            <input class="form-control mr-sm-2" type="search" placeholder="{{ __('content.codigo-da-liga') }}" aria-label="{{ __('content.codigo-da-liga') }}">
                             <button class="btn btn-success my-2 my-sm-0" type="submit">{{ __('content.pesquisar') }}</button>
                         </form>
                     @endif
@@ -90,7 +90,7 @@
         </header>
 
         <main role="main" class="flex-shrink-0">
-            <div class="container pb-3">
+            <div class="container pb-5">
                 @include('includes._alerts')
 
                 @yield('content')

@@ -13,7 +13,7 @@ class LigaClassificacao extends Model
 
     public function liga()
     {
-        return $this->belongsTo(Liga::class)->with('rodadas');
+        return $this->belongsTo(Liga::class)->with(['rodadas', 'classificacao']);
     }
 
     public function usuario()
