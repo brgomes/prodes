@@ -86,6 +86,7 @@ return [
 	'empate'					=> 'Draw',
 	'visitante'					=> 'Away team',
 	'gols'						=> 'Goals',
+	'excluir'					=> 'Delete',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

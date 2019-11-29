@@ -86,6 +86,7 @@ return [
 	'empate'					=> 'Empate',
 	'visitante'					=> 'Visitante',
 	'gols'						=> 'Gols',
+	'excluir'					=> 'Excluir',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

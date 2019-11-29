@@ -14,6 +14,16 @@ class Partida extends Model
         return $this->belongsTo(LigaRodada::class, 'rodada_id');
     }
 
+    public function getDataAttribute()
+    {
+        return datetime($this->datapartida, 'Y-m-d');
+    }
+
+    public function getHoraAttribute()
+    {
+        return datetime($this->datapartida, 'H:i');
+    }
+
     public function getDescricaoAttribute()
     {
         if (isset($this->golsmandante) && isset($this->golsvisitante)) {

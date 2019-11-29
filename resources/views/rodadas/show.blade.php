@@ -41,7 +41,11 @@
 							@foreach ($rodada->partidas as $partida)
 								<tr>
 									<td>{{ datetime($partida->datapartida, __('content.formato-datahora')) }}</td>
-									<td><a href="#">{!! $partida->descricao !!}</a></td>
+									<td>
+										<a href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{!! $partida->descricao !!}</a>
+										@include('partidas._edit', ['partida' => $partida])
+										@include('partidas._delete', ['partida' => $partida])
+									</td>
 									<td>{{ $partida->sigla }}</td>
 								</tr>
 							@endforeach

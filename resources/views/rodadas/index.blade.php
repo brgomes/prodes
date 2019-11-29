@@ -74,7 +74,7 @@
 							</td>
 							<td>
 								<a href="#" data-toggle="modal" data-target="#modalEditarLiga{{ $liga->liga->id }}"><i class="fas fa-pencil-alt text-success" title="{{ __('content.editar') }}"></i></a>
-								@include('ligas.edit', ['liga' => $liga->liga, 'name' => 'modalEditarLiga'])
+								@include('ligas._edit', ['liga' => $liga->liga, 'name' => 'modalEditarLiga'])
 							</td>
 						</tr>
 					@endforeach

@@ -25,11 +25,7 @@ class RodadaController extends Controller
             return null;
         }
 
-        $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
-                            ->where('liga_id', $rodada->liga_id)
-                            ->first();
-
-        if (!$classificacao) {
+        if (!auth()->user()->podeAdministrarLiga($rodada->liga_id)) {
             return null;
         }
 

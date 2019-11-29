@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PartidaValidationRequest;
+use App\Models\LigaClassificacao;
 use App\Models\Partida;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,21 @@ class PartidaController extends Controller
     public function __construct(Partida $partida)
     {
         $this->partida = $partida;
+    }
+
+    public function partida($id)
+    {
+        $partida = Partida::with('rodada')->find($id);
+
+        if (!$partida) {
+            return null;
+        }
+
+        if (!auth()->user()->podeAdministrarLiga($partida->rodada->liga_id)) {
+            return null;
+        }
+
+        return $partida;
     }
 
     public function store(PartidaValidationRequest $request)
@@ -31,13 +47,40 @@ class PartidaController extends Controller
         return redirect()->back()->with('error', __('message.erro'));
     }
 
-    public function update(Request $request, $id)
+    public function update(PartidaValidationRequest $request, $id)
     {
-        //
+        $partida = $this->partida($id);
+
+        if (!$partida) {
+            return redirect()->back();
+        }
+
+        $data = $request->all();
+
+        $data['datapartida']    = $request->data . ' ' . $request->hora . ':00';
+        $data['updated_by']     = auth()->user()->id;
+
+        if ($partida = $partida->update($data)) {
+            return redirect()->route('rodadas.show', $request->rodada_id);
+        }
+
+        return redirect()->back()->with('error', __('message.erro'));
     }
 
     public function destroy($id)
     {
-        //
+        $partida = $this->partida($id);
+
+        if (!$partida) {
+            return redirect()->back();
+        }
+
+        $rodada_id = $partida->rodada_id;
+
+        if ($partida->delete()) {
+            return redirect()->route('rodadas.show', $rodada_id);
+        }
+
+        return redirect()->back()->with('error', __('message.erro'));
     }
 }

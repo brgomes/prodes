@@ -59,4 +59,14 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     {
         return 'flag-icon flag-icon-' . mb_strtolower($this->pais->iso3);
     }
+
+    public function podeAdministrarLiga($liga_id)
+    {
+        $classificacao = LigaClassificacao::where('usuario_id', $this->id)
+                            ->where('liga_id', $liga_id)
+                            ->where('admin', 1)
+                            ->first();
+
+        return isset($classificacao);
+    }
 }

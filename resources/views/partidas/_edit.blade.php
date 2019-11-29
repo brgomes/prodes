@@ -1,5 +1,5 @@
-{{ Form::model($liga, ['route' => ['ligas.update', $liga->id], 'method' => 'put']) }}
-	<div class="modal fade" id="modalEditarLiga{{ $liga->id }}">
+{{ Form::model($partida, ['route' => ['partidas.update', $partida->id], 'method' => 'put']) }}
+	<div class="modal fade" id="modalEditarPartida{{ $partida->id }}">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -9,10 +9,13 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-					@include('ligas._form')
+					@include('partidas._form')
 	            </div>
 	            <div class="modal-footer">
-	            	<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
+	            	<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> {{ __('content.salvar') }}</button>
+	            	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">
+	            		<i class="far fa-trash-alt"></i> {{ __('content.excluir') }}
+	            	</button>
 	                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.cancelar') }}</button>
 	            </div>
 	        </div>
