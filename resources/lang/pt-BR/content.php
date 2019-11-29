@@ -75,6 +75,7 @@ return [
 	'aproveitamento'			=> 'Aproveitamento',
 	'partidas'					=> 'Partidas',
 	'consolidar'				=> 'Consolidar',
+	'fechar'					=> 'Fechar',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

@@ -90,7 +90,7 @@
         </header>
 
         <main role="main" class="flex-shrink-0">
-            <div class="container pb-5">
+            <div class="container-fluid pb-5">
                 @include('includes._alerts')
 
                 @yield('content')

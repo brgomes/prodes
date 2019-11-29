@@ -75,6 +75,7 @@ return [
 	'aproveitamento'			=> 'Average',
 	'partidas'					=> 'Games',
 	'consolidar'				=> 'Consolidate',
+	'fechar'					=> 'Close',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',
