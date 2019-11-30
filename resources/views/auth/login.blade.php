@@ -17,7 +17,7 @@
 		  			<input type="hidden" id="lang" value="">
 		  			<div class="checkbox mb-3">
 		    			<label>
-		      				<input type="checkbox" value="rememberme"> {{ __('content.lembrar-login') }}
+		      				<input type="checkbox" value="remember"> {{ __('content.lembrar-login') }}
 		    			</label>
 		  			</div>
 		  			<a href="{{ route('password.request') }}">{{ __('content.esqueceu-senha') }}</a>

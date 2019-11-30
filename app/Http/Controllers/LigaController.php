@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LigaValidationRequest;
 use App\Models\Liga;
 use App\Models\LigaClassificacao;
+use App\Models\LigaRodada;
 use DB;
 use Illuminate\Http\Request;
 
@@ -70,9 +71,10 @@ class LigaController extends Controller
                         ->first();
 
         if ($classificacao) {
-            $liga = $classificacao->liga;
+            $liga   = $classificacao->liga;
+            $rodada = LigaRodada::find(1);
 
-            return view('ligas.show', compact('classificacao', 'liga'));
+            return view('ligas.show', compact('classificacao', 'liga', 'rodada'));
         }
 
         return redirect()->back();

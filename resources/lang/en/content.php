@@ -94,6 +94,7 @@ return [
 	'excluir'					=> 'Delete',
 	'total-partidas'			=> 'Total games',
 	'aposta'					=> 'Bet',
+	'participantes'				=> 'Participants',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

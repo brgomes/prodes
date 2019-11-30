@@ -94,6 +94,7 @@ return [
 	'excluir'					=> 'Excluir',
 	'total-partidas'			=> 'Total de partidas',
 	'aposta'					=> 'Aposta',
+	'participantes'				=> 'Participantes',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',
