@@ -24,6 +24,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::put('rodadas/update/{id}', 'RodadaController@update')->name('rodadas.update');
 
 	Route::resource('partidas', 'PartidaController');
+
+	Route::get('apostas', 'ApostaController@index')->name('apostas.index');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

@@ -3,7 +3,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-6">
 			<div class="wrapper">
 				<div class="wrapper-title">
 					<div class="row">
@@ -28,13 +28,15 @@
 		            </div>
 				</div>
 				<div class="table-responsive">
+					<div class="clearfix">
+                		<div class="hint-text">{{ __('content.total-partidas') }}: <b>{{ $rodada->partidas->count() }}</b></div>
+                	</div>
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>{{ __('content.data') }}</th>
 								<th>{{ __('content.partida') }}</th>
 								<th>{{ __('content.sigla') }}</th>
-								<th></th>
 							</tr>
 						</thead>
 						<tbody>

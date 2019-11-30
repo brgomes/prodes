@@ -55,6 +55,7 @@ return [
 	'regulamento'				=> 'Regulation',
 	'data-consolidacao'			=> 'Consolidation date',
 	'ligas'						=> 'Leagues',
+	'liga'						=> 'League',
 	'rodada'					=> 'Round',
 	'rodadas'					=> 'Rounds',
 	'nova-liga'					=> 'New league',
@@ -91,6 +92,8 @@ return [
 	'visitante'					=> 'Away team',
 	'gols'						=> 'Goals',
 	'excluir'					=> 'Delete',
+	'total-partidas'			=> 'Total games',
+	'aposta'					=> 'Bet',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

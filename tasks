@@ -1,3 +1,22 @@
+- No cadastro de rodada inserir os campos data início e data fim e validar para ver se as datas estão dentro do
+intervalo da liga
+
+- Na validação do cadastro de uma partida verificar se a data está dentro do intervalo da rodada
+
+- Na página da liga criar as seguintes abas
+
+* Geral: com as guias de informações gerais da liga, a rodada atual, quadro com informações como seu nome,
+país, total de pontos na liga, posição na liga e total de participantes na liga
+
+* Classificação: com a classificação geral da liga
+
+* Apostas: guia com a rodadas anteriores, podendo ser navegadas através de um select. Cada rodada deve exibir as partidas,
+juntamente com as apostas do usuário logado e a classificação na rodada. Se for admin exibir opção para cadastrar
+nova rodada e novas partidas
+
+
+- Remover menus Apostas e Históricos
+
 - Cadastro de apostas
 
 - Consolidar rodadas
@@ -13,8 +32,8 @@ necessidade de ela ser consolidada (exibir um asteristico na lista de ligas quan
 
 - Implementar busca de ligas
 
-- A exclusão de uma liga deve ser disponibilizada na página da liga, no final, e exibido um modal de confirmação,
-como em https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php
+- A exclusão de uma liga deve ser disponibilizada na página da liga, no final, e exibido um modal de confirmação, como em
+https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php
 
 
 

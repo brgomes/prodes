@@ -54,6 +54,7 @@ return [
 	'data-final'				=> 'Fecha final',
 	'regulamento'				=> 'Reglamento',
 	'data-consolidacao'			=> 'Fecha consolidación',
+	'liga'						=> 'Liga',
 	'ligas'						=> 'Ligas',
 	'rodada'					=> 'Fecha',
 	'rodadas'					=> 'Fechas',
@@ -91,6 +92,8 @@ return [
 	'visitante'					=> 'Visitante',
 	'gols'						=> 'Gols',
 	'excluir'					=> 'Excluir',
+	'total-partidas'			=> 'Total de juegos',
+	'aposta'					=> 'Apuesta',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

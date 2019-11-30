@@ -11,7 +11,7 @@ class Partida extends Model
 
     public function rodada()
     {
-        return $this->belongsTo(LigaRodada::class, 'rodada_id');
+        return $this->belongsTo(LigaRodada::class, 'rodada_id')->with('liga');
     }
 
     public function getDataAttribute()
