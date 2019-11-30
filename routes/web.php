@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 
 	Route::post('rodadas/store/{liga_id}', 'RodadaController@store')->name('rodadas.store');
 	Route::get('rodadas/{id}', 'RodadaController@show')->name('rodadas.show');
+	Route::put('rodadas/update/{id}', 'RodadaController@update')->name('rodadas.update');
 
 	Route::resource('partidas', 'PartidaController');
 });

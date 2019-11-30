@@ -1,10 +1,13 @@
-- Exibir classificação na página da rodada (somente após consolidação)
-
 - Cadastro de apostas
 
 - Consolidar rodadas
 
+- Exibir classificação na página da rodada (somente após consolidação)
+
 - Consolidar liga
+
+- Controlar necessidade de consolidar uma liga. Quando cadastrar, editar ou excluir uma partida a liga deve ter uma flag indicando a
+necessidade de ela ser consolidada (exibir um asteristico na lista de ligas quando for administrador)
 
 - Ao abrir um liga pode-se exibir a classificação geral, adicionar rodadas, definir administradores, chamar a consolidação (se admin)
 

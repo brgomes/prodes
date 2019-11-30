@@ -67,27 +67,23 @@ class RodadaController extends Controller
         return view('rodadas.show', compact('rodada', 'classificacao'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(RodadaValidationRequest $request, $id)
     {
-        //
-    }
+        $rodada = $this->rodada($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        if (!$rodada) {
+            return redirect()->back();
+        }
+
+        $data = $request->all();
+
+        $data['updated_by'] = auth()->user()->id;
+
+        if ($rodada->update($data)) {
+            return redirect()->route('ligas.show', $rodada->liga_id);
+        }
+
+        return redirect()->back()->with('error', __('message.erro'));
     }
 
     /**

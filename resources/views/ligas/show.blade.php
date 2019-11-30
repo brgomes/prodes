@@ -110,7 +110,6 @@
 								<th>{{ __('content.pontos') }}</th>
 								<th>{{ __('content.rodadas-vencidas') }}</th>
 								<th>{{ __('content.aproveitamento') }}</th>
-								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -194,6 +193,12 @@
 									<td>{{ datetime($rodada->dataconsolidacao, __('content.formato-datahora-completo')) }}</td>
 									<td>{{ $rodada->partidas->count() }}</td>
 									<td></td>
+									<td>
+										@if ($classificacao->admin)
+											<a href="#" data-toggle="modal" data-target="#modalEditarRodada{{ $rodada->id }}"><i class="fas fa-pencil-alt text-success" title="{{ __('content.editar') }}"></i></a>
+											@include('rodadas._edit', ['rodada' => $rodada])
+										@endif
+									</td>
 								</tr>
 							@endforeach
 						</tbody>
