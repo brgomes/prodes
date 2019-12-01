@@ -82,7 +82,7 @@
                     @if (Auth::check())
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="{{ __('content.codigo-da-liga') }}" aria-label="{{ __('content.codigo-da-liga') }}">
-                            <button class="btn btn-success my-2 my-sm-0" type="submit">{{ __('content.pesquisar') }}</button>
+                            <button class="btn btn-primary my-2 my-sm-0" type="submit">{{ __('content.pesquisar') }}</button>
                         </form>
                     @endif
                 </div>
@@ -98,13 +98,15 @@
         </main>
 
         <footer class="footer mt-auto py-3 bg-prode text-light">
-            <div class="container">
+            <div class="container-fluid">
                 <span>{{ trans('content.desenvolvido-por') }} <a href="http://www.brgomes.com" target="_blank" class="text-light">brgomes.com</a></span>
             </div>
         </footer>
 
         <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.mask.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/funcs_1.0.js') }}"></script>
 
         @stack('js')

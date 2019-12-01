@@ -9,7 +9,7 @@
 					<h2>{{ __('content.minhas-ligas') }}</h2>
 				</div>
 				<div class="col-sm-6">
-					<a href="#" class="btn btn-success" data-toggle="modal" data-target="#novaLiga">
+					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#novaLiga">
 						<i class="fas fa-plus-circle"></i> {{ __('content.nova-liga') }}
 					</a>
 				</div>

@@ -14,7 +14,9 @@ class RodadaValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'numero' => 'required|numeric',
+            'numero'        => 'required|numeric',
+            'datainicio'    => 'required|date_format:d/m/Y H:i',
+            'datafim'       => 'required|date_format:d/m/Y H:i|after:datainicio',
         ];
     }
 }

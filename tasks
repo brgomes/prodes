@@ -1,3 +1,7 @@
+- Consertar cadastro de rodadas. O campo datainicio (e também o datafim) deve ser desmembrado em data e hora, como no Futinfo
+
+- Ajeitar ícone dos menu para aparecer o ícone ellipsis-v do Awesome
+
 - No cadastro de rodada inserir os campos data início e data fim e validar para ver se as datas estão dentro do
 intervalo da liga
 

@@ -11,7 +11,7 @@ body {
 
 
 .bg-prode {
-    background-color: #2E1280;
+    background-color: #000;
 }
 .form-signin {
     width: 100%;
@@ -65,7 +65,7 @@ main > .container, main > .container-fluid {
 }
 .wrapper-title {        
     padding-bottom: 15px;
-    background: #806512;
+    background: #000;
     color: #fff;
     padding: 16px 30px;
     margin: -20px -25px 10px;
@@ -82,7 +82,7 @@ main > .container, main > .container-fluid {
     color: #fff;
     float: right;
     border: none;
-    min-width: 50px;
+    /*min-width: 50px;*/
     border-radius: 2px;
     border: none;
     outline: none !important;
@@ -96,6 +96,12 @@ main > .container, main > .container-fluid {
 .wrapper-title .btn span {
     float: left;
     margin-top: 2px;
+}
+.wrapper-title .dropdown-toggle::after {
+    border: none!important;
+    font: normal normal normal 14px/1 'Font Awesome 5 Free';
+    content: "\f142"!important; /* the desired FontAwesome icon */
+    vertical-align: 0; /* to center vertically */
 }
 table.table {
     margin-bottom: 0;

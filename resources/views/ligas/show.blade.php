@@ -6,7 +6,28 @@
 		<div class="col-sm-12">
 			<div class="wrapper">
 				<div class="wrapper-title">
-					<h2>{{ $liga->nome }}</h2>
+					<div class="row">
+						<div class="col-sm-11">
+							<h2>{{ $liga->nome }}</h2>
+						</div>
+						<div class="col-sm-1">
+							<div class="dropdown">
+								<a class="btn btn-primary btn-dark dropdown-toggle" href="#" role="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+
+								<div class="dropdown-menu" aria-labelledby="dropdown1">
+									@if ($liga->regulamento)
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#regulamento">{{ __('content.regulamento') }}</a>
+									@endif
+
+									<a class="dropdown-item" href="#">{{ __('content.classificacao') }}</a>
+
+									@if ($classificacao->admin)
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaRodada">{{ __('content.nova-rodada') }}</a>
+									@endif
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-2">
@@ -18,20 +39,8 @@
 					<div class="col-sm-2">
 						{{ __('content.pontos') }}: <strong>{{ $classificacao->pontos }}27</strong>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-sm-6">
 						{{ __('content.aproveitamento') }}: <strong>{{ $classificacao->aproveitamento }}48%</strong>
-					</div>
-					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#regulamento">
-							{{ __('content.classificacao') }}
-						</a>
-					</div>
-					<div class="col-sm-2">
-						@if ($liga->regulamento)
-							<a href="#" data-toggle="modal" data-target="#regulamento">
-								{{ __('content.regulamento') }}
-							</a>
-						@endif
 					</div>
 				</div>
 			</div>
@@ -43,20 +52,20 @@
 			<div class="wrapper">
 				<div class="wrapper-title">
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-11">
 							<h2>{{ __('content.rodadas') }}</h2>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-1">
 							@if ($classificacao->admin)
-								<button class="btn btn-success" data-toggle="modal" data-target="#consolidar">
-									<i class="fas fa-check-circle"></i> {{ __('content.consolidar') }}
-								</button>
-							@endif
+								<div class="dropdown">
+									<a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
-							@if ($classificacao->admin)
-								<button class="btn btn-success" data-toggle="modal" data-target="#consolidar">
-									<i class="fas fa-plus-circle"></i> {{ __('content.nova-partida') }}
-								</button>
+									<div class="dropdown-menu" aria-labelledby="dropdown2">
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidar">{{ __('content.consolidar') }}</a>
+									</div>
+								</div>
 							@endif
 						</div>
 					</div>
@@ -98,7 +107,7 @@
 		<div class="col-sm-4 mt-4">
 			<div class="wrapper">
 				<div class="wrapper-title">
-					<h2>{{ __('content.classificacao') }} da rodada</h2>
+					<h2>{{ __('content.classificacao-da-rodada') }}</h2>
 				</div>
 			  	<div class="table-responsive">
 					<table class="table table-striped">
@@ -133,6 +142,75 @@
 
 
 	@if ($classificacao->admin)
+		{{ Form::open(['route' => ['rodadas.store', $liga->id]]) }}
+			<div class="modal fade" id="novaRodada">
+				<div class="modal-dialog">
+					<div class="modal-content">
+		  				<div class="modal-header">
+		    				<h5 class="modal-title">{{ __('content.nova-rodada') }}</h5>
+		    				<button type="button" class="close" data-dismiss="modal">
+		      					<span aria-hidden="true">&times;</span>
+		    				</button>
+		  				</div>
+		  				<div class="modal-body">
+							@include('rodadas._form')
+		  				</div>
+		  				<div class="modal-footer">
+		  					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
+		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+		  				</div>
+					</div>
+				</div>
+			</div>
+		{{ Form::close() }}
+
+
+		{{ Form::model($rodada, ['route' => ['rodadas.update', $rodada->id]]) }}
+			<div class="modal fade" id="editarRodada">
+				<div class="modal-dialog">
+					<div class="modal-content">
+		  				<div class="modal-header">
+		    				<h5 class="modal-title">{{ __('content.editar-rodada') }}</h5>
+		    				<button type="button" class="close" data-dismiss="modal">
+		      					<span aria-hidden="true">&times;</span>
+		    				</button>
+		  				</div>
+		  				<div class="modal-body">
+							@include('rodadas._form')
+		  				</div>
+		  				<div class="modal-footer">
+		  					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
+		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+		  				</div>
+					</div>
+				</div>
+			</div>
+		{{ Form::close() }}
+
+
+    	{{ Form::open(['route' => 'partidas.store']) }}
+			<div class="modal fade" id="novaPartida">
+	  			<div class="modal-dialog">
+	    			<div class="modal-content">
+	      				<div class="modal-header">
+	        				<h5 class="modal-title">{{ __('content.nova-partida') }}</h5>
+	        				<button type="button" class="close" data-dismiss="modal">
+	          					<span aria-hidden="true">&times;</span>
+	        				</button>
+	      				</div>
+	      				<div class="modal-body">
+	    					@include('partidas._form')
+	      				</div>
+	      				<div class="modal-footer">
+	      					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
+	        				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.cancelar') }}</button>
+	      				</div>
+	    			</div>
+	  			</div>
+			</div>
+		{{ Form::close() }}
+
+
 		<div class="modal fade" id="consolidar">
 			<div class="modal-dialog">
 				<div class="modal-content">

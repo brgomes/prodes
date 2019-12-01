@@ -20,4 +20,10 @@ $(document).ready(function() {
         }
     });
 
+    if ($.isFunction($.fn.mask)) {
+        $('.date').mask('00/00/0000');
+        $('.time').mask('00:00');
+        $('.datetime').mask('00/00/0000 00:00');
+    }
+
 });

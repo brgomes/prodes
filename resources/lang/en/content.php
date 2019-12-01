@@ -51,7 +51,9 @@ return [
 	'administrador'				=> 'Administrator',
 	'created-at'				=> 'Date created',
 	'data-inicial'				=> 'Initial date',
+	'data-hora-inicial'			=> 'Initial datetime',
 	'data-final'				=> 'Final date',
+	'data-hora-final'			=> 'Final datetime',
 	'regulamento'				=> 'Regulation',
 	'data-consolidacao'			=> 'Consolidation date',
 	'ligas'						=> 'Leagues',
@@ -95,6 +97,7 @@ return [
 	'total-partidas'			=> 'Total games',
 	'aposta'					=> 'Bet',
 	'participantes'				=> 'Participants',
+	'desc-formato-datahora'		=> 'Format: dd/mm/yyyy hh:mm',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',
