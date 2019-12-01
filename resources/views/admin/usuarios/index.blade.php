@@ -3,7 +3,7 @@
 @section('content')
 
 	<div class="wrapper">
-		<div class="wrapper-title">
+		<div class="wrapper-title bg-dark">
 			<h2>{{ __('content.menu-usuarios') }}</h2>
 		</div>
 		<div class="table-responsive">
@@ -23,7 +23,7 @@
 						<tr>
 							<td>
 								<span class="{{ $usuario->bandeira }}" title="{{ $usuario->pais->nome }}"></span>
-								<a href="#">{{ $usuario->primeironome . ' ' . $usuario->sobrenome }}</a>
+								{{ $usuario->primeironome . ' ' . $usuario->sobrenome }}
 
 								@if ($usuario->admin)
 									<span class="fas fa-star text-warning" title="Admin"></span>

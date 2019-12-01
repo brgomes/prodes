@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-6 offset-md-3">
 			<div class="wrapper">
-				<div class="wrapper-title">
+				<div class="wrapper-title bg-dark">
 	  				<h2>{{ __('content.login') }}</h2>
 	  			</div>
 
