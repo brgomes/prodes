@@ -61,6 +61,7 @@ return [
 	'rodada'					=> 'Round',
 	'rodadas'					=> 'Rounds',
 	'nova-liga'					=> 'New league',
+	'criar-nova-liga'			=> 'Create new league',
 	'editar-liga'				=> 'Edit league',
 	'excluir-liga'				=> 'Delete league',
 	'nova-rodada'				=> 'New round',
@@ -98,6 +99,7 @@ return [
 	'aposta'					=> 'Bet',
 	'participantes'				=> 'Participants',
 	'desc-formato-datahora'		=> 'Format: dd/mm/yyyy hh:mm',
+	'classificacao-da-rodada'	=> 'Round ranking',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

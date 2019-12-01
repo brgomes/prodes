@@ -61,6 +61,7 @@ return [
 	'rodada'					=> 'Rodada',
 	'rodadas'					=> 'Rodadas',
 	'nova-liga'					=> 'Nova liga',
+	'criar-nova-liga'			=> 'Criar nova liga',
 	'editar-liga'				=> 'Editar liga',
 	'excluir-liga'				=> 'Excluir liga',
 	'nova-rodada'				=> 'Nova rodada',
@@ -98,6 +99,7 @@ return [
 	'aposta'					=> 'Aposta',
 	'participantes'				=> 'Participantes',
 	'desc-formato-datahora'		=> 'Formato: dd/mm/aaaa hh:mm',
+	'classificacao-da-rodada'	=> 'Classificação da rodada',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

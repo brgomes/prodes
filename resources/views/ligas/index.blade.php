@@ -3,16 +3,9 @@
 @section('content')
 
 	<div class="wrapper">
-		<div class="wrapper-title">
+		<div class="wrapper-title bg-dark">
 			<div class="row">
-                <div class="col-sm-6">
-					<h2>{{ __('content.minhas-ligas') }}</h2>
-				</div>
-				<div class="col-sm-6">
-					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#novaLiga">
-						<i class="fas fa-plus-circle"></i> {{ __('content.nova-liga') }}
-					</a>
-				</div>
+				<h2>{{ __('content.minhas-ligas') }}</h2>
             </div>
 		</div>
 
@@ -38,7 +31,7 @@
 			</div>
 		{{ Form::close() }}
 
-		<div class="table-responsive">
+		<div class="table-responsive mb-3">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -81,6 +74,10 @@
 				</tbody>
 			</table>
 	  	</div>
+
+	  	<a href="#" class="link" data-toggle="modal" data-target="#novaLiga">
+			{{ __('content.criar-nova-liga') }}
+		</a>
 	</div>
 
 @stop

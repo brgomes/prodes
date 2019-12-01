@@ -13,6 +13,13 @@ body {
 .bg-prode {
     background-color: #000;
 }
+a.link {
+    color: #566787;
+    text-decoration: underline;
+}
+a.link:hover {
+    color: #2196F3;
+}
 .form-signin {
     width: 100%;
     max-width: 330px;
@@ -65,7 +72,6 @@ main > .container, main > .container-fluid {
 }
 .wrapper-title {        
     padding-bottom: 15px;
-    background: #000;
     color: #fff;
     padding: 16px 30px;
     margin: -20px -25px 10px;
@@ -99,7 +105,8 @@ main > .container, main > .container-fluid {
 }
 .wrapper-title .dropdown-toggle::after {
     border: none!important;
-    font: normal normal normal 14px/1 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
     content: "\f142"!important; /* the desired FontAwesome icon */
     vertical-align: 0; /* to center vertically */
 }
