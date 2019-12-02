@@ -7,5 +7,7 @@ return [
 	'senha-alterada'			=> 'Su contraseña ha sido cambiada.',
 	'confirma-exclusao-partida'	=> 'Confirmar eliminación de juego',
 	'datainicio-rodada-liga'	=> 'La fecha de inicio de la ronda no puede ser inferior a la fecha de inicio de la liga.',
-	'datafim-rodada-liga'		-> 'La fecha de finalización de la ronda no puede ser mayor que la fecha de finalización de la liga.',
+	'datafim-rodada-liga'		=> 'La fecha de finalización de la ronda no puede ser mayor que la fecha de finalización de la liga.',
+	'datainicio-partida-rodada'	=> 'La fecha de salida no puede ser inferior a la fecha de inicio de la ronda.',
+	'datafim-partida-rodada'	=> 'La fecha de salida no puede ser mayor que la fecha final de la ronda.',
 ];

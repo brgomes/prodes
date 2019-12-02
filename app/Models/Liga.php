@@ -26,9 +26,18 @@ class Liga extends Model
             return LigaRodada::where('liga_id', $this->id)->find($id);
         }
 
-        return LigaRodada::where('liga_id', $this->id)
+        $liga = LigaRodada::where('liga_id', $this->id)
                 ->where('datainicio', '>=', Carbon::now())
                 ->orderBy('datafim')
+                ->first();
+
+        if ($liga) {
+            return $liga;
+        }
+
+        return LigaRodada::where('liga_id', $this->id)
+                ->where('datainicio', '<=', Carbon::now())
+                ->orderBy('datafim', 'DESC')
                 ->first();
     }
 }

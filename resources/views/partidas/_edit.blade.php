@@ -12,10 +12,7 @@
 					@include('partidas._form')
 	            </div>
 	            <div class="modal-footer">
-	            	<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> {{ __('content.salvar') }}</button>
-	            	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">
-	            		<i class="far fa-trash-alt"></i> {{ __('content.excluir') }}
-	            	</button>
+	            	<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
 	                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.cancelar') }}</button>
 	            </div>
 	        </div>

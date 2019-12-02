@@ -7,5 +7,7 @@ return [
 	'senha-alterada'			=> 'Sua senha foi alterada.',
 	'confirma-exclusao-partida'	=> 'Confirma a exclusão da partida',
 	'datainicio-rodada-liga'	=> 'A data inicial da rodada não pode ser menor que a data inicial da liga.',
-	'datafim-rodada-liga'		-> 'A data final da rodada não pode ser maior que a data final da liga.',
+	'datafim-rodada-liga'		=> 'A data final da rodada não pode ser maior que a data final da liga.',
+	'datainicio-partida-rodada'	=> 'A data da partida não pode ser menor que a data inicial da rodada.',
+	'datafim-partida-rodada'	=> 'A data da partida não pode ser maior que a data final da rodada.',
 ];

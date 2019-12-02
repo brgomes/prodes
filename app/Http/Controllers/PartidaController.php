@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PartidaValidationRequest;
 use App\Models\LigaClassificacao;
+use App\Models\LigaRodada;
 use App\Models\Partida;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,21 @@ class PartidaController extends Controller
     public function __construct(Partida $partida)
     {
         $this->partida = $partida;
+    }
+
+    public function rodada($id)
+    {
+        $rodada = LigaRodada::find($id);
+
+        if (!$rodada) {
+            return null;
+        }
+
+        if (!auth()->user()->podeAdministrarLiga($rodada->liga_id)) {
+            return null;
+        }
+
+        return $rodada;
     }
 
     public function partida($id)
@@ -40,8 +56,22 @@ class PartidaController extends Controller
         $data['created_by']     = $user->id;
         $data['updated_by']     = $user->id;
 
+        $rodada = $this->rodada($request->rodada_id);
+
+        if (!$rodada) {
+            return redirect()->back();
+        }
+
+        if ($data['datapartida'] < $rodada->datainicio) {
+            return redirect()->back()->with('warning', __('message.datainicio-partida-rodada'))->withInput();
+        }
+
+        if ($data['datapartida'] > $rodada->datafim) {
+            return redirect()->back()->with('warning', __('message.datafim-partida-rodada'))->withInput();
+        }
+
         if ($partida = $this->partida->create($data)) {
-            return redirect()->route('rodadas.show', $request->rodada_id);
+            return redirect()->route('ligas.show', [$partida->rodada->liga_id, $request->rodada_id]);
         }
 
         return redirect()->back()->with('error', __('message.erro'));
@@ -60,8 +90,22 @@ class PartidaController extends Controller
         $data['datapartida']    = $request->data . ' ' . $request->hora . ':00';
         $data['updated_by']     = auth()->user()->id;
 
-        if ($partida = $partida->update($data)) {
-            return redirect()->route('rodadas.show', $request->rodada_id);
+        $rodada = $partida->rodada;
+
+        if (!$rodada) {
+            return redirect()->back();
+        }
+
+        if ($data['datapartida'] < $rodada->datainicio) {
+            return redirect()->back()->with('warning', __('message.datainicio-partida-rodada'))->withInput();
+        }
+
+        if ($data['datapartida'] > $rodada->datafim) {
+            return redirect()->back()->with('warning', __('message.datafim-partida-rodada'))->withInput();
+        }
+
+        if ($partida->update($data)) {
+            return redirect()->route('ligas.show', [$partida->rodada->liga_id, $partida->rodada_id]);
         }
 
         return redirect()->back()->with('error', __('message.erro'));
@@ -75,10 +119,11 @@ class PartidaController extends Controller
             return redirect()->back();
         }
 
-        $rodada_id = $partida->rodada_id;
+        $liga_id    = $partida->rodada->liga_id;
+        $rodada_id  = $partida->rodada_id;
 
         if ($partida->delete()) {
-            return redirect()->route('rodadas.show', $rodada_id);
+            return redirect()->route('ligas.show', [$liga_id, $rodada_id]);
         }
 
         return redirect()->back()->with('error', __('message.erro'));

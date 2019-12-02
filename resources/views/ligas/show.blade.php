@@ -44,7 +44,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-8 mt-4">
+		<div class="col-sm-7 mt-4">
 			<div class="wrapper">
 				<div class="wrapper-title bg-dark">
 					<div class="row">
@@ -80,21 +80,50 @@
 					<table class="table table-striped">
 						<thead>
 							<tr>
+								<th>#</th>
 								<th>{{ __('content.data') }}</th>
-								<th>{{ __('content.partida') }}</th>
-								<th>{{ __('content.sigla') }}</th>
+								<th class="text-right">{{ __('content.mandante') }}</th>
+								<th class="text-center">{{ __('content.empate') }}</th>
+								<th>{{ __('content.visitante') }}</th>
+
+								@if ($classificacao->admin)
+									<th>{{ __('content.sigla') }}</th>
+									<th></th>
+								@endif
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($rodada->partidas as $partida)
+							@foreach ($rodada->partidas as $i => $partida)
 								<tr>
+									<td>{{ $i+1 }}</td>
 									<td>{{ datetime($partida->datapartida, __('content.formato-datahora')) }}</td>
-									<td>
-										<a href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{!! $partida->descricao !!}</a>
-										@include('partidas._edit', ['partida' => $partida])
-										@include('partidas._delete', ['partida' => $partida])
+									<td class="text-right">
+										<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
+										{!! Form::radio('palpite' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id]) !!}
 									</td>
-									<td>{{ $partida->sigla }}</td>
+									<td class="text-center">
+										{!! Form::radio('palpite' . $partida->id, 'E', null) !!}
+									</td>
+									<td>
+										{!! Form::radio('palpite' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id]) !!}
+										<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
+									</td>
+
+									@if ($classificacao->admin)
+										<td>{{ $partida->sigla }}</td>
+										<td>
+											<div class="dropdown">
+												<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_partida{{ $partida->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+
+												<div class="dropdown-menu" aria-labelledby="dd_partida{{ $partida->id }}">
+													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{{ __('content.editar-partida') }}</a>
+													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">{{ __('content.excluir-partida') }}</a>
+												</div>
+											</div>
+											@include('partidas._edit', ['partida' => $partida])
+											@include('partidas._delete', ['partida' => $partida])
+										</td>
+									@endif
 								</tr>
 							@endforeach
 						</tbody>
@@ -103,7 +132,7 @@
 			</div>
 		</div>
 
-		<div class="col-sm-4 mt-4">
+		<div class="col-sm-5 mt-4">
 			<div class="wrapper">
 				<div class="wrapper-title bg-dark">
 					<h2>{{ __('content.classificacao-da-rodada') }}</h2>

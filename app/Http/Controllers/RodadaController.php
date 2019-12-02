@@ -69,11 +69,11 @@ class RodadaController extends Controller
         }
 
         if ($data['datainicio'] < $liga->datainicio . ' 00:00:00') {
-            return redirect()->back()->with('warning', __('message.datainicio-rodada-liga'));
+            return redirect()->back()->with('warning', __('message.datainicio-rodada-liga'))->withInput();
         }
 
         if ($data['datafim'] > $liga->datafim . ' 23:59:59') {
-            return redirect()->back()->with('warning', __('message.datafim-rodada-liga'));
+            return redirect()->back()->with('warning', __('message.datafim-rodada-liga'))->withInput();
         }
 
         if ($rodada = $this->ligaRodada->create($data)) {
@@ -81,21 +81,6 @@ class RodadaController extends Controller
         }
 
         return redirect()->back()->with('error', __('message.erro'));
-    }
-
-    public function show($id)
-    {
-        $rodada = $this->rodada($id);
-
-        if (!$rodada) {
-            return redirect()->back();
-        }
-
-        $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
-                            ->where('liga_id', $rodada->liga_id)
-                            ->first();
-
-        return view('rodadas.show', compact('rodada', 'classificacao'));
     }
 
     public function update(RodadaValidationRequest $request, $id)
@@ -113,11 +98,11 @@ class RodadaController extends Controller
         $data['updated_by'] = auth()->user()->id;
 
         if ($data['datainicio'] < $rodada->liga->datainicio . ' 00:00:00') {
-            return redirect()->back()->with('warning', __('message.datainicio-rodada-liga'));
+            return redirect()->back()->with('warning', __('message.datainicio-rodada-liga'))->withInput();
         }
 
         if ($data['datafim'] > $rodada->liga->datafim . ' 23:59:59') {
-            return redirect()->back()->with('warning', __('message.datafim-rodada-liga'));
+            return redirect()->back()->with('warning', __('message.datafim-rodada-liga'))->withInput();
         }
 
         if ($rodada->update($data)) {

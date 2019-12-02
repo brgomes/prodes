@@ -23,7 +23,6 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::delete('ligas/{liga}', 'LigaController@destroy')->name('ligas.destroy');
 	Route::get('ligas/consolidar/{liga}', 'LigaController@consolidar')->name('ligas.consolidar');
 
-	Route::get('rodadas/{rodada}', 'RodadaController@show')->name('rodadas.show');
 	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
 

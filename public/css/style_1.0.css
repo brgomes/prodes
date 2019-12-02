@@ -4,7 +4,7 @@
 
 body {
     background: #e2e0e0;
-    color: #566787;;
+    color: #566787;
 }
 
 
@@ -19,6 +19,30 @@ a.link {
 }
 a.link:hover {
     color: #2196F3;
+}
+.dropdown-sm {
+    color: #566787;
+    padding: 2px 5px;
+    background-color: white;
+    border: none;
+}
+.dropdown-sm:hover {
+    color: #566787;
+    padding: 2px 5px;
+    background-color: white;
+    border: none;
+}
+.dropdown-sm::after {
+    border: none!important;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: "\f142"!important; /* the desired FontAwesome icon */
+    vertical-align: 0; /* to center vertically */
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #7B1FA2;
+    background-color: #7B1FA2;
 }
 .form-signin {
     width: 100%;
@@ -131,7 +155,7 @@ table.table th i {
     margin: 0 5px;
     cursor: pointer;
 }
-table.table td a {
+/*table.table td a {
     color: #566787;
     display: inline-block;
     text-decoration: underline;
@@ -145,7 +169,7 @@ table.table td a.edit {
 }
 table.table td a.delete {
     color: #F44336;
-}
+}*/
 table.table td i {
     font-size: 19px;
 }

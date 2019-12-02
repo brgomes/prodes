@@ -29,12 +29,6 @@
                     <ul class="navbar-nav mr-auto">
 
                         @if (Auth::check())
-                            <li class="nav-item {{ request()->is('apostas*') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('apostas.index') }}"><i class="fas fa-futbol"></i> {{ __('content.apostas') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fas fa-trophy"></i> {{ __('content.historico') }}</a>
-                            </li>
                             <li class="nav-item {{ request()->is('perfil*') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('perfil') }}"><i class="fas fa-user"></i> {{ __('content.meu-perfil') }}</a>
                             </li>
