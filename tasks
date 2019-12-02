@@ -1,8 +1,3 @@
-- Consertar cadastro de rodadas. O campo datainicio (e também o datafim) deve ser desmembrado em data e hora, como no Futinfo
-
-- No cadastro de rodada inserir os campos data início e data fim e validar para ver se as datas estão dentro do
-intervalo da liga
-
 - Na validação do cadastro de uma partida verificar se a data está dentro do intervalo da rodada
 
 - Criar select para navegar entre as rodadas de uma liga

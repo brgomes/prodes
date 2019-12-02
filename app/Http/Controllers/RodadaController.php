@@ -17,6 +17,21 @@ class RodadaController extends Controller
         $this->ligaRodada = $ligaRodada;
     }
 
+    public function liga($id)
+    {
+        $liga = Liga::find($id);
+
+        if (!$liga) {
+            return null;
+        }
+
+        if (!auth()->user()->podeAdministrarLiga($liga->id)) {
+            return null;
+        }
+
+        return $liga;
+    }
+
     public function rodada($id)
     {
         $rodada = LigaRodada::with('liga')->find($id);
@@ -37,13 +52,29 @@ class RodadaController extends Controller
         //
     }
 
-    public function store(RodadaValidationRequest $request)
+    public function store(RodadaValidationRequest $request, $liga)
     {
         $data = $request->all();
         $user = auth()->user();
 
+        $data['datainicio'] = $request->datainicial . ' ' . $request->horainicial . ':00';
+        $data['datafim']    = $request->datafinal . ' ' . $request->horafinal . ':00';
         $data['created_by'] = $user->id;
         $data['updated_by'] = $user->id;
+
+        $liga = $this->liga($liga);
+
+        if (!$liga) {
+            return redirect()->back();
+        }
+
+        if ($data['datainicio'] < $liga->datainicio . ' 00:00:00') {
+            return redirect()->back()->with('warning', __('message.datainicio-rodada-liga'));
+        }
+
+        if ($data['datafim'] > $liga->datafim . ' 23:59:59') {
+            return redirect()->back()->with('warning', __('message.datafim-rodada-liga'));
+        }
 
         if ($rodada = $this->ligaRodada->create($data)) {
             return redirect()->route('ligas.show', $request->liga_id);
@@ -77,10 +108,20 @@ class RodadaController extends Controller
 
         $data = $request->all();
 
+        $data['datainicio'] = $request->datainicial . ' ' . $request->horainicial . ':00';
+        $data['datafim']    = $request->datafinal . ' ' . $request->horafinal . ':00';
         $data['updated_by'] = auth()->user()->id;
 
+        if ($data['datainicio'] < $rodada->liga->datainicio . ' 00:00:00') {
+            return redirect()->back()->with('warning', __('message.datainicio-rodada-liga'));
+        }
+
+        if ($data['datafim'] > $rodada->liga->datafim . ' 23:59:59') {
+            return redirect()->back()->with('warning', __('message.datafim-rodada-liga'));
+        }
+
         if ($rodada->update($data)) {
-            return redirect()->route('ligas.show', $rodada->liga_id);
+            return redirect()->route('ligas.show', [$rodada->liga_id, $id]);
         }
 
         return redirect()->back()->with('error', __('message.erro'));

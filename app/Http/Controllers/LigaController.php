@@ -63,7 +63,7 @@ class LigaController extends Controller
         return redirect()->back()->with('error', __('message.erro'));
     }
 
-    public function show($id)
+    public function show($id, $rodada_id = null)
     {
         $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
                         ->where('id', $id)
@@ -71,10 +71,19 @@ class LigaController extends Controller
                         ->first();
 
         if ($classificacao) {
-            $liga   = $classificacao->liga;
-            $rodada = LigaRodada::find(1);
+            $liga = $classificacao->liga;
 
-            return view('ligas.show', compact('classificacao', 'liga', 'rodada'));
+            if ($rodada_id) {
+                $rodada = rodadas($liga->id, $rodada_id);
+            } else {
+                $rodada = $liga->rodada();
+            }
+
+            if ($liga->id != $rodada->liga_id) {
+                return redirect()->back();
+            }
+
+            return view('ligas.show', compact('classificacao', 'liga', 'rodada', 'rodada_id'));
         }
 
         return redirect()->back();

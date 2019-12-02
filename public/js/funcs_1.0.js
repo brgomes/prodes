@@ -20,6 +20,12 @@ $(document).ready(function() {
         }
     });
 
+    $('#select-rodada').change(function() {
+        var liga_id = $('#liga_id').val();
+        
+        location.href = '/ligas/' + liga_id + '/' + $(this).val();
+    });
+
     if ($.isFunction($.fn.mask)) {
         $('.date').mask('00/00/0000');
         $('.time').mask('00:00');

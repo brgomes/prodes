@@ -51,8 +51,10 @@ return [
 	'administrador'				=> 'Administrator',
 	'created-at'				=> 'Date created',
 	'data-inicial'				=> 'Initial date',
+	'hora-inicial'				=> 'Initial time',
 	'data-hora-inicial'			=> 'Initial datetime',
 	'data-final'				=> 'Final date',
+	'hora-final'				=> 'Final time',
 	'data-hora-final'			=> 'Final datetime',
 	'regulamento'				=> 'Regulation',
 	'data-consolidacao'			=> 'Consolidation date',
@@ -99,6 +101,7 @@ return [
 	'aposta'					=> 'Bet',
 	'participantes'				=> 'Participants',
 	'desc-formato-datahora'		=> 'Format: dd/mm/yyyy hh:mm',
+	'desc-formato-hora'			=> 'Format: hh:mm',
 	'classificacao-da-rodada'	=> 'Round ranking',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',

@@ -16,12 +16,16 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('perfil/salvar', 'IndexController@salvarPerfil')->name('salvar-perfil');
 	Route::post('perfil/senha', 'IndexController@salvarSenha')->name('salvar-senha');
 
-	Route::resource('ligas', 'LigaController');
-	Route::get('ligas/consolidar/{id}', 'LigaController@consolidar')->name('ligas.consolidar');
+	Route::get('ligas', 'LigaController@index')->name('ligas.index');
+	Route::get('ligas/{liga}/{rodada?}', 'LigaController@show')->name('ligas.show');
+	Route::post('ligas', 'LigaController@store')->name('ligas.store');
+	Route::put('ligas/{liga}', 'LigaController@update')->name('ligas.update');
+	Route::delete('ligas/{liga}', 'LigaController@destroy')->name('ligas.destroy');
+	Route::get('ligas/consolidar/{liga}', 'LigaController@consolidar')->name('ligas.consolidar');
 
-	Route::post('rodadas/store/{liga_id}', 'RodadaController@store')->name('rodadas.store');
-	Route::get('rodadas/{id}', 'RodadaController@show')->name('rodadas.show');
-	Route::put('rodadas/update/{id}', 'RodadaController@update')->name('rodadas.update');
+	Route::get('rodadas/{rodada}', 'RodadaController@show')->name('rodadas.show');
+	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
+	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
 
 	Route::resource('partidas', 'PartidaController');
 

@@ -1,26 +1,32 @@
-<div class="form-group row">
-	<label class="col-sm-4 col-form-label" for="numero">{{ __('content.numero') }}</label>
-	<div class="col-sm-8">
-		{!! Form::number('numero', null, ['class' => 'form-control', 'id' => 'numero', 'required']) !!}
-	</div>
+<div class="form-group">
+	<label for="numero">{{ __('content.numero') }}</label>
+	{!! Form::number('numero', null, ['class' => 'form-control', 'id' => 'numero', 'required']) !!}
 </div>
 
-<div class="form-group row">
-	<label class="col-sm-4 col-form-label" for="datainicio">{{ __('content.data-hora-inicial') }}</label>
-	<div class="col-sm-8">
-		{!! Form::text('datainicio', null, ['class' => 'form-control datetime', 'id' => 'datainicio', 'required']) !!}
+<div class="form-row">
+	<div class="form-group col-sm-8">
+		<label for="datainicial">{{ __('content.data-inicial') }}</label>
+		{!! Form::date('datainicial', null, ['class' => 'form-control', 'id' => 'datainicial', 'required']) !!}
+	</div>
+	<div class="form-group col-sm-4">
+		<label for="horainicial">{{ __('content.hora-inicial') }}</label>
+		{!! Form::text('horainicial', null, ['class' => 'form-control time', 'id' => 'horainicial', 'required']) !!}
 		<small class="form-text text-muted">
-		  	{{ __('content.desc-formato-datahora') }}
+		  	{{ __('content.desc-formato-hora') }}
 		</small>
 	</div>
 </div>
 
-<div class="form-group row">
-	<label class="col-sm-4 col-form-label" for="datafim">{{ __('content.data-hora-final') }}</label>
-	<div class="col-sm-8">
-		{!! Form::text('datafim', null, ['class' => 'form-control datetime', 'id' => 'datafim', 'required']) !!}
+<div class="form-row">
+	<div class="form-group col-sm-8">
+		<label for="datafinal">{{ __('content.data-final') }}</label>
+		{!! Form::date('datafinal', null, ['class' => 'form-control', 'id' => 'datafinal', 'required']) !!}
+	</div>
+	<div class="form-group col-sm-4">
+		<label for="horafinal">{{ __('content.hora-final') }}</label>
+		{!! Form::text('horafinal', null, ['class' => 'form-control time', 'id' => 'horafinal', 'required']) !!}
 		<small class="form-text text-muted">
-		  	{{ __('content.desc-formato-datahora') }}
+		  	{{ __('content.desc-formato-hora') }}
 		</small>
 	</div>
 </div>

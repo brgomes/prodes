@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\Registry;
+use App\Models\LigaRodada;
 //use Illuminate\Support\Facades\Storage;
 //use Intervention\Image\Facades\Image;
 use GuzzleHttp\Client;
@@ -683,22 +684,19 @@ function elapsed_time($first, $second = null, $inverse = false, $short = false, 
     return $agora;
 }
 
-function moduloAtivo()
+function rodadas($liga_id, $rodada_id = null)
 {
-    return Registry::get('modulo.ativo');
-}
-
-function mySoundex($value)
-{
-    $temp       = explode(' ', $value);
-    $soundex    = '';
-
-    foreach ($temp as $item) {
-        $item = str_replace("'", "\'", $item);
-        $soundex .= soundex($item);
+    if (isset($rodada_id)) {
+        return LigaRodada::where('liga_id', $liga_id)->find($rodada_id);
     }
 
-    return $soundex;
+    return LigaRodada::where('liga_id', $liga_id)
+            ->orderBy('datafim', 'DESC')
+            ->get()
+            ->map(function($rodada) {
+                return ['key' => $rodada->id, 'value' => __('content.rodada') . ' ' . $rodada->numero];
+            })
+            ->pluck('value', 'key');
 }
 
 function uploadFoto($imagebase64, $folder, $filename, $width = null, $height = null, $public = true)
@@ -735,19 +733,4 @@ function uploadFoto($imagebase64, $folder, $filename, $width = null, $height = n
     }
 
     return false;
-}
-
-function situacoesContaFinanceiro($situacao = null)
-{
-    $situacoes = array(
-        0 => 'Em aberto',
-        1 => 'Baixada',
-        2 => 'Cancelada'
-    );
-
-    if (null === $situacao) {
-        return $situacoes;
-    }
-
-    return $situacoes[$situacao];
 }

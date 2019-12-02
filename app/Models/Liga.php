@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Liga extends Model
@@ -17,5 +18,17 @@ class Liga extends Model
     public function classificacao()
     {
         return $this->hasMany(LigaClassificacao::class)->orderBy('posicao');
+    }
+
+    public function rodada($id = null)
+    {
+        if (isset($id)) {
+            return LigaRodada::where('liga_id', $this->id)->find($id);
+        }
+
+        return LigaRodada::where('liga_id', $this->id)
+                ->where('datainicio', '>=', Carbon::now())
+                ->orderBy('datafim')
+                ->first();
     }
 }
