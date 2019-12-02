@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('perfil', 'IndexController@perfil')->name('perfil');
 	Route::post('perfil/salvar', 'IndexController@salvarPerfil')->name('salvar-perfil');
@@ -26,9 +15,11 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
 
+	Route::post('palpitar/{rodada}', 'PalpiteController@salvar')->name('palpitar');
+
 	Route::resource('partidas', 'PartidaController');
 
-	Route::get('apostas', 'ApostaController@index')->name('apostas.index');
+	//Route::get('apostas', 'ApostaController@index')->name('apostas.index');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

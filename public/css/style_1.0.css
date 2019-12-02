@@ -23,7 +23,7 @@ a.link:hover {
 .dropdown-sm {
     color: #566787;
     padding: 2px 5px;
-    background-color: white;
+    background-color: auto;
     border: none;
 }
 .dropdown-sm:hover {

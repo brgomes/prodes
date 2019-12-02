@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Palpite extends Model
 {
-    protected $table 	= 'usuario_palpite';
-    protected $fillable = ['partida_id', 'usuario_id', 'palpite', 'pontos', 'created_by'];
+    protected $table        = 'usuario_palpite';
+    protected $fillable     = ['usuario_id', 'partida_id', 'palpite', 'pontos'];
+
+    public function usuario()
+    {
+    	return $this->belongsTo(Usuario::class);
+    }
+
+    public function partida()
+    {
+    	return $this->belongsTo(Partida::class);
+    }
 }

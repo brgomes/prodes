@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Partida extends Model
@@ -14,6 +15,17 @@ class Partida extends Model
         return $this->belongsTo(LigaRodada::class, 'rodada_id')->with('liga');
     }
 
+    public function palpite()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return null;
+        }
+
+        return $this->belongsTo(Palpite::class, 'usuario_id', $user->id);
+    }
+
     public function getDataAttribute()
     {
         return datetime($this->datapartida, 'Y-m-d');
@@ -22,6 +34,22 @@ class Partida extends Model
     public function getHoraAttribute()
     {
         return datetime($this->datapartida, 'H:i');
+    }
+
+    public function getResultadoAttribute()
+    {
+        return $this->golsmandante . '-' . $this->golsvisitante;
+    }
+
+    public function getVencedorAttribute()
+    {
+        if ($this->golsmandante > $this->golsvisitante) {
+            return 'M';
+        } elseif ($this->golsmandante < $this->golsvisitante) {
+            return 'V';
+        }
+
+        return 'E';
     }
 
     public function getDescricaoAttribute()
@@ -37,5 +65,27 @@ class Partida extends Model
         } else {
             return $this->mandante . ' - ' . $this->visitante;
         }
+    }
+
+    public function aberta()
+    {
+        if (!isset($this->golsmandante) || !isset($this->golsvisitante)) {
+            return false;
+        }
+
+        if ($this->datapartida <= Carbon::now()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function resultado()
+    {
+        if (isset($this->golsmandante) && isset($this->golsvisitante)) {
+            return true;
+        }
+
+        return false;
     }
 }

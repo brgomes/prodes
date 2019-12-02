@@ -103,6 +103,7 @@ return [
 	'desc-formato-datahora'		=> 'Format: dd/mm/yyyy hh:mm',
 	'desc-formato-hora'			=> 'Format: hh:mm',
 	'classificacao-da-rodada'	=> 'Round ranking',
+	'resultado'					=> 'Result',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

@@ -76,61 +76,145 @@
 					<div class="col-sm-6 text-right">
 					</div>
 				</div>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>{{ __('content.data') }}</th>
-								<th class="text-right">{{ __('content.mandante') }}</th>
-								<th class="text-center">{{ __('content.empate') }}</th>
-								<th>{{ __('content.visitante') }}</th>
 
-								@if ($classificacao->admin)
-									<th>{{ __('content.sigla') }}</th>
-									<th></th>
-								@endif
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($rodada->partidas as $i => $partida)
+				{{ Form::open(['route' => ['palpitar', $rodada->id]]) }}
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
 								<tr>
-									<td>{{ $i+1 }}</td>
-									<td>{{ datetime($partida->datapartida, __('content.formato-datahora')) }}</td>
-									<td class="text-right">
-										<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
-										{!! Form::radio('palpite' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id]) !!}
-									</td>
-									<td class="text-center">
-										{!! Form::radio('palpite' . $partida->id, 'E', null) !!}
-									</td>
-									<td>
-										{!! Form::radio('palpite' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id]) !!}
-										<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
-									</td>
+									<th>#</th>
+									<th>{{ __('content.data') }}</th>
+									<th class="text-right">{{ __('content.mandante') }}</th>
+									<th class="text-center">{{ __('content.empate') }}</th>
+									<th>{{ __('content.visitante') }}</th>
+									<th>{{ __('content.resultado') }}</th>
 
 									@if ($classificacao->admin)
-										<td>{{ $partida->sigla }}</td>
-										<td>
-											<div class="dropdown">
-												<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_partida{{ $partida->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-
-												<div class="dropdown-menu" aria-labelledby="dd_partida{{ $partida->id }}">
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{{ __('content.editar-partida') }}</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">{{ __('content.excluir-partida') }}</a>
-												</div>
-											</div>
-											@include('partidas._edit', ['partida' => $partida])
-											@include('partidas._delete', ['partida' => $partida])
-										</td>
+										<th>{{ __('content.sigla') }}</th>
+										<th></th>
 									@endif
 								</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
+							</thead>
+							<tbody>
+								@foreach ($rodada->partidas as $i => $partida)
+									@if ($partida->resultado())
+										@if ($palpite = auth()->user()->palpite($partida->id))
+											@if ($palpite->palpite == $partida->vencedor)
+												<tr class="table-success">
+											@else
+												<tr class="table-danger">
+											@endif
+										@else
+											<tr class="table-active">
+										@endif
+									@else
+										<tr>
+									@endif
+
+										<td>{{ $i+1 }}</td>
+										<td>
+											{{ datetime($partida->datapartida, __('content.formato-datahora')) }}
+											{!! Form::hidden('partidas[]', $partida->id) !!}
+										</td>
+										<td class="text-right">
+											@if ($partida->aberta())
+												<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
+
+												@if ($palpite = auth()->user()->palpite($partida->id))
+													{!! Form::radio('palpite-' . $partida->id, 'M', ($palpite->palpite == 'M'), ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+												@else
+													{!! Form::radio('palpite-' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+												@endif
+											@else
+												@if ($palpite = auth()->user()->palpite($partida->id))
+													@if ($palpite->palpite == 'M')
+														<strong>{{ $partida->mandante }}</strong>
+														<i class="fas fa-check-circle"></i>
+													@else
+														{{ $partida->mandante }}
+													@endif
+												@else
+													{{ $partida->mandante }}
+												@endif
+											@endif
+										</td>
+										<td class="text-center">
+											@if ($partida->aberta())
+												@if ($palpite = auth()->user()->palpite($partida->id))
+													{!! Form::radio('palpite-' . $partida->id, 'E', ($palpite->palpite == 'E'), ['class' => 'palpite']) !!}
+												@else
+													{!! Form::radio('palpite-' . $partida->id, 'E', null, ['class' => 'palpite']) !!}
+												@endif
+											@else
+												@if ($palpite = auth()->user()->palpite($partida->id))
+													@if ($palpite->palpite == 'E')
+														<i class="fas fa-check-circle"></i>
+													@endif
+												@endif
+											@endif
+										</td>
+										<td>
+											@if ($partida->aberta())
+												@if ($palpite = auth()->user()->palpite($partida->id))
+													{!! Form::radio('palpite-' . $partida->id, 'V', ($palpite->palpite == 'V'), ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
+												@else
+													{!! Form::radio('palpite-' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
+												@endif
+
+												<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
+											@else
+												@if ($palpite = auth()->user()->palpite($partida->id))
+													@if ($palpite->palpite == 'V')
+														<strong>{{ $partida->visitante }}</strong>
+														<i class="fas fa-check-circle"></i>
+													@else
+														{{ $partida->visitante }}
+													@endif
+												@else
+													{{ $partida->visitante }}
+												@endif
+											@endif
+										</td>
+										<td>
+											@if ($partida->resultado())
+												<span class="text-secondary">
+													{!! $partida->resultado !!}
+												</span>
+											@endif
+										</td>
+
+										@if ($classificacao->admin)
+											<td>{{ $partida->sigla }}</td>
+											<td>
+												<div class="dropdown">
+													<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_partida{{ $partida->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+
+													<div class="dropdown-menu" aria-labelledby="dd_partida{{ $partida->id }}">
+														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{{ __('content.editar-partida') }}</a>
+														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">{{ __('content.excluir-partida') }}</a>
+													</div>
+												</div>
+											</td>
+										@endif
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
+
+					<button type="submit" class="btn btn-secondary">Salvar apostas</button>
+				{{ Form::close() }}
 			</div>
 		</div>
+
+
+		@if ($classificacao->admin)
+			@foreach ($rodada->partidas as $partida)
+				@include('partidas._edit', ['partida' => $partida])
+				@include('partidas._delete', ['partida' => $partida])
+			@endforeach
+		@endif
+
 
 		<div class="col-sm-5 mt-4">
 			<div class="wrapper">

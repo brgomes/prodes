@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Palpite;
+use App\Notifications\ResetPassword;
+use App\Notifications\VerifyMail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\ResetPassword;
-use App\Notifications\VerifyMail;
 
 class Usuario extends Authenticatable implements MustVerifyEmail
 {
@@ -60,6 +61,15 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         return 'flag-icon flag-icon-' . mb_strtolower($this->pais->iso3);
     }
 
+    public function participaDaLiga($liga_id)
+    {
+        $classificacao = LigaClassificacao::where('usuario_id', $this->id)
+                            ->where('liga_id', $liga_id)
+                            ->first();
+
+        return isset($classificacao);
+    }
+
     public function podeAdministrarLiga($liga_id)
     {
         $classificacao = LigaClassificacao::where('usuario_id', $this->id)
@@ -68,5 +78,12 @@ class Usuario extends Authenticatable implements MustVerifyEmail
                             ->first();
 
         return isset($classificacao);
+    }
+
+    public function palpite($partida_id)
+    {
+        return Palpite::where('usuario_id', $this->id)
+                ->where('partida_id', $partida_id)
+                ->first();
     }
 }
