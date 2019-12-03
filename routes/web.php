@@ -10,10 +10,11 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('ligas', 'LigaController@store')->name('ligas.store');
 	Route::put('ligas/{liga}', 'LigaController@update')->name('ligas.update');
 	Route::delete('ligas/{liga}', 'LigaController@destroy')->name('ligas.destroy');
-	Route::get('ligas/consolidar/{liga}', 'LigaController@consolidar')->name('ligas.consolidar');
+	Route::post('ligas/consolidar/{liga}', 'LigaController@consolidar')->name('ligas.consolidar');
 
 	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
+	Route::post('rodadas/consolidar/{rodada}', 'RodadaController@consolidar')->name('rodadas.consolidar');
 
 	Route::post('palpitar/{rodada}', 'PalpiteController@salvar')->name('palpitar');
 

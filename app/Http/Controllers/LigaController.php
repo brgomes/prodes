@@ -7,6 +7,8 @@ use App\Http\Requests\LigaValidationRequest;
 use App\Models\Liga;
 use App\Models\LigaClassificacao;
 use App\Models\LigaRodada;
+use App\Models\Palpite;
+use App\Models\RodadaClassificacao;
 use DB;
 use Illuminate\Http\Request;
 
@@ -118,5 +120,101 @@ class LigaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function consolidar($id)
+    {
+        $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
+                ->where('liga_id', $id)
+                ->where('admin', 1)
+                ->with('liga')
+                ->first();
+
+        if (!$temp) {
+            return redirect()->back();
+        }
+
+        $liga       = $temp->liga;
+        $usuarios   = $liga->classificacao;
+        $rodadas    = $liga->rodadas;
+
+        foreach ($usuarios as $usuario) {
+            $pontosDisputadosLiga   = 0;
+            $pontosGanhosLiga       = 0;
+            $rodadasJogadas         = 0;
+            $totalPartidasLiga      = 0;
+
+            foreach ($rodadas as $rodada) {
+                $pontosDisputadosRodada = 0;
+                $pontosGanhosRodada     = 0;
+                $totalPartidasRodada    = 0;
+
+                $totalPartidasRodada    += $rodada->partidas->count();
+                $totalPartidasLiga      += $totalPartidasRodada;
+
+                $palpites = Palpite::where('rodada_id', $rodada->id)
+                            ->where('usuario_id', $usuario->id)
+                            ->with('partida')
+                            ->get();
+
+                if ($palpites->count() == 0) {
+                    $aproveitamentoRodada = null;
+                } else {
+                    $rodadasJogadas++;
+
+                    foreach ($palpites as $palpite) {
+                        if ($palpite->partida->resultado()) {
+                            $pontosDisputadosLiga++;
+                            $pontosDisputadosRodada++;
+
+                            if ($palpite->palpite == $palpite->partida->vencedor) {
+                                $pontosGanhosLiga++;
+                                $pontosGanhosRodada++;
+
+                                $pontuacao = 1;
+                            } else {
+                                $pontuacao = 0;
+                            }
+
+                            $palpite->update(['pontos' => $pontuacao]);
+                        }
+                    }
+
+                    if ($pontosDisputadosRodada == 0) {
+                        $aproveitamentoRodada = 0;
+                    } else {
+                        $aproveitamentoRodada = round((($pontosGanhosRodada * 100) / $pontosDisputadosRodada), 2);
+                    }
+                }
+
+                $where = [
+                    'rodada_id'     => $rodada->id,
+                    'usuario_id'    => $usuario->id,
+                ];
+
+                $values = [
+                    'pontosdisputados'  => $pontosDisputadosRodada,
+                    'pontosganhos'      => $pontosGanhosRodada,
+                    'aproveitamento'    => $aproveitamentoRodada,
+                ];
+
+                RodadaClassificacao::updateOrCreate($where, $values);
+            }
+
+            if ($pontosDisputadosLiga == 0) {
+                $aproveitamentoLiga = null;
+            } else {
+                $aproveitamentoLiga = round((($pontosGanhosLiga * 100) / $pontosDisputadosLiga), 2);
+            }
+
+            $usuario->update([
+                'rodadasjogadas'    => $rodadasJogadas,
+                'pontosdisputados'  => $pontosDisputadosLiga,
+                'pontosganhos'      => $pontosGanhosLiga,
+                'aproveitamento'    => $aproveitamentoLiga,
+            ]);
+        }
+
+        echo 'Falta calcular as posições';
     }
 }

@@ -34,7 +34,7 @@ class RodadaController extends Controller
 
     public function rodada($id)
     {
-        $rodada = LigaRodada::with('liga')->find($id);
+        $rodada = LigaRodada::with(['liga', 'partidas'])->find($id);
 
         if (!$rodada) {
             return null;
@@ -45,11 +45,6 @@ class RodadaController extends Controller
         }
 
         return $rodada;
-    }
-
-    public function create()
-    {
-        //
     }
 
     public function store(RodadaValidationRequest $request, $liga)
@@ -116,4 +111,27 @@ class RodadaController extends Controller
     {
         //
     }
+
+    /*public function consolidar($rodada_id)
+    {
+        $rodada = $this->rodada($rodada_id);
+
+        if (!$rodada) {
+            return redirect()->back();
+        }
+
+        // Pesquisa todos os usuários que participam da liga
+        $usuarios = $rodada->liga->classificacao;
+        
+        if ($usuarios->count() > 0) {
+            $rodadas
+            foreach ($usuarios as $usuario) {
+
+            }
+        }
+
+        // Para cada usuário pesquisa todas as apostas dele ao longo do tempo, ordenado por rodada
+
+        // 
+    }*/
 }

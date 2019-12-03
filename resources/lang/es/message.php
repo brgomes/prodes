@@ -10,4 +10,5 @@ return [
 	'datafim-rodada-liga'		=> 'La fecha de finalización de la jornada no puede ser mayor que la fecha de finalización de la liga.',
 	'datainicio-partida-rodada'	=> 'La fecha del juego no puede ser inferior a la fecha de inicio de la jornada.',
 	'datafim-partida-rodada'	=> 'La fecha del juego no puede ser mayor que la fecha final de la jornada.',
+	'confirma-consolidacao'		=> 'La acción de consolidación de la jornada puede demorar algunos minutos. Confirmar la consolidación?',
 ];

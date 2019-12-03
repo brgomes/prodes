@@ -62,7 +62,7 @@
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidar">{{ __('content.consolidar') }}</a>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
 									</div>
 								</div>
 							@endif
@@ -325,24 +325,27 @@
 		{{ Form::close() }}
 
 
-		<div class="modal fade" id="consolidar">
-			<div class="modal-dialog">
-				<div class="modal-content">
-	  				<div class="modal-header">
-	    				<h5 class="modal-title">{{ __('content.consolidar') }}</h5>
-	    				<button type="button" class="close" data-dismiss="modal">
-	      					<span aria-hidden="true">&times;</span>
-	    				</button>
-	  				</div>
-	  				<div class="modal-body">
-						Não sei se é preciso implementar o botão para consolidar toda a liga de uma vez.
-	  				</div>
-	  				<div class="modal-footer">
-	    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-	  				</div>
+		{{ Form::open(['route' => ['ligas.consolidar', $rodada->liga_id]]) }}
+			<div class="modal fade" id="consolidarLiga">
+				<div class="modal-dialog">
+					<div class="modal-content">
+		  				<div class="modal-header">
+		    				<h5 class="modal-title">{{ __('content.consolidar') }}</h5>
+		    				<button type="button" class="close" data-dismiss="modal">
+		      					<span aria-hidden="true">&times;</span>
+		    				</button>
+		  				</div>
+		  				<div class="modal-body">
+							{{ __('message.confirma-consolidacao') }}
+		  				</div>
+		  				<div class="modal-footer">
+		  					<button type="submit" class="btn btn-success">{{ __('content.consolidar') }}</button>
+		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+		  				</div>
+					</div>
 				</div>
 			</div>
-		</div>
+		{{ Form::close() }}
 	@endif
 
 

@@ -9,7 +9,7 @@ class LigaClassificacao extends Model
     public $timestamps = false;
 
     protected $table 	= 'liga_classificacao';
-    protected $fillable = ['liga_id', 'usuario_id', 'admin', 'rodadasjogadas', 'rodadasvencidas', 'pontos', 'posicao', 'aproveitamento'];
+    protected $fillable = ['liga_id', 'usuario_id', 'admin', 'rodadasjogadas', 'rodadasvencidas', 'pontosdisputados', 'pontosganhos', 'posicao', 'aproveitamento'];
 
     public function liga()
     {

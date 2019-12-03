@@ -12,7 +12,7 @@ class Liga extends Model
 
     public function rodadas()
     {
-        return $this->hasMany(LigaRodada::class)->with('partidas')->orderBy('numero', 'DESC');
+        return $this->hasMany(LigaRodada::class)->with('partidas');
     }
 
     public function classificacao()
