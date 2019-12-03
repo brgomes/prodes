@@ -23,12 +23,13 @@ class Liga extends Model
     public function rodada($id = null)
     {
         if (isset($id)) {
-            return LigaRodada::where('liga_id', $this->id)->find($id);
+            return LigaRodada::with('partidas')->where('liga_id', $this->id)->find($id);
         }
 
         $liga = LigaRodada::where('liga_id', $this->id)
                 ->where('datainicio', '>=', Carbon::now())
                 ->orderBy('datafim')
+                ->with('partidas')
                 ->first();
 
         if ($liga) {
@@ -38,6 +39,7 @@ class Liga extends Model
         return LigaRodada::where('liga_id', $this->id)
                 ->where('datainicio', '<=', Carbon::now())
                 ->orderBy('datafim', 'DESC')
+                ->with('partidas')
                 ->first();
     }
 }

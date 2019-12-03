@@ -98,8 +98,8 @@
 							<tbody>
 								@foreach ($rodada->partidas as $i => $partida)
 									@if ($partida->resultado())
-										@if ($palpite = auth()->user()->palpite($partida->id))
-											@if ($palpite->palpite == $partida->vencedor)
+										@if ($partida->palpite)
+											@if ($partida->palpite->palpite == $partida->vencedor)
 												<tr class="table-success">
 											@else
 												<tr class="table-danger">
@@ -120,14 +120,14 @@
 											@if ($partida->aberta())
 												<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
 
-												@if ($palpite = auth()->user()->palpite($partida->id))
-													{!! Form::radio('palpite-' . $partida->id, 'M', ($palpite->palpite == 'M'), ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+												@if ($partida->palpite)
+													{!! Form::radio('palpite-' . $partida->id, 'M', ($partida->palpite->palpite == 'M'), ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
 												@else
 													{!! Form::radio('palpite-' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
 												@endif
 											@else
-												@if ($palpite = auth()->user()->palpite($partida->id))
-													@if ($palpite->palpite == 'M')
+												@if ($partida->palpite)
+													@if ($partida->palpite->palpite == 'M')
 														<strong>{{ $partida->mandante }}</strong>
 														<i class="fas fa-check-circle"></i>
 													@else
@@ -140,14 +140,14 @@
 										</td>
 										<td class="text-center">
 											@if ($partida->aberta())
-												@if ($palpite = auth()->user()->palpite($partida->id))
-													{!! Form::radio('palpite-' . $partida->id, 'E', ($palpite->palpite == 'E'), ['class' => 'palpite']) !!}
+												@if ($partida->palpite)
+													{!! Form::radio('palpite-' . $partida->id, 'E', ($partida->palpite->palpite == 'E'), ['class' => 'palpite']) !!}
 												@else
 													{!! Form::radio('palpite-' . $partida->id, 'E', null, ['class' => 'palpite']) !!}
 												@endif
 											@else
-												@if ($palpite = auth()->user()->palpite($partida->id))
-													@if ($palpite->palpite == 'E')
+												@if ($partida->palpite)
+													@if ($partida->palpite->palpite == 'E')
 														<i class="fas fa-check-circle"></i>
 													@endif
 												@endif
@@ -155,16 +155,16 @@
 										</td>
 										<td>
 											@if ($partida->aberta())
-												@if ($palpite = auth()->user()->palpite($partida->id))
-													{!! Form::radio('palpite-' . $partida->id, 'V', ($palpite->palpite == 'V'), ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
+												@if ($partida->palpite)
+													{!! Form::radio('palpite-' . $partida->id, 'V', ($partida->palpite->palpite == 'V'), ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
 												@else
 													{!! Form::radio('palpite-' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
 												@endif
 
 												<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
 											@else
-												@if ($palpite = auth()->user()->palpite($partida->id))
-													@if ($palpite->palpite == 'V')
+												@if ($partida->palpite)
+													@if ($partida->palpite->palpite == 'V')
 														<strong>{{ $partida->visitante }}</strong>
 														<i class="fas fa-check-circle"></i>
 													@else

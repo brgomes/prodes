@@ -16,7 +16,7 @@ class LigaRodada extends Model
 
     public function partidas()
     {
-        return $this->hasMany(Partida::class, 'rodada_id')->orderBy('datapartida');
+        return $this->hasMany(Partida::class, 'rodada_id')->with('palpite')->orderBy('datapartida');
     }
 
     public function getDatainicialAttribute()

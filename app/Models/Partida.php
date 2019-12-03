@@ -23,7 +23,7 @@ class Partida extends Model
             return null;
         }
 
-        return $this->belongsTo(Palpite::class, 'usuario_id', $user->id);
+        return $this->hasOne(Palpite::class, 'partida_id')->where('usuario_id', $user->id);
     }
 
     public function getDataAttribute()

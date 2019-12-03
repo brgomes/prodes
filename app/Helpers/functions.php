@@ -684,14 +684,11 @@ function elapsed_time($first, $second = null, $inverse = false, $short = false, 
     return $agora;
 }
 
-function rodadas($liga_id, $rodada_id = null)
+function rodadas($liga_id)
 {
-    if (isset($rodada_id)) {
-        return LigaRodada::where('liga_id', $liga_id)->find($rodada_id);
-    }
-
     return LigaRodada::where('liga_id', $liga_id)
             ->orderBy('datafim', 'DESC')
+            ->with('partidas')
             ->get()
             ->map(function($rodada) {
                 return ['key' => $rodada->id, 'value' => __('content.rodada') . ' ' . $rodada->numero];

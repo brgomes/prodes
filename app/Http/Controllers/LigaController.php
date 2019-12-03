@@ -74,7 +74,7 @@ class LigaController extends Controller
             $liga = $classificacao->liga;
 
             if ($rodada_id) {
-                $rodada = rodadas($id, $rodada_id);
+                $rodada = $liga->rodada($rodada_id);
             } else {
                 $rodada = $liga->rodada();
             }
