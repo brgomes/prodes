@@ -64,17 +64,18 @@ class PalpiteController extends Controller
     		if (array_key_exists($key, $data)) {
     			$where = [
 	    			'usuario_id' 	=> $usuario->id,
-	    			'partida_id'	=> (int) $partida_id,
+                    'rodada_id'     => $partida->rodada_id,
+	    			'partida_id'	=> $partida->id,
 	    		];
 
 	    		$values = [
-	    			'palpite'		=> $data['palpite-' . $partida_id],
+	    			'palpite'		=> $data['palpite-' . $partida->id],
 	    			'pontos'		=> null,
 	    		];
 
 	    		$this->palpite->updateOrCreate($where, $values);
 	    	} else {
-	    		$this->palpite->where('usuario_id', $usuario->id)->where('partida_id', $partida_id)->delete();
+	    		$this->palpite->where('usuario_id', $usuario->id)->where('partida_id', $partida->id)->delete();
 	    	}
     	}
 
