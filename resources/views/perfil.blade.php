@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="wrapper">
-        <div class="wrapper-title">
+        <div class="wrapper-title bg-dark">
             <h2>{{ __('content.meu-perfil') }}</h2>
         </div>
         <ul class="nav nav-tabs" role="tablist">
