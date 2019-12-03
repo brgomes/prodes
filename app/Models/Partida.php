@@ -69,7 +69,7 @@ class Partida extends Model
 
     public function aberta()
     {
-        if (!isset($this->golsmandante) || !isset($this->golsvisitante)) {
+        if (isset($this->golsmandante) || isset($this->golsvisitante)) {
             return false;
         }
 
