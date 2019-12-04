@@ -321,4 +321,10 @@ class LigaController extends Controller
 
         return redirect()->back()->with('success', __('message.admin-removido'));
     }
+
+    public function pesquisar(Request $request)
+    {
+        $liga = Liga::where('codigo', (int) $request->q)->first();
+        dd($liga);
+    }
 }

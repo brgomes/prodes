@@ -74,10 +74,10 @@
                     </ul>
 
                     @if (Auth::check())
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="{{ __('content.codigo-da-liga') }}" aria-label="{{ __('content.codigo-da-liga') }}">
+                        {{ Form::open(['route' => 'ligas.pesquisar', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'get'])}}
+                            <input class="form-control mr-sm-2" name="q" type="search" placeholder="{{ __('content.codigo-da-liga') }}" aria-label="{{ __('content.codigo-da-liga') }}">
                             <button class="btn btn-primary my-2 my-sm-0" type="submit">{{ __('content.pesquisar') }}</button>
-                        </form>
+                        {{ Form::close() }}
                     @endif
                 </div>
             </nav>
