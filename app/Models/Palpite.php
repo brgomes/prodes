@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Palpite extends Model
 {
     protected $table        = 'usuario_palpite';
-    protected $fillable     = ['usuario_id', 'rodada_id', 'partida_id', 'palpite', 'pontos'];
+    protected $fillable     = ['usuario_id', 'rodada_id', 'partida_id', 'palpite', 'consolidado', 'pontos'];
 
     public function usuario()
     {

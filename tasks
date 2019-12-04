@@ -1,5 +1,3 @@
-- Criar dispositivo para somente exibir a partida verde ou vermelha depois que ela for consolidade, como no TennisTemple
-
 - Ver palpites de outros usuários
 
 
@@ -7,8 +5,6 @@
 - Implementar busca de ligas
 
 - Criar dispositivo para usuários saberem que existem partidas a palpitar
-
-- Implementar barra de progresso ao consolidar uma liga
 
 
 
@@ -21,3 +17,5 @@
 
 ================================
 - Cadastrar foto do usuário
+
+- Implementar barra de progresso ao consolidar uma liga

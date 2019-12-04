@@ -32,8 +32,6 @@ class LigaController extends Controller
                 ->where('usuario_id', auth()->user()->id)
                 ->with('liga')->orderBy('datafim', 'DESC')->get();
 
-        //dd($ligas);
-
         return view('ligas.index', compact('ligas'));
     }
 
@@ -200,7 +198,9 @@ class LigaController extends Controller
                                 $pontuacao = 0;
                             }
 
-                            $palpite->update(['pontos' => $pontuacao]);
+                            $palpite->update(['consolidado' => true, 'pontos' => $pontuacao]);
+                        } else {
+                            $palpite->update(['consolidado' => false, 'pontos' => null]);
                         }
                     }
 

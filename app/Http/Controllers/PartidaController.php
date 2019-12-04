@@ -118,7 +118,12 @@ class PartidaController extends Controller
             $data['temresultado'] = false;
         }
 
+        if (!array_key_exists('cancelada', $data)) {
+            $data['cancelada'] = false;
+        }
+
         if ($partida->update($data)) {
+            $partida->palpites()->update(['consolidado' => false]);
             $partida->liga->update(['consolidar' => true]);
 
             return redirect()->route('ligas.show', [$partida->rodada->liga_id, $partida->rodada_id]);

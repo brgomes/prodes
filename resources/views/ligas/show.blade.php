@@ -120,10 +120,14 @@
 											<tr class="table-active">
 										@else
 											@if ($partida->palpite)
-												@if ($partida->palpite->palpite == $partida->vencedor)
-													<tr class="table-success">
+												@if ($partida->palpite->consolidado)
+													@if ($partida->palpite->palpite == $partida->vencedor)
+														<tr class="table-success">
+													@else
+														<tr class="table-danger">
+													@endif
 												@else
-													<tr class="table-danger">
+													<tr class="table-warning">
 												@endif
 											@else
 												<tr>
