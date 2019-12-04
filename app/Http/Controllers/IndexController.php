@@ -61,7 +61,7 @@ class IndexController extends Controller
 
         $data = [
             'password' 	=> bcrypt($request->novasenha),
-            'datasenha' => Carbon::now(),
+            'datasenha' => Carbon::now()->setTimezone(config('app.timezone')),
         ];
 
     	if ($user->update($data)) {

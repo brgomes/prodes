@@ -32,7 +32,7 @@ class Liga extends Model
         }
 
         $liga = LigaRodada::where('liga_id', $this->id)
-                ->where('datainicio', '>=', Carbon::now())
+                ->where('datainicio', '>=', Carbon::now()->setTimezone(config('app.timezone')))
                 ->orderBy('datafim')
                 ->with(['partidas', 'classificacao'])
                 ->first();
@@ -42,7 +42,7 @@ class Liga extends Model
         }
 
         return LigaRodada::where('liga_id', $this->id)
-                ->where('datainicio', '<=', Carbon::now())
+                ->where('datainicio', '<=', Carbon::now()->setTimezone(config('app.timezone')))
                 ->orderBy('datafim', 'DESC')
                 ->with(['partidas', 'classificacao'])
                 ->first();

@@ -88,7 +88,7 @@ class Partida extends Model
             return false;
         }
 
-        if ($this->datapartida <= Carbon::now()) {
+        if ($this->datapartida <= Carbon::now()->setTimezone(config('app.timezone'))) {
             return false;
         }
 

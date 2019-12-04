@@ -116,7 +116,7 @@ class RegisterController extends Controller
             $usuario = $verifyUser->usuario;
 
             if (!$usuario->email_verified_at) {
-                $usuario->email_verified_at = Carbon::now();
+                $usuario->email_verified_at = Carbon::now()->setTimezone(config('app.timezone'));
                 $usuario->save();
 
                 $status = __('content.email-verificado');

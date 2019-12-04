@@ -256,7 +256,7 @@ class LigaController extends Controller
 
         $liga->rankear();
 
-        $liga->update(['consolidar' => false, 'dataconsolidacao' => Carbon::now()]);
+        $liga->update(['consolidar' => false, 'dataconsolidacao' => Carbon::now()->setTimezone(config('app.timezone'))]);
 
         return redirect()->route('ligas.show', [$liga->id, $rodada_id]);
     }
