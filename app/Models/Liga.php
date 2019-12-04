@@ -20,6 +20,11 @@ class Liga extends Model
         return $this->hasMany(LigaClassificacao::class)->orderBy('posicao');
     }
 
+    public function administradores()
+    {
+        return $this->hasMany(LigaClassificacao::class)->where('admin', true);
+    }
+
     public function rodada($id = null)
     {
         if (isset($id)) {

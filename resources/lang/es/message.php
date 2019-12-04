@@ -11,4 +11,7 @@ return [
 	'datainicio-partida-rodada'	=> 'La fecha del juego no puede ser inferior a la fecha de inicio de la jornada.',
 	'datafim-partida-rodada'	=> 'La fecha del juego no puede ser mayor que la fecha final de la jornada.',
 	'confirma-consolidacao'		=> 'La acción de consolidación de la jornada puede demorar algunos minutos. Confirmar la consolidación?',
+	'nao-pode-excluir-admin'	=> 'No puede excluirse de la administración. No hay otros administradores.',
+	'admin-removido'			=> 'El administrador ha sido eliminado.',
+	'admin-setado'				=> 'El administrador se ha configurado.',
 ];

@@ -238,4 +238,65 @@ class LigaController extends Controller
 
         return redirect()->route('ligas.show', [$liga->id, $rodada_id]);
     }
+
+    public function setarAdmin($liga_id, $usuario_id)
+    {
+        $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
+                ->where('liga_id', $liga_id)
+                ->where('admin', 1)
+                ->with('liga')
+                ->first();
+
+        if (!$temp) {
+            return redirect()->back();
+        }
+
+        $classificacao = LigaClassificacao::where('usuario_id', $usuario_id)
+                            ->where('liga_id', $liga_id)
+                            ->where('admin', 0)
+                            ->first();
+
+        if ($classificacao) {
+            $classificacao->update(['admin', true]);
+        }
+
+        return redirect()->back()->with('success', __('message.admin-setado'));
+    }
+
+    public function removerAdmin($liga_id, $usuario_id)
+    {
+        $user = auth()->user();
+        $temp = LigaClassificacao::where('usuario_id', $user->id)
+                ->where('liga_id', $liga_id)
+                ->where('admin', 1)
+                ->with('liga')
+                ->first();
+
+        if (!$temp) {
+            return redirect()->back();
+        }
+
+        $outrosAdmin = [];
+
+        foreach ($temp->liga->administradores as $admin) {
+            if ($admin->usuario_id != $user->id) {
+                $outrosAdmin[] = $admin;
+            }
+        }
+
+        if (count($outrosAdmin) == 0) {
+            return redirect()->back()->with('warning', __('message.nao-pode-excluir-admin'));
+        }
+
+        $classificacao = LigaClassificacao::where('usuario_id', $usuario_id)
+                            ->where('liga_id', $liga_id)
+                            ->where('admin', 1)
+                            ->first();
+
+        if ($classificacao) {
+            $classificacao->update(['admin', false]);
+        }
+
+        return redirect()->back()->with('success', __('message.admin-removido'));
+    }
 }

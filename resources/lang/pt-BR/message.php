@@ -11,4 +11,7 @@ return [
 	'datainicio-partida-rodada'	=> 'A data da partida não pode ser menor que a data inicial da rodada.',
 	'datafim-partida-rodada'	=> 'A data da partida não pode ser maior que a data final da rodada.',
 	'confirma-consolidacao'		=> 'A ação de consolidação da rodada pode demorar alguns minutos. Confirma a consolidação?',
+	'nao-pode-excluir-admin'	=> 'Você não pode se excluir da administração. Não há outros administradores.',
+	'admin-removido'			=> 'O administrador foi removido com sucesso.',
+	'admin-setado'				=> 'O administrador foi setado com sucesso.',
 ];
