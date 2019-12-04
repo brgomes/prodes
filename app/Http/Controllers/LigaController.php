@@ -29,6 +29,7 @@ class LigaController extends Controller
         $ligas = LigaClassificacao::addSelect(['datafim' => Liga::select('datafim')
                     ->where('id', 'liga_classificacao.id')
                 ])
+                ->where('usuario_id', auth()->user()->id)
                 ->with('liga')->orderBy('datafim', 'DESC')->get();
 
         //dd($ligas);
@@ -71,19 +72,20 @@ class LigaController extends Controller
     public function show($id, $rodada_id = null)
     {
         $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
-                            ->where('id', $id)
+                            ->where('liga_id', $id)
                             ->with('liga')
                             ->first();
 
         if ($classificacao) {
             $liga = $classificacao->liga;
 
-            if ($rodada_id) {
+            if (isset($rodada_id)) {
                 $rodada = $liga->rodada($rodada_id);
             } else {
                 $rodada = $liga->rodada();
             }
 
+            //dd($liga);
             //dd($rodada);
 
             if ($liga->id != $rodada->liga_id) {

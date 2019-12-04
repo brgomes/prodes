@@ -9,6 +9,7 @@
 					<div class="row">
 						<div class="col-sm-11">
 							<h2>{{ $liga->nome }}</h2>
+							{!! Form::hidden('liga_id', $liga->id, ['id' => 'liga_id']) !!}
 						</div>
 						<div class="col-sm-1">
 							<div class="dropdown">
@@ -301,7 +302,7 @@
 							@include('rodadas._form')
 		  				</div>
 		  				<div class="modal-footer">
-		  					{!! Form::hidden('liga_id', $liga->id, ['id' => 'liga_id']) !!}
+		  					{!! Form::hidden('liga_id', $liga->id) !!}
 
 		  					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
 		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>

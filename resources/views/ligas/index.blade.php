@@ -54,7 +54,7 @@
 									@endif
 								@endif
 
-								<a href="{{ route('ligas.show', $liga->id) }}" class="link">{{ $liga->liga->nome }}</a>
+								<a href="{{ route('ligas.show', $liga->liga->id) }}" class="link">{{ $liga->liga->nome }}</a>
 
 								@if ($liga->admin)
 									<span class="fas fa-star text-warning" title="Admin"></span>
