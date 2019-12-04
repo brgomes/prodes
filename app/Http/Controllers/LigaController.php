@@ -259,7 +259,7 @@ class LigaController extends Controller
                             ->first();
 
         if ($classificacao) {
-            $classificacao->update(['admin', true]);
+            $classificacao->update(['admin' => 1]);
         }
 
         return redirect()->back()->with('success', __('message.admin-setado'));
@@ -296,7 +296,7 @@ class LigaController extends Controller
                             ->first();
 
         if ($classificacao) {
-            $classificacao->update(['admin', false]);
+            $classificacao->update(['admin' => 0]);
         }
 
         return redirect()->back()->with('success', __('message.admin-removido'));

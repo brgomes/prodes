@@ -25,4 +25,9 @@ class RodadaClassificacao extends Model
     {
         return $this->belongsTo(Usuario::class);
     }
+
+    public function getAproveitamentofAttribute()
+    {
+        return number_format($this->aproveitamento, 0);
+    }
 }

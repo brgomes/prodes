@@ -47,7 +47,7 @@
 						{{ __('content.pontos') }}: <strong>{{ $classificacao->pontosganhos }}</strong>
 					</div>
 					<div class="col-sm-2">
-						{{ __('content.aproveitamento') }}: <strong>{{ number_format($classificacao->aproveitamento, 2, ',', '.') }}%</strong>
+						{{ __('content.aproveitamento') }}: <strong>{{ $classificacao->aproveitamentof }}%</strong>
 					</div>
 				</div>
 			</div>
@@ -240,10 +240,7 @@
 								<th>{{ __('content.jogador') }}</th>
 								<th>{{ __('content.pontos') }}</th>
 								<th>%</th>
-
-								@if ($classificacao->admin)
-									<th></th>
-								@endif
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -259,7 +256,7 @@
 										@endif
 									</td>
 									<td>{{ $item->pontosganhos }}</td>
-									<td>@if ($item->aproveitamento) {{ $item->aproveitamento }} @else - @endif</td>
+									<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
 									<td>
 										<div class="dropdown">
 											<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>

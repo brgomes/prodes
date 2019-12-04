@@ -47,8 +47,8 @@ class LigaRodada extends Model
     public function rankear()
     {
         $itens = RodadaClassificacao::where('rodada_id', $this->id)
-                    ->orderBy('pontosganhos')
-                    ->orderBy('aproveitamento')
+                    ->orderBy('pontosganhos', 'DESC')
+                    ->orderBy('aproveitamento', 'DESC')
                     ->get();
 
         if ($itens->count() == 0) {

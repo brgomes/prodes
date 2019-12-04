@@ -51,9 +51,9 @@ class Liga extends Model
     public function rankear()
     {
         $itens = LigaClassificacao::where('liga_id', $this->id)
-                    ->orderBy('pontosganhos')
-                    ->orderBy('rodadasvencidas')
-                    ->orderBy('aproveitamento')
+                    ->orderBy('pontosganhos', 'DESC')
+                    ->orderBy('rodadasvencidas', 'DESC')
+                    ->orderBy('aproveitamento', 'DESC')
                     ->get();
 
         $i = 1;
