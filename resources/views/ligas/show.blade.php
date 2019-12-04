@@ -20,7 +20,12 @@
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#regulamento">{{ __('content.regulamento') }}</a>
 									@endif
 
-									<a class="dropdown-item" href="#">{{ __('content.classificacao') }}</a>
+									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#classificacao">{{ __('content.classificacao') }}</a>
+
+									@if ($classificacao->admin)
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
+									@endif
 								</div>
 							</div>
 						</div>
@@ -72,8 +77,6 @@
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
 									</div>
 								</div>
 							@endif
@@ -400,6 +403,49 @@
 			</div>
 		</div>
 	@endif
+
+	<div class="modal fade" id="classificacao">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+  				<div class="modal-header">
+    				<h5 class="modal-title">{{ __('content.classificacao') }}</h5>
+    				<button type="button" class="close" data-dismiss="modal">
+      					<span aria-hidden="true">&times;</span>
+    				</button>
+  				</div>
+  				<div class="modal-body">
+					<table class="table table-condensed table-striped">
+						<thead>
+							<tr>
+								<th></th>
+								<th>{{ __('content.jogador') }}</th>
+								<th>{{ __('content.pontos') }}</th>
+								<th>{{ __('content.rodadas-vencidas') }}</th>
+								<th>%</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($liga->classificacao as $item)
+								<tr>
+									<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
+									<td>
+										<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
+										{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
+									</td>
+									<td>{{ $item->pontosganhos }}</td>
+									<td>{{ $item->rodadasvencidas }}</td>
+									<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+  				</div>
+  				<div class="modal-footer">
+    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+  				</div>
+			</div>
+		</div>
+	</div>
 
 @stop
 

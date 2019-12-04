@@ -8,6 +8,8 @@
 
 - Ver palpites de outros usuários
 
+- Criar dispositivo para usuários saberem que existem partidas a palpitar
+
 - A exclusão de uma liga deve ser disponibilizada na página da liga, no menu, e exibido um modal de confirmação, como em
 https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php
 

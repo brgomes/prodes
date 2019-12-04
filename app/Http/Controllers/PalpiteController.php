@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\LigaRodada;
 use App\Models\Palpite;
 use App\Models\Partida;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PalpiteController extends Controller
@@ -22,10 +21,6 @@ class PalpiteController extends Controller
         $rodada = LigaRodada::with('liga')->find($id);
 
         if (!$rodada) {
-            return null;
-        }
-
-        if (!auth()->user()->adminLiga($rodada->liga_id)) {
             return null;
         }
 
@@ -51,13 +46,11 @@ class PalpiteController extends Controller
 
     		$partida = Partida::with('rodada')->find($partida_id);
 
-    		// O usuário deve participar da liga para poder palpitar
     		if (!$usuario->participaDaLiga($partida->rodada->liga_id)) {
     			continue;
     		}
 
-    		// O usuário não pode palpitar se a partida já tiver começado
-    		if ($partida->datapartida <= Carbon::now()) {
+    		if (!$partida->aberta()) {
     			continue;
     		}
 

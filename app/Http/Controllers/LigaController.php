@@ -227,8 +227,8 @@ class LigaController extends Controller
 
         foreach ($usuarios as $usuario) {
             $liderancas = RodadaClassificacao::where('liga_id', $liga->id)
-                            ->where('usuario_id', $usuario)
-                            ->where('lider', true)
+                            ->where('usuario_id', $usuario->usuario->id)
+                            ->where('lider', 1)
                             ->get();
 
             $usuario->update(['rodadasvencidas' => $liderancas->count()]);
