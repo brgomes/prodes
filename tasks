@@ -1,4 +1,6 @@
-- Exibir a classificação geral de uma liga
+- Setar partida como cancelada
+
+- Calcular vencedor de rodada somente se a rodada não tiver mais nenhuma partida sem resultado
 
 - Excluir rodada
 

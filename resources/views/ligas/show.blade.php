@@ -414,31 +414,33 @@
     				</button>
   				</div>
   				<div class="modal-body">
-					<table class="table table-condensed table-striped">
-						<thead>
-							<tr>
-								<th></th>
-								<th>{{ __('content.jogador') }}</th>
-								<th>{{ __('content.pontos') }}</th>
-								<th>{{ __('content.rodadas-vencidas') }}</th>
-								<th>%</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($liga->classificacao as $item)
+  					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
 								<tr>
-									<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
-									<td>
-										<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
-										{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
-									</td>
-									<td>{{ $item->pontosganhos }}</td>
-									<td>{{ $item->rodadasvencidas }}</td>
-									<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
+									<th></th>
+									<th>{{ __('content.jogador') }}</th>
+									<th>{{ __('content.pontos') }}</th>
+									<th>{{ __('content.rodadas-vencidas') }}</th>
+									<th>%</th>
 								</tr>
-							@endforeach
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								@foreach ($liga->classificacao as $item)
+									<tr>
+										<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
+										<td>
+											<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
+											{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
+										</td>
+										<td>{{ $item->pontosganhos }}</td>
+										<td>{{ $item->rodadasvencidas }}</td>
+										<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
   				</div>
   				<div class="modal-footer">
     				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
