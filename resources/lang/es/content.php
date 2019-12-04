@@ -104,6 +104,11 @@ return [
 	'desc-formato-hora'			=> 'Formato: hh:mm',
 	'classificacao-da-rodada'	=> 'Classificación de la jornada',
 	'resultado'					=> 'Resultado',
+	'precisa-consolidar'		=> 'Necesita consolidar',
+	'consolidada'				=> 'Consolidada',
+	'setar-como-admin'			=> 'Establecer como administrador',
+	'remover-admin'				=> 'Remover de la administración',
+	'ver-palpites'				=> 'Ver apuestas',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

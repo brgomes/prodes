@@ -70,7 +70,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         return isset($classificacao);
     }
 
-    public function podeAdministrarLiga($liga_id)
+    public function adminLiga($liga_id)
     {
         $classificacao = LigaClassificacao::where('usuario_id', $this->id)
                             ->where('liga_id', $liga_id)

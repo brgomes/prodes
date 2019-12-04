@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Liga extends Model
 {
     protected $table 	= 'liga';
-    protected $fillable = ['nome', 'codigo', 'datainicio', 'datafim', 'regulamento', 'dataconsolidacao', 'created_by', 'updated_by'];
+    protected $fillable = ['nome', 'codigo', 'datainicio', 'datafim', 'regulamento', 'consolidar', 'dataconsolidacao', 'created_by', 'updated_by'];
 
     public function rodadas()
     {
-        return $this->hasMany(LigaRodada::class)->with('partidas');
+        return $this->hasMany(LigaRodada::class)->with(['partidas', 'classificacao']);
     }
 
     public function classificacao()
@@ -23,13 +23,13 @@ class Liga extends Model
     public function rodada($id = null)
     {
         if (isset($id)) {
-            return LigaRodada::with('partidas')->where('liga_id', $this->id)->find($id);
+            return LigaRodada::with(['partidas', 'classificacao'])->where('liga_id', $this->id)->find($id);
         }
 
         $liga = LigaRodada::where('liga_id', $this->id)
                 ->where('datainicio', '>=', Carbon::now())
                 ->orderBy('datafim')
-                ->with('partidas')
+                ->with(['partidas', 'classificacao'])
                 ->first();
 
         if ($liga) {
@@ -39,7 +39,26 @@ class Liga extends Model
         return LigaRodada::where('liga_id', $this->id)
                 ->where('datainicio', '<=', Carbon::now())
                 ->orderBy('datafim', 'DESC')
-                ->with('partidas')
+                ->with(['partidas', 'classificacao'])
                 ->first();
+    }
+
+    public function rankear()
+    {
+        $itens = LigaClassificacao::where('liga_id', $this->id)
+                    ->orderBy('pontosganhos')
+                    ->orderBy('rodadasvencidas')
+                    ->orderBy('aproveitamento')
+                    ->get();
+
+        $i = 1;
+
+        foreach ($itens as $item) {
+            $item->update(['posicao' => $i]);
+
+            $i++;
+        }
+
+        return true;
     }
 }

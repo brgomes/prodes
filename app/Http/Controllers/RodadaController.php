@@ -25,7 +25,7 @@ class RodadaController extends Controller
             return null;
         }
 
-        if (!auth()->user()->podeAdministrarLiga($liga->id)) {
+        if (!auth()->user()->adminLiga($liga->id)) {
             return null;
         }
 
@@ -40,7 +40,7 @@ class RodadaController extends Controller
             return null;
         }
 
-        if (!auth()->user()->podeAdministrarLiga($rodada->liga_id)) {
+        if (!auth()->user()->adminLiga($rodada->liga_id)) {
             return null;
         }
 

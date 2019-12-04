@@ -1,17 +1,16 @@
-- Consolidar rodadas
+- Na página da liga deve haver a opção de definir administradores através de um menu para cada usuário na classificação
 
-- Exibir classificação na página da rodada (somente após consolidação)
+- Exibir a classificação geral de uma liga
 
-- Consolidar liga
+- Excluir rodada
 
-- Controlar necessidade de consolidar uma liga. Quando cadastrar, editar ou excluir uma partida a liga deve ter uma flag indicando a
-necessidade de ela ser consolidada (exibir um asteristico na lista de ligas quando for administrador)
 
-- Ao abrir um liga pode-se exibir a classificação geral, adicionar rodadas, definir administradores, chamar a consolidação (se admin)
 
 - Implementar busca de ligas
 
-- A exclusão de uma liga deve ser disponibilizada na página da liga, no final, e exibido um modal de confirmação, como em
+- Ver palpites de outros usuários
+
+- A exclusão de uma liga deve ser disponibilizada na página da liga, no menu, e exibido um modal de confirmação, como em
 https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php
 
 

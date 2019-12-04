@@ -8,11 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Partida extends Model
 {
     protected $table 	= 'liga_partida';
-    protected $fillable = ['rodada_id', 'datapartida', 'mandante', 'golsmandante', 'visitante', 'golsvisitante', 'sigla', 'created_by', 'updated_by'];
+    protected $fillable = ['liga_id', 'rodada_id', 'datapartida', 'mandante', 'golsmandante', 'visitante', 'golsvisitante', 'sigla', 'created_by', 'updated_by'];
+
+    public function liga()
+    {
+        return $this->belongsTo(Liga::class, 'liga_id');
+    }
 
     public function rodada()
     {
         return $this->belongsTo(LigaRodada::class, 'rodada_id')->with('liga');
+    }
+
+    public function palpites()
+    {
+        return $this->hasMany(Palpite::class, 'partida_id');
     }
 
     public function palpite()

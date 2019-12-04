@@ -48,6 +48,12 @@
 					@foreach ($ligas as $liga)
 						<tr>
 							<td>
+								@if ($liga->admin)
+									@if ($liga->liga->consolidar)
+										<i class="fas fa-exclamation text-warning"></i>
+									@endif
+								@endif
+
 								<a href="{{ route('ligas.show', $liga->id) }}" class="link">{{ $liga->liga->nome }}</a>
 
 								@if ($liga->admin)

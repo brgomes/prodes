@@ -9,7 +9,12 @@ class RodadaClassificacao extends Model
     public $timestamps = false;
 
     protected $table 	= 'rodada_classificacao';
-    protected $fillable = ['rodada_id', 'usuario_id', 'posicao', 'pontosdisputados', 'pontosganhos', 'aproveitamento'];
+    protected $fillable = ['liga_id', 'rodada_id', 'usuario_id', 'posicao', 'pontosdisputados', 'pontosganhos', 'aproveitamento', 'lider'];
+
+    public function liga()
+    {
+        return $this->belongsTo(Liga::class);
+    }
 
     public function rodada()
     {

@@ -10,7 +10,9 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('ligas', 'LigaController@store')->name('ligas.store');
 	Route::put('ligas/{liga}', 'LigaController@update')->name('ligas.update');
 	Route::delete('ligas/{liga}', 'LigaController@destroy')->name('ligas.destroy');
-	Route::post('ligas/consolidar/{liga}', 'LigaController@consolidar')->name('ligas.consolidar');
+	Route::post('ligas/consolidar/{liga}/{rodada}', 'LigaController@consolidar')->name('ligas.consolidar');
+	Route::get('ligas/setar-admin/{liga}/{usuario}', 'LigaController@setarAdmin')->name('ligas.setar-admin');
+	Route::get('ligas/remover-admin/{liga}/{usuario}', 'LigaController@removerAdmin')->name('ligas.remover-admin');
 
 	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
@@ -19,8 +21,6 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('palpitar/{rodada}', 'PalpiteController@salvar')->name('palpitar');
 
 	Route::resource('partidas', 'PartidaController');
-
-	//Route::get('apostas', 'ApostaController@index')->name('apostas.index');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

@@ -25,7 +25,7 @@ class PalpiteController extends Controller
             return null;
         }
 
-        if (!auth()->user()->podeAdministrarLiga($rodada->liga_id)) {
+        if (!auth()->user()->adminLiga($rodada->liga_id)) {
             return null;
         }
 

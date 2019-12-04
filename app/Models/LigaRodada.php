@@ -19,6 +19,11 @@ class LigaRodada extends Model
         return $this->hasMany(Partida::class, 'rodada_id')->with('palpite')->orderBy('datapartida');
     }
 
+    public function classificacao()
+    {
+        return $this->hasMany(RodadaClassificacao::class, 'rodada_id')->orderBy('posicao');
+    }
+
     public function getDatainicialAttribute()
     {
         return datetime($this->datainicio, 'Y-m-d');
@@ -37,5 +42,30 @@ class LigaRodada extends Model
     public function getHorafinalAttribute()
     {
         return datetime($this->datafim, 'H:i');
+    }
+
+    public function rankear()
+    {
+        $itens = RodadaClassificacao::where('rodada_id', $this->id)
+                    ->orderBy('pontosganhos')
+                    ->orderBy('aproveitamento')
+                    ->get();
+
+        if ($itens->count() == 0) {
+            return true;
+        }
+
+        $i              = 1;
+        $pontosLider    = $itens[0]->pontosganhos;
+
+        foreach ($itens as $item) {
+            $lider = ($item->pontosganhos == $pontosLider);
+
+            $item->update(['posicao' => $i, 'lider' => $lider]);
+
+            $i++;
+        }
+
+        return true;
     }
 }

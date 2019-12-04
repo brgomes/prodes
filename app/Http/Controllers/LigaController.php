@@ -9,6 +9,7 @@ use App\Models\LigaClassificacao;
 use App\Models\LigaRodada;
 use App\Models\Palpite;
 use App\Models\RodadaClassificacao;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,8 @@ class LigaController extends Controller
                     ->where('id', 'liga_classificacao.id')
                 ])
                 ->with('liga')->orderBy('datafim', 'DESC')->get();
+
+        //dd($ligas);
 
         return view('ligas.index', compact('ligas'));
     }
@@ -68,9 +71,9 @@ class LigaController extends Controller
     public function show($id, $rodada_id = null)
     {
         $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
-                        ->where('id', $id)
-                        ->with('liga')
-                        ->first();
+                            ->where('id', $id)
+                            ->with('liga')
+                            ->first();
 
         if ($classificacao) {
             $liga = $classificacao->liga;
@@ -80,6 +83,8 @@ class LigaController extends Controller
             } else {
                 $rodada = $liga->rodada();
             }
+
+            //dd($rodada);
 
             if ($liga->id != $rodada->liga_id) {
                 return redirect()->back();
@@ -122,10 +127,10 @@ class LigaController extends Controller
         //
     }
 
-    public function consolidar($id)
+    public function consolidar($liga_id, $rodada_id)
     {
         $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
-                ->where('liga_id', $id)
+                ->where('liga_id', $liga_id)
                 ->where('admin', 1)
                 ->with('liga')
                 ->first();
@@ -160,8 +165,6 @@ class LigaController extends Controller
                 if ($palpites->count() == 0) {
                     $aproveitamentoRodada = null;
                 } else {
-                    $rodadasJogadas++;
-
                     foreach ($palpites as $palpite) {
                         if ($palpite->partida->resultado()) {
                             $pontosDisputadosLiga++;
@@ -180,30 +183,31 @@ class LigaController extends Controller
                         }
                     }
 
-                    if ($pontosDisputadosRodada == 0) {
-                        $aproveitamentoRodada = 0;
-                    } else {
+                    if ($pontosDisputadosRodada > 0) {
+                        $rodadasJogadas++;
+
                         $aproveitamentoRodada = round((($pontosGanhosRodada * 100) / $pontosDisputadosRodada), 2);
                     }
                 }
 
-                $where = [
-                    'rodada_id'     => $rodada->id,
-                    'usuario_id'    => $usuario->id,
-                ];
+                if ($pontosDisputadosRodada > 0) {
+                    $where = [
+                        'liga_id'       => $rodada->liga_id,
+                        'rodada_id'     => $rodada->id,
+                        'usuario_id'    => $usuario->id,
+                    ];
 
-                $values = [
-                    'pontosdisputados'  => $pontosDisputadosRodada,
-                    'pontosganhos'      => $pontosGanhosRodada,
-                    'aproveitamento'    => $aproveitamentoRodada,
-                ];
+                    $values = [
+                        'pontosdisputados'  => $pontosDisputadosRodada,
+                        'pontosganhos'      => $pontosGanhosRodada,
+                        'aproveitamento'    => $aproveitamentoRodada,
+                    ];
 
-                RodadaClassificacao::updateOrCreate($where, $values);
+                    RodadaClassificacao::updateOrCreate($where, $values);
+                }
             }
 
-            if ($pontosDisputadosLiga == 0) {
-                $aproveitamentoLiga = null;
-            } else {
+            if ($pontosDisputadosLiga > 0) {
                 $aproveitamentoLiga = round((($pontosGanhosLiga * 100) / $pontosDisputadosLiga), 2);
             }
 
@@ -215,6 +219,23 @@ class LigaController extends Controller
             ]);
         }
 
-        echo 'Falta calcular as posições';
+        foreach ($rodadas as $rodada) {
+            $rodada->rankear();
+        }
+
+        foreach ($usuarios as $usuario) {
+            $liderancas = RodadaClassificacao::where('liga_id', $liga->id)
+                            ->where('usuario_id', $usuario)
+                            ->where('lider', true)
+                            ->get();
+
+            $usuario->update(['rodadasvencidas' => $liderancas->count()]);
+        }
+
+        $liga->rankear();
+
+        $liga->update(['consolidar' => false, 'dataconsolidacao' => Carbon::now()]);
+
+        return redirect()->route('ligas.show', [$liga->id, $rodada_id]);
     }
 }

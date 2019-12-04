@@ -26,17 +26,27 @@
 					</div>
 				</div>
 				<div class="row">
+					@if ($classificacao->admin)
+						<div class="col-sm-2">
+							@if ($liga->consolidar)
+								<i class="fas fa-exclamation-triangle text-warning"></i> {{ __('content.precisa-consolidar') }}
+							@else
+								<i class="fas fa-check-circle text-success"></i> {{ __('content.consolidada') }}
+							@endif
+						</div>
+					@endif
+
 					<div class="col-sm-2">
 						{{ __('content.participantes') }}: <strong>{{ $liga->classificacao->count() }}</strong>
 					</div>
 					<div class="col-sm-2">
-						{{ __('content.posicao') }}: <strong>{{ $classificacao->posicao }}9</strong>
+						{{ __('content.posicao') }}: <strong>{{ $classificacao->posicao }}</strong>
 					</div>
 					<div class="col-sm-2">
-						{{ __('content.pontos') }}: <strong>{{ $classificacao->pontos }}27</strong>
+						{{ __('content.pontos') }}: <strong>{{ $classificacao->pontosganhos }}</strong>
 					</div>
-					<div class="col-sm-6">
-						{{ __('content.aproveitamento') }}: <strong>{{ $classificacao->aproveitamento }}48%</strong>
+					<div class="col-sm-2">
+						{{ __('content.aproveitamento') }}: <strong>{{ number_format($classificacao->aproveitamento, 2, ',', '.') }}%</strong>
 					</div>
 				</div>
 			</div>
@@ -227,22 +237,45 @@
 							<tr>
 								<th></th>
 								<th>{{ __('content.jogador') }}</th>
-								<th>P</th>
-								<th>RV</th>
+								<th>{{ __('content.pontos') }}</th>
 								<th>%</th>
+
+								@if ($classificacao->admin)
+									<th></th>
+								@endif
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($liga->classificacao as $item)
+							@foreach ($rodada->classificacao as $item)
 								<tr>
 									<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
 									<td>
 										<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
 										{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
+
+										@if ($item->usuario->adminLiga($liga->id))
+											<span class="fas fa-star text-warning" title="Admin"></span>
+										@endif
 									</td>
-									<td>{{ $item->pontos }}</td>
-									<td>{{ $item->rodadasjogadas }}</td>
+									<td>{{ $item->pontosganhos }}</td>
 									<td>@if ($item->aproveitamento) {{ $item->aproveitamento }} @else - @endif</td>
+									<td>
+										<div class="dropdown">
+											<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+
+											<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
+												@if ($classificacao->admin)
+													@if ($item->usuario->adminLiga($liga->id))
+														<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->usuario->id]) }}">{{ __('content.remover-admin') }}</a>
+													@else
+														<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->usuario->id]) }}">{{ __('content.setar-como-admin') }}</a>
+													@endif
+												@endif
+
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalPalpites{{ $item->id }}">{{ __('content.ver-palpites') }}</a>
+											</div>
+										</div>
+									</td>
 								</tr>
 							@endforeach
 						</tbody>
@@ -325,7 +358,7 @@
 		{{ Form::close() }}
 
 
-		{{ Form::open(['route' => ['ligas.consolidar', $rodada->liga_id]]) }}
+		{{ Form::open(['route' => ['ligas.consolidar', $rodada->liga_id, $rodada->id]]) }}
 			<div class="modal fade" id="consolidarLiga">
 				<div class="modal-dialog">
 					<div class="modal-content">

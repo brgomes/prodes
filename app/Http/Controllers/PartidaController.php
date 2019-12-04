@@ -25,7 +25,7 @@ class PartidaController extends Controller
             return null;
         }
 
-        if (!auth()->user()->podeAdministrarLiga($rodada->liga_id)) {
+        if (!auth()->user()->adminLiga($rodada->liga_id)) {
             return null;
         }
 
@@ -34,13 +34,13 @@ class PartidaController extends Controller
 
     public function partida($id)
     {
-        $partida = Partida::with('rodada')->find($id);
+        $partida = Partida::with(['liga', 'rodada'])->find($id);
 
         if (!$partida) {
             return null;
         }
 
-        if (!auth()->user()->podeAdministrarLiga($partida->rodada->liga_id)) {
+        if (!auth()->user()->adminLiga($partida->rodada->liga_id)) {
             return null;
         }
 
@@ -49,14 +49,14 @@ class PartidaController extends Controller
 
     public function store(PartidaValidationRequest $request)
     {
-        $data = $request->all();
-        $user = auth()->user();
+        $data   = $request->all();
+        $user   = auth()->user();
+        $rodada = $this->rodada($request->rodada_id);
 
+        $data['liga_id']        = $rodada->liga_id;
         $data['datapartida']    = $request->data . ' ' . $request->hora . ':00';
         $data['created_by']     = $user->id;
         $data['updated_by']     = $user->id;
-
-        $rodada = $this->rodada($request->rodada_id);
 
         if (!$rodada) {
             return redirect()->back();
@@ -71,6 +71,8 @@ class PartidaController extends Controller
         }
 
         if ($partida = $this->partida->create($data)) {
+            //$partida->liga->update(['consolidar' => true]);
+
             return redirect()->route('ligas.show', [$partida->rodada->liga_id, $request->rodada_id]);
         }
 
@@ -105,6 +107,8 @@ class PartidaController extends Controller
         }
 
         if ($partida->update($data)) {
+            $partida->liga->update(['consolidar' => true]);
+
             return redirect()->route('ligas.show', [$partida->rodada->liga_id, $partida->rodada_id]);
         }
 
@@ -119,11 +123,18 @@ class PartidaController extends Controller
             return redirect()->back();
         }
 
-        $liga_id    = $partida->rodada->liga_id;
+        $liga       = $partida->liga;
         $rodada_id  = $partida->rodada_id;
+        $resultado  = $partida->resultado();
+
+        $partida->palpites()->delete();
 
         if ($partida->delete()) {
-            return redirect()->route('ligas.show', [$liga_id, $rodada_id]);
+            if ($resultado) {
+                $liga->update(['consolidar' => true]);
+            }
+
+            return redirect()->route('ligas.show', [$liga->id, $rodada_id]);
         }
 
         return redirect()->back()->with('error', __('message.erro'));
