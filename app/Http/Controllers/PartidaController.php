@@ -70,6 +70,12 @@ class PartidaController extends Controller
             return redirect()->back()->with('warning', __('message.datafim-partida-rodada'))->withInput();
         }
 
+        if ((isset($data['golsmandante']) && isset($data['golsvisitante'])) || ($request->cancelada == '1')) {
+            $data['temresultado'] = true;
+        } else {
+            $data['temresultado'] = false;
+        }
+
         if ($partida = $this->partida->create($data)) {
             //$partida->liga->update(['consolidar' => true]);
 
@@ -104,6 +110,12 @@ class PartidaController extends Controller
 
         if ($data['datapartida'] > $rodada->datafim) {
             return redirect()->back()->with('warning', __('message.datafim-partida-rodada'))->withInput();
+        }
+
+        if ((isset($data['golsmandante']) && isset($data['golsvisitante'])) || ($request->cancelada == '1')) {
+            $data['temresultado'] = true;
+        } else {
+            $data['temresultado'] = false;
         }
 
         if ($partida->update($data)) {

@@ -109,29 +109,21 @@ class RodadaController extends Controller
 
     public function destroy($id)
     {
-        //
-    }
-
-    /*public function consolidar($rodada_id)
-    {
-        $rodada = $this->rodada($rodada_id);
+        $rodada = $this->rodada($id);
 
         if (!$rodada) {
             return redirect()->back();
         }
 
-        // Pesquisa todos os usuários que participam da liga
-        $usuarios = $rodada->liga->classificacao;
-        
-        if ($usuarios->count() > 0) {
-            $rodadas
-            foreach ($usuarios as $usuario) {
+        $liga = $rodada->liga;
 
-            }
-        }
+        $rodada->palpites()->delete();
+        $rodada->partidas()->delete();
+        $rodada->classificacao()->delete();
+        $rodada->delete();
 
-        // Para cada usuário pesquisa todas as apostas dele ao longo do tempo, ordenado por rodada
+        $liga->update(['consolidar' => true]);
 
-        // 
-    }*/
+        return redirect()->route('ligas.show', $liga->id)->with('success', __('message.rodada-excluida'));
+    }
 }

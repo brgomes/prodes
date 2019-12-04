@@ -37,3 +37,8 @@
 	<label for="sigla">{{ __('content.sigla') }}</label>
 	{!! Form::text('sigla', null, ['class' => 'form-control', 'id' => 'sigla', 'maxlength' => 7, 'required']) !!}
 </div>
+
+<div class="form-group form-check">
+	{!! Form::checkbox('cancelada', '1', null, ['class' => 'form-check-input', 'id' => 'cancelada']) !!}
+	<label class="form-check-label" for="cancelada">{{ __('content.cancelada') }}</label>
+</div>

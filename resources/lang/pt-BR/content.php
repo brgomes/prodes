@@ -109,6 +109,7 @@ return [
 	'setar-como-admin'			=> 'Setar como administrador',
 	'remover-admin'				=> 'Remover da administração',
 	'ver-palpites'				=> 'Ver palpites',
+	'cancelada'					=> 'Cancelada',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

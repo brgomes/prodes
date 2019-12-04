@@ -109,6 +109,7 @@ return [
 	'setar-como-admin'			=> 'Establecer como administrador',
 	'remover-admin'				=> 'Remover de la administración',
 	'ver-palpites'				=> 'Ver apuestas',
+	'cancelada'					=> 'Cancelada',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

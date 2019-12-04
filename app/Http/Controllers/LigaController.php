@@ -118,15 +118,34 @@ class LigaController extends Controller
         return redirect()->route('ligas.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
+                ->where('liga_id', $id)
+                ->where('admin', 1)
+                ->with('liga')
+                ->first();
+
+        if (!$temp) {
+            return redirect()->back();
+        }
+
+        $liga       = $temp->liga;
+        $rodadas    = $liga->rodadas;
+        
+        if ($rodadas->count() > 0) {
+            foreach ($rodadas as $rodada) {
+                $rodada->palpites()->delete();
+                $rodada->partidas()->delete();
+                $rodada->classificacao()->delete();
+                $rodada->delete();
+            }
+        }
+
+        $liga->classificacao()->delete();
+        $liga->delete();
+
+        return redirect()->route('ligas.index')->with('success', __('message.liga-excluida'));
     }
 
     public function consolidar($liga_id, $rodada_id)
@@ -168,7 +187,7 @@ class LigaController extends Controller
                     $aproveitamentoRodada = null;
                 } else {
                     foreach ($palpites as $palpite) {
-                        if ($palpite->partida->resultado()) {
+                        if ($palpite->partida->temresultado) {
                             $pontosDisputadosLiga++;
                             $pontosDisputadosRodada++;
 
@@ -225,6 +244,7 @@ class LigaController extends Controller
             $rodada->rankear();
         }
 
+        // Se a rodada já não tiver partidas abertas, calcula a quantidade de vencedores
         foreach ($usuarios as $usuario) {
             $liderancas = RodadaClassificacao::where('liga_id', $liga->id)
                             ->where('usuario_id', $usuario->usuario->id)

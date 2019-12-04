@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Partida extends Model
 {
     protected $table 	= 'liga_partida';
-    protected $fillable = ['liga_id', 'rodada_id', 'datapartida', 'mandante', 'golsmandante', 'visitante', 'golsvisitante', 'sigla', 'created_by', 'updated_by'];
+    protected $fillable = ['liga_id', 'rodada_id', 'datapartida', 'mandante', 'golsmandante', 'visitante',
+                            'golsvisitante', 'sigla', 'cancelada', 'temresultado', 'created_by', 'updated_by'];
 
     public function liga()
     {
@@ -48,7 +49,11 @@ class Partida extends Model
 
     public function getResultadoAttribute()
     {
-        return $this->golsmandante . '-' . $this->golsvisitante;
+        if ($this->cancelada) {
+            return __('content.cancelada');
+        } else {
+            return $this->golsmandante . '-' . $this->golsvisitante;
+        }
     }
 
     public function getVencedorAttribute()
@@ -87,15 +92,10 @@ class Partida extends Model
             return false;
         }
 
-        return true;
-    }
-
-    public function resultado()
-    {
-        if (isset($this->golsmandante) && isset($this->golsvisitante)) {
-            return true;
+        if ($this->cancelada) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 }

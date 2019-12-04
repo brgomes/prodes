@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
 	Route::post('rodadas/consolidar/{rodada}', 'RodadaController@consolidar')->name('rodadas.consolidar');
+	Route::delete('rodadas/{rodada}', 'RodadaController@destroy')->name('rodadas.destroy');
 
 	Route::post('palpitar/{rodada}', 'PalpiteController@salvar')->name('palpitar');
 

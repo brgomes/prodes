@@ -25,6 +25,8 @@
 									@if ($classificacao->admin)
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirLiga">{{ __('content.excluir-liga') }}</a>
 									@endif
 								</div>
 							</div>
@@ -65,7 +67,7 @@
 				<div class="wrapper-title bg-dark">
 					<div class="row">
 						<div class="col-sm-11">
-							<h2>{{ __('content.partidas') }}</h2>
+							<h2>{{ __('content.rodadas') }}</h2>
 						</div>
 						<div class="col-sm-1">
 							@if ($classificacao->admin)
@@ -77,6 +79,8 @@
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirRodada">{{ __('content.excluir-rodada') }}</a>
 									</div>
 								</div>
 							@endif
@@ -101,7 +105,7 @@
 									<th class="text-right">{{ __('content.mandante') }}</th>
 									<th class="text-center">{{ __('content.empate') }}</th>
 									<th>{{ __('content.visitante') }}</th>
-									<th>{{ __('content.resultado') }}</th>
+									<th class="text-center">{{ __('content.resultado') }}</th>
 
 									@if ($classificacao->admin)
 										<th>{{ __('content.sigla') }}</th>
@@ -111,15 +115,19 @@
 							</thead>
 							<tbody>
 								@foreach ($rodada->partidas as $i => $partida)
-									@if ($partida->resultado())
-										@if ($partida->palpite)
-											@if ($partida->palpite->palpite == $partida->vencedor)
-												<tr class="table-success">
-											@else
-												<tr class="table-danger">
-											@endif
-										@else
+									@if ($partida->temresultado)
+										@if ($partida->cancelada)
 											<tr class="table-active">
+										@else
+											@if ($partida->palpite)
+												@if ($partida->palpite->palpite == $partida->vencedor)
+													<tr class="table-success">
+												@else
+													<tr class="table-danger">
+												@endif
+											@else
+												<tr>
+											@endif
 										@endif
 									@else
 										<tr>
@@ -189,8 +197,8 @@
 												@endif
 											@endif
 										</td>
-										<td>
-											@if ($partida->resultado())
+										<td class="text-center">
+											@if ($partida->temresultado)
 												<span class="text-secondary">
 													{!! $partida->resultado !!}
 												</span>
@@ -216,7 +224,7 @@
 						</table>
 					</div>
 
-					<button type="submit" class="btn btn-secondary">Salvar apostas</button>
+					<button type="submit" class="btn btn-secondary mt-3">Salvar apostas</button>
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -374,6 +382,54 @@
 		  				</div>
 		  				<div class="modal-footer">
 		  					<button type="submit" class="btn btn-success">{{ __('content.consolidar') }}</button>
+		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+		  				</div>
+					</div>
+				</div>
+			</div>
+		{{ Form::close() }}
+
+
+		{{ Form::open(['route' => ['rodadas.destroy', $rodada->id], 'method' => 'delete']) }}
+			<div class="modal fade" id="modalExcluirRodada">
+				<div class="modal-dialog">
+					<div class="modal-content">
+		  				<div class="modal-header">
+		    				<h5 class="modal-title">{{ __('content.excluir-rodada') }}</h5>
+		    				<button type="button" class="close" data-dismiss="modal">
+		      					<span aria-hidden="true">&times;</span>
+		    				</button>
+		  				</div>
+		  				<div class="modal-body">
+							<p>{{ __('message.confirma-exclusao-rodada') }} {{ $rodada->numero }}?</p>
+							<p class="text-danger"><small>{{ __('message.acao-nao-pode-ser-desfeita') }}</small></p>
+		  				</div>
+		  				<div class="modal-footer">
+		  					<button type="submit" class="btn btn-danger">{{ __('content.excluir') }}</button>
+		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+		  				</div>
+					</div>
+				</div>
+			</div>
+		{{ Form::close() }}
+
+
+		{{ Form::open(['route' => ['ligas.destroy', $liga->id], 'method' => 'delete']) }}
+			<div class="modal fade" id="modalExcluirLiga">
+				<div class="modal-dialog">
+					<div class="modal-content">
+		  				<div class="modal-header">
+		    				<h5 class="modal-title">{{ __('content.excluir-liga') }}</h5>
+		    				<button type="button" class="close" data-dismiss="modal">
+		      					<span aria-hidden="true">&times;</span>
+		    				</button>
+		  				</div>
+		  				<div class="modal-body">
+							<p>{{ __('message.confirma-exclusao-liga') }} <strong>{{ $liga->nome }}</strong>?</p>
+							<p class="text-danger"><small>{{ __('message.acao-nao-pode-ser-desfeita') }}</small></p>
+		  				</div>
+		  				<div class="modal-footer">
+		  					<button type="submit" class="btn btn-danger">{{ __('content.excluir') }}</button>
 		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
 		  				</div>
 					</div>

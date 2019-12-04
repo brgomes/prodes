@@ -1,19 +1,12 @@
-- Setar partida como cancelada
-
-- Calcular vencedor de rodada somente se a rodada não tiver mais nenhuma partida sem resultado
-
-- Excluir rodada
+- Ver palpites de outros usuários
 
 
 
 - Implementar busca de ligas
 
-- Ver palpites de outros usuários
-
 - Criar dispositivo para usuários saberem que existem partidas a palpitar
 
-- A exclusão de uma liga deve ser disponibilizada na página da liga, no menu, e exibido um modal de confirmação, como em
-https://www.tutorialrepublic.com/snippets/bootstrap/crud-data-table-for-database-with-modal-form.php
+- Implementar barra de progresso ao consolidar uma liga
 
 
 

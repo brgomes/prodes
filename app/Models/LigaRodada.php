@@ -24,6 +24,11 @@ class LigaRodada extends Model
         return $this->hasMany(RodadaClassificacao::class, 'rodada_id')->orderBy('posicao');
     }
 
+    public function palpites()
+    {
+        return $this->hasMany(Palpite::class, 'rodada_id');
+    }
+
     public function getDatainicialAttribute()
     {
         return datetime($this->datainicio, 'Y-m-d');
@@ -55,13 +60,18 @@ class LigaRodada extends Model
             return true;
         }
 
-        $i              = 1;
-        $pontosLider    = $itens[0]->pontosganhos;
+        $i                      = 1;
+        $pontosLider            = $itens[0]->pontosganhos;
+        $qtdePartidasAbertas    = Partida::where('rodada_id', $this->id)->where('temresultado', false)->get()->count();
 
         foreach ($itens as $item) {
-            $lider = ($item->pontosganhos == $pontosLider);
+            if ($qtdePartidasAbertas == 0) {
+                $lider = ($item->pontosganhos == $pontosLider);
 
-            $item->update(['posicao' => $i, 'lider' => $lider]);
+                $item->update(['posicao' => $i, 'lider' => $lider]);
+            } else {
+                $item->update(['posicao' => $i, 'lider' => false]);
+            }
 
             $i++;
         }
