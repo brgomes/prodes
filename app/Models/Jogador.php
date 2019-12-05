@@ -26,4 +26,24 @@ class Jogador extends Model
     {
         return number_format($this->aproveitamento, 1);
     }
+
+    public function palpite($partida_id)
+    {
+        return Palpite::where('partida_id', $partida_id)
+                ->where('jogador_id', $this->id)
+                ->first();
+    }
+
+    public function pontosNaRodada($rodada_id)
+    {
+        $item = Classificacao::where('rodada_id', $rodada_id)
+                ->where('jogador_id', $this->id)
+                ->first();
+
+        if ($item) {
+            return $item->pontosganhos;
+        }
+
+        return null;
+    }
 }

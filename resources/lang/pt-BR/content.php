@@ -111,6 +111,10 @@ return [
 	'ver-palpites'				=> 'Ver palpites',
 	'cancelada'					=> 'Cancelada',
 	'tabela-resultado'			=> 'Tabela de resultado',
+	'total'						=> 'Total',
+	'sigla-palpiteM'			=> 'M',
+	'sigla-palpiteE'			=> 'E',
+	'sigla-palpiteV'			=> 'V',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

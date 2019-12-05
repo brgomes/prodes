@@ -11,7 +11,7 @@ class Rodada extends Model
 
     public function liga()
     {
-    	return $this->belongsTo(Liga::class);
+    	return $this->belongsTo(Liga::class)->with('jogadores');
     }
 
     public function partidas()
@@ -26,7 +26,7 @@ class Rodada extends Model
 
     public function palpites()
     {
-        return $this->hasMany(Palpite::class, 'rodada_id');
+        return $this->hasMany(Palpite::class, 'rodada_id')->with('jogador');
     }
 
     public function getDatainicialAttribute()

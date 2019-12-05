@@ -111,6 +111,10 @@ return [
 	'ver-palpites'				=> 'View bets',
 	'cancelada'					=> 'Canceled',
 	'tabela-resultado'			=> 'Result table',
+	'total'						=> 'Total',
+	'sigla-palpiteM'			=> 'H',
+	'sigla-palpiteE'			=> 'D',
+	'sigla-palpiteV'			=> 'A',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

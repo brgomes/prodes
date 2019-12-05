@@ -10,7 +10,7 @@ return [
 	'datafim-rodada-liga'			=> 'The end date of the round cannot be greater than the end date of the league.',
 	'datainicio-partida-rodada'		=> 'The game date cannot be less than the start date of the round.',
 	'datafim-partida-rodada'		=> 'The game date cannot be greater than the final date of the round.',
-	'confirma-consolidacao'			=> 'The round consolidation action may take a few minutes. Confirm the consolidation?',
+	'confirma-consolidacao'			=> 'This action may take a few minutes. Confirm the consolidation?',
 	'nao-pode-excluir-admin'		=> 'You cannot exclude yourself from administration. There are no other administrators.',
 	'admin-removido'				=> 'The administrator has been removed.',
 	'admin-setado'					=> 'The administrator has been set.',

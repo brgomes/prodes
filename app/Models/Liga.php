@@ -17,7 +17,7 @@ class Liga extends Model
 
     public function jogadores()
     {
-        return $this->hasMany(Jogador::class)->orderBy('posicao');
+        return $this->hasMany(Jogador::class);
     }
 
     public function administradores()

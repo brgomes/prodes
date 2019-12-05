@@ -26,7 +26,7 @@ class LigaController extends Controller
 
     public function index()
     {
-        $ligas = Jogador::addSelect(['datafim' => Liga::select('datafim')->where('id', 'jogador.liga_id')])
+        $ligas = Jogador::addSelect(['datafim' => Liga::select('datafim')->whereColumn('id', 'jogador.liga_id')])
                 ->where('usuario_id', auth()->user()->id)
                 ->with('liga')->orderBy('datafim', 'DESC')->get();
 
@@ -85,7 +85,9 @@ class LigaController extends Controller
                 return redirect()->back();
             }
 
-            return view('ligas.show', compact('jogador', 'liga', 'rodada', 'rodada_id'));
+            $classificacao = $liga->jogadores()->orderBy('posicao')->get();
+
+            return view('ligas.show', compact('jogador', 'liga', 'rodada', 'rodada_id', 'classificacao'));
         }
 
         return redirect()->back();

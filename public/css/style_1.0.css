@@ -105,6 +105,11 @@ main > .container, main > .container-fluid {
     margin: 5px 0 0;
     font-size: 20px;
 }
+.wrapper-title h2 a {
+    margin: 5px 0 0;
+    font-size: 20px;
+    color: #fff;
+}
 .wrapper-title .btn-group {
     float: right;
 }

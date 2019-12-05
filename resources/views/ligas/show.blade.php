@@ -74,7 +74,7 @@
 								<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 								<div class="dropdown-menu" aria-labelledby="dropdown2">
-									<a class="dropdown-item" href="{{ route('rodadas.tabela-resultado', $rodada->id) }}" target="_blank">{{ __('content.tabela-resultado') }}</a>
+									<a class="dropdown-item" href="{{ route('rodadas.tabela-resultado', $rodada->id) }}">{{ __('content.tabela-resultado') }}</a>
 
 									@if ($jogador->admin)
 										<div class="dropdown-divider"></div>
@@ -494,7 +494,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($liga->jogadores as $item)
+								@foreach ($classificacao as $item)
 									@if ($item->id == $jogador->id)
 										<tr class="table-success">
 									@else

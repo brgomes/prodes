@@ -5,27 +5,65 @@
 	<div class="wrapper">
 		<div class="wrapper-title bg-dark">
 			<div class="row text-center">
-				<h2>{{ $rodada->liga->nome }} - {{ __('content.rodada') }} {{ $rodada->numero }}</h2>
+				<h2>
+					<a href="{{ route('ligas.show', $rodada->liga_id) }}">{{ $rodada->liga->nome }}</a>
+					-
+					<a href="{{ route('ligas.show', [$rodada->liga_id, $rodada->id]) }}">{{ __('content.rodada') }} {{ $rodada->numero }}</a>
+				</h2>
 			</div>
 		</div>
 
 		<div class="table-responsive">
-			<table class="table table-striped">
+			<table class="table table-striped table-bordered">
 				<thead>
-					<tr>
+					<tr class="bg-dark text-light">
 						<th>{{ __('content.jogador') }}</th>
 						
 						@foreach ($rodada->partidas as $partida)
-							<th>{{ $partida->sigla }}</th>
+							<th class="text-center">{{ $partida->sigla }}</th>
 						@endforeach
 
-						<th>{{ __('content.total') }}</th>
+						<th class="text-center">{{ __('content.total') }}</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						
-					</tr>
+					@foreach ($jogadores as $jogador)
+						<tr>
+							<td>{{ $jogador->usuario->primeironome . ' ' . $jogador->usuario->sobrenome }}</td>
+
+							@foreach ($rodada->partidas as $partida)
+								@if ($partida->aberta())
+									<td></td>
+								@elseif (!$partida->temresultado)
+									<td></td>
+								@else
+									@if ($palpite = $jogador->palpite($partida->id))
+										@if ($palpite->consolidado)
+											@if ($partida->vencedor == $palpite->palpite)
+												<td class="text-center bg-success text-light">
+													<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
+												</td>
+											@else
+												<td class="text-center bg-danger text-light">
+													{{ __('content.sigla-palpite' . $palpite->palpite) }}
+												</td>
+											@endif
+										@else
+											<td class="text-center">
+												{{ __('content.sigla-palpite' . $palpite->palpite) }}
+											</td>
+										@endif
+									@else
+										<td></td>
+									@endif
+								@endif
+							@endforeach
+
+							<td class="text-center">
+								<strong>{{ $jogador->pontosNaRodada($rodada->id) }}</strong>
+							</td>
+						</tr>
+					@endforeach
 				</tbody>
 			</table>
 	  	</div>

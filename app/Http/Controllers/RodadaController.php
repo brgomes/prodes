@@ -6,6 +6,7 @@ use App\Http\Requests\RodadaValidationRequest;
 use App\Models\Jogador;
 use App\Models\Liga;
 use App\Models\Rodada;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class RodadaController extends Controller
@@ -135,6 +136,13 @@ class RodadaController extends Controller
     {
         $rodada = $this->rodada($id, false);
 
-        return view('rodadas.tabela', compact('rodada'));
+        $jogadores = $rodada->liga->jogadores()
+                        ->addSelect(['primeironome' => Usuario::select('primeironome')->whereColumn('usuario.id', 'jogador.usuario_id')])
+                        ->addSelect(['sobrenome' => Usuario::select('sobrenome')->whereColumn('usuario.id', 'jogador.usuario_id')])
+                        ->orderBy('primeironome')
+                        ->orderBy('sobrenome')
+                        ->get();
+
+        return view('rodadas.tabela', compact('rodada', 'jogadores'));
     }
 }
