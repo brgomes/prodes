@@ -51,7 +51,7 @@ class Rodada extends Model
 
     public function rankear()
     {
-        $itens = RodadaClassificacao::where('rodada_id', $this->id)
+        $itens = Classificacao::where('rodada_id', $this->id)
                     ->orderBy('pontosganhos', 'DESC')
                     ->orderBy('aproveitamento', 'DESC')
                     ->get();

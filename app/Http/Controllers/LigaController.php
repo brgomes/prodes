@@ -67,13 +67,13 @@ class LigaController extends Controller
 
     public function show($id, $rodada_id = null)
     {
-        $classificacao = LigaClassificacao::where('usuario_id', auth()->user()->id)
-                            ->where('liga_id', $id)
-                            ->with('liga')
-                            ->first();
+        $jogador = Jogador::where('usuario_id', auth()->user()->id)
+                    ->where('liga_id', $id)
+                    ->with('liga')
+                    ->first();
 
-        if ($classificacao) {
-            $liga = $classificacao->liga;
+        if ($jogador) {
+            $liga = $jogador->liga;
 
             if (isset($rodada_id)) {
                 $rodada = $liga->rodada($rodada_id);
@@ -85,9 +85,7 @@ class LigaController extends Controller
                 return redirect()->back();
             }
 
-            $user_id = auth()->user()->id;
-
-            return view('ligas.show', compact('classificacao', 'liga', 'rodada', 'rodada_id', 'user_id'));
+            return view('ligas.show', compact('jogador', 'liga', 'rodada', 'rodada_id'));
         }
 
         return redirect()->back();
@@ -95,11 +93,11 @@ class LigaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
-                                ->where('liga_id', $id)
-                                ->where('admin', 1)
-                                ->with('liga')
-                                ->first();
+        $temp = Jogador::where('usuario_id', auth()->user()->id)
+                ->where('liga_id', $id)
+                ->where('admin', 1)
+                ->with('liga')
+                ->first();
 
         if ($temp) {
             $liga = $temp->liga;
@@ -115,7 +113,7 @@ class LigaController extends Controller
 
     public function destroy($id)
     {
-        $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
+        $temp = Jogador::where('usuario_id', auth()->user()->id)
                 ->where('liga_id', $id)
                 ->where('admin', 1)
                 ->with('liga')
@@ -137,7 +135,7 @@ class LigaController extends Controller
             }
         }
 
-        $liga->classificacao()->delete();
+        $liga->jogadores()->delete();
         $liga->delete();
 
         return redirect()->route('ligas.index')->with('success', __('message.liga-excluida'));
@@ -145,7 +143,7 @@ class LigaController extends Controller
 
     public function consolidar($liga_id, $rodada_id)
     {
-        $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
+        $temp = Jogador::where('usuario_id', auth()->user()->id)
                 ->where('liga_id', $liga_id)
                 ->where('admin', 1)
                 ->with('liga')
@@ -156,10 +154,10 @@ class LigaController extends Controller
         }
 
         $liga       = $temp->liga;
-        $usuarios   = $liga->classificacao;
+        $jogadores  = $liga->jogadores;
         $rodadas    = $liga->rodadas;
 
-        foreach ($usuarios as $usuario) {
+        foreach ($jogadores as $jogador) {
             $pontosDisputadosLiga   = 0;
             $pontosGanhosLiga       = 0;
             $rodadasJogadas         = 0;
@@ -174,7 +172,7 @@ class LigaController extends Controller
                 $totalPartidasLiga      += $totalPartidasRodada;
 
                 $palpites = Palpite::where('rodada_id', $rodada->id)
-                            ->where('usuario_id', $usuario->id)
+                            ->where('jogador_id', $jogador->id)
                             ->with('partida')
                             ->get();
 
@@ -212,7 +210,7 @@ class LigaController extends Controller
                     $where = [
                         'liga_id'       => $rodada->liga_id,
                         'rodada_id'     => $rodada->id,
-                        'usuario_id'    => $usuario->id,
+                        'jogador_id'    => $jogador->id,
                     ];
 
                     $values = [
@@ -221,7 +219,7 @@ class LigaController extends Controller
                         'aproveitamento'    => $aproveitamentoRodada,
                     ];
 
-                    RodadaClassificacao::updateOrCreate($where, $values);
+                    Classificacao::updateOrCreate($where, $values);
                 }
             }
 
@@ -229,7 +227,7 @@ class LigaController extends Controller
                 $aproveitamentoLiga = round((($pontosGanhosLiga * 100) / $pontosDisputadosLiga), 2);
             }
 
-            $usuario->update([
+            $jogador->update([
                 'rodadasjogadas'    => $rodadasJogadas,
                 'pontosdisputados'  => $pontosDisputadosLiga,
                 'pontosganhos'      => $pontosGanhosLiga,
@@ -242,13 +240,13 @@ class LigaController extends Controller
         }
 
         // Se a rodada já não tiver partidas abertas, calcula a quantidade de vencedores
-        foreach ($usuarios as $usuario) {
-            $liderancas = RodadaClassificacao::where('liga_id', $liga->id)
-                            ->where('usuario_id', $usuario->usuario->id)
+        foreach ($jogadores as $jogador) {
+            $liderancas = Classificacao::where('liga_id', $liga->id)
+                            ->where('jogador_id', $jogador->id)
                             ->where('lider', 1)
                             ->get();
 
-            $usuario->update(['rodadasvencidas' => $liderancas->count()]);
+            $jogador->update(['rodadasvencidas' => $liderancas->count()]);
         }
 
         $liga->rankear();
@@ -260,7 +258,7 @@ class LigaController extends Controller
 
     public function setarAdmin($liga_id, $usuario_id)
     {
-        $temp = LigaClassificacao::where('usuario_id', auth()->user()->id)
+        $temp = Jogador::where('usuario_id', auth()->user()->id)
                 ->where('liga_id', $liga_id)
                 ->where('admin', 1)
                 ->with('liga')
@@ -270,13 +268,13 @@ class LigaController extends Controller
             return redirect()->back();
         }
 
-        $classificacao = LigaClassificacao::where('usuario_id', $usuario_id)
-                            ->where('liga_id', $liga_id)
-                            ->where('admin', 0)
-                            ->first();
+        $jogador = Jogador::where('usuario_id', $usuario_id)
+                    ->where('liga_id', $liga_id)
+                    ->where('admin', 0)
+                    ->first();
 
-        if ($classificacao) {
-            $classificacao->update(['admin' => 1]);
+        if ($jogador) {
+            $jogador->update(['admin' => 1]);
         }
 
         return redirect()->back()->with('success', __('message.admin-setado'));
@@ -285,7 +283,7 @@ class LigaController extends Controller
     public function removerAdmin($liga_id, $usuario_id)
     {
         $user = auth()->user();
-        $temp = LigaClassificacao::where('usuario_id', $user->id)
+        $temp = Jogador::where('usuario_id', $user->id)
                 ->where('liga_id', $liga_id)
                 ->where('admin', 1)
                 ->with('liga')
@@ -307,13 +305,13 @@ class LigaController extends Controller
             return redirect()->back()->with('warning', __('message.nao-pode-excluir-admin'));
         }
 
-        $classificacao = LigaClassificacao::where('usuario_id', $usuario_id)
-                            ->where('liga_id', $liga_id)
-                            ->where('admin', 1)
-                            ->first();
+        $jogador = Jogador::where('usuario_id', $usuario_id)
+                    ->where('liga_id', $liga_id)
+                    ->where('admin', 1)
+                    ->first();
 
-        if ($classificacao) {
-            $classificacao->update(['admin' => 0]);
+        if ($jogador) {
+            $jogador->update(['admin' => 0]);
         }
 
         return redirect()->back()->with('success', __('message.admin-removido'));

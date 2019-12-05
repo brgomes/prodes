@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RodadaValidationRequest;
+use App\Models\Jogador;
 use App\Models\Liga;
-use App\Models\LigaClassificacao;
-use App\Models\LigaRodada;
+use App\Models\Rodada;
 use Illuminate\Http\Request;
 
 class RodadaController extends Controller
 {
-    protected $ligaRodada;
+    protected $rodada;
 
-    public function __construct(LigaRodada $ligaRodada)
+    public function __construct(Rodada $rodada)
     {
-        $this->ligaRodada = $ligaRodada;
+        $this->rodada = $rodada;
     }
 
     public function liga($id, $admin = true)
@@ -36,7 +36,7 @@ class RodadaController extends Controller
 
     public function rodada($id, $admin = true)
     {
-        $rodada = LigaRodada::with(['liga', 'partidas'])->find($id);
+        $rodada = Rodada::with(['liga', 'partidas'])->find($id);
 
         if (!$rodada) {
             return null;
@@ -75,7 +75,7 @@ class RodadaController extends Controller
             return redirect()->back()->with('warning', __('message.datafim-rodada-liga'))->withInput();
         }
 
-        if ($rodada = $this->ligaRodada->create($data)) {
+        if ($this->rodada->create($data)) {
             return redirect()->route('ligas.show', $request->liga_id);
         }
 

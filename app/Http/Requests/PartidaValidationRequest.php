@@ -14,7 +14,7 @@ class PartidaValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'rodada_id'     => 'required|exists:liga_rodada,id',
+            'rodada_id'     => 'required|exists:rodada,id',
             'data'          => 'required|date_format:Y-m-d',
             'hora'          => 'required|date_format:H:i',
             'mandante'      => 'required|max:50',

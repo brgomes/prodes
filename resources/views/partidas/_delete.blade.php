@@ -9,7 +9,8 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-					{{ __('message.confirma-exclusao-partida') }} {{ $partida->descricao }}?
+					<p>{{ __('message.confirma-exclusao-partida') }} {{ $partida->descricao }}?</p>
+					<p class="text-danger"><small>{{ __('message.acao-nao-pode-ser-desfeita') }}</small></p>
 	            </div>
 	            <div class="modal-footer">
 	            	<button type="submit" class="btn btn-danger">{{ __('content.excluir') }}</button>

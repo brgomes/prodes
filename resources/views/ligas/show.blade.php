@@ -22,7 +22,7 @@
 
 									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#classificacao">{{ __('content.classificacao') }}</a>
 
-									@if ($classificacao->admin)
+									@if ($jogador->admin)
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
 										<div class="dropdown-divider"></div>
@@ -34,7 +34,7 @@
 					</div>
 				</div>
 				<div class="row">
-					@if ($classificacao->admin)
+					@if ($jogador->admin)
 						<div class="col-sm-2">
 							@if ($liga->consolidar)
 								<i class="fas fa-exclamation-triangle text-warning"></i> {{ __('content.precisa-consolidar') }}
@@ -45,16 +45,16 @@
 					@endif
 
 					<div class="col-sm-2">
-						{{ __('content.participantes') }}: <strong>{{ $liga->classificacao->count() }}</strong>
+						{{ __('content.participantes') }}: <strong>{{ $liga->jogadores->count() }}</strong>
 					</div>
 					<div class="col-sm-2">
-						{{ __('content.posicao') }}: <strong>{{ $classificacao->posicao }}</strong>
+						{{ __('content.posicao') }}: <strong>{{ $jogador->posicao }}</strong>
 					</div>
 					<div class="col-sm-2">
-						{{ __('content.pontos') }}: <strong>{{ $classificacao->pontosganhos }}</strong>
+						{{ __('content.pontos') }}: <strong>{{ $jogador->pontosganhos }}</strong>
 					</div>
 					<div class="col-sm-2">
-						{{ __('content.aproveitamento') }}: <strong>{{ $classificacao->aproveitamentof }}%</strong>
+						{{ __('content.aproveitamento') }}: <strong>{{ $jogador->aproveitamentof }}%</strong>
 					</div>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 								<div class="dropdown-menu" aria-labelledby="dropdown2">
 									<a class="dropdown-item" href="{{ route('rodadas.tabela-resultado', $rodada->id) }}" target="_blank">{{ __('content.tabela-resultado') }}</a>
 
-									@if ($classificacao->admin)
+									@if ($jogador->admin)
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaRodada">{{ __('content.nova-rodada') }}</a>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
@@ -91,10 +91,8 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-6">
+					<div class="col-sm-12">
 						{{ Form::select('rodada_id', rodadas($liga->id), $rodada->id, ['id' => 'select-rodada']) }}
-					</div>
-					<div class="col-sm-6 text-right">
 					</div>
 				</div>
 
@@ -110,7 +108,7 @@
 									<th>{{ __('content.visitante') }}</th>
 									<th class="text-center">{{ __('content.resultado') }}</th>
 
-									@if ($classificacao->admin)
+									@if ($jogador->admin)
 										<th>{{ __('content.sigla') }}</th>
 										<th></th>
 									@endif
@@ -212,7 +210,7 @@
 											@endif
 										</td>
 
-										@if ($classificacao->admin)
+										@if ($jogador->admin)
 											<td>{{ $partida->sigla }}</td>
 											<td>
 												<div class="dropdown">
@@ -237,7 +235,7 @@
 		</div>
 
 
-		@if ($classificacao->admin)
+		@if ($jogador->admin)
 			@foreach ($rodada->partidas as $partida)
 				@include('partidas._edit', ['partida' => $partida])
 				@include('partidas._delete', ['partida' => $partida])
@@ -259,14 +257,14 @@
 								<th>{{ __('content.pontos') }}</th>
 								<th>%</th>
 
-								@if ($classificacao->admin)
+								@if ($jogador->admin)
 									<th></th>
 								@endif
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($rodada->classificacao as $item)
-								@if ($item->usuario->id == $user_id)
+								@if ($item->jogador_id == $jogador->id)
 									<tr class="table-success">
 								@else
 									<tr>
@@ -274,26 +272,26 @@
 
 									<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
 									<td>
-										<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
-										{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
+										<span class="{{ $item->jogador->usuario->bandeira }}" title="{{ $item->jogador->usuario->pais->nome }}"></span>
+										{{ $item->jogador->usuario->primeironome . ' ' . $item->jogador->usuario->sobrenome }}
 
-										@if ($item->usuario->adminLiga($liga->id))
+										@if ($item->jogador->admin)
 											<span class="fas fa-star text-warning" title="Admin"></span>
 										@endif
 									</td>
 									<td>{{ $item->pontosganhos }}</td>
 									<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
 
-									@if ($classificacao->admin)
+									@if ($jogador->admin)
 										<td>
 											<div class="dropdown">
 												<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 												<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
-													@if ($item->usuario->adminLiga($liga->id))
-														<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->usuario->id]) }}">{{ __('content.remover-admin') }}</a>
+													@if ($item->jogador->admin)
+														<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.remover-admin') }}</a>
 													@else
-														<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->usuario->id]) }}">{{ __('content.setar-como-admin') }}</a>
+														<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.setar-como-admin') }}</a>
 													@endif
 												</div>
 											</div>
@@ -309,7 +307,7 @@
 	</div>
 
 
-	@if ($classificacao->admin)
+	@if ($jogador->admin)
 		{{ Form::open(['route' => ['rodadas.store', $liga->id]]) }}
 			<div class="modal fade" id="novaRodada">
 				<div class="modal-dialog">
@@ -496,8 +494,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($liga->classificacao as $item)
-									@if ($item->usuario->id == $user_id)
+								@foreach ($liga->jogadores as $item)
+									@if ($item->id == $jogador->id)
 										<tr class="table-success">
 									@else
 										<tr>

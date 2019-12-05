@@ -63,21 +63,21 @@ class Usuario extends Authenticatable implements MustVerifyEmail
 
     public function participaDaLiga($liga_id)
     {
-        $classificacao = LigaClassificacao::where('usuario_id', $this->id)
-                            ->where('liga_id', $liga_id)
-                            ->first();
+        $jogador = Jogador::where('usuario_id', $this->id)
+                        ->where('liga_id', $liga_id)
+                        ->first();
 
-        return isset($classificacao);
+        return isset($jogador);
     }
 
     public function adminLiga($liga_id)
     {
-        $classificacao = LigaClassificacao::where('usuario_id', $this->id)
-                            ->where('liga_id', $liga_id)
-                            ->where('admin', 1)
-                            ->first();
+        $jogador = Jogador::where('usuario_id', $this->id)
+                    ->where('liga_id', $liga_id)
+                    ->where('admin', 1)
+                    ->first();
 
-        return isset($classificacao);
+        return isset($jogador);
     }
 
     public function palpite($partida_id)

@@ -19,7 +19,7 @@ class Jogador extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Usuario::class)->with('pais');
     }
 
     public function getAproveitamentofAttribute()

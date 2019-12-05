@@ -23,7 +23,7 @@ class Classificacao extends Model
 
     public function jogador()
     {
-        return $this->belongsTo(Jogador::class);
+        return $this->belongsTo(Jogador::class)->with('usuario');
     }
 
     public function getAproveitamentofAttribute()

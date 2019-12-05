@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PartidaValidationRequest;
-use App\Models\LigaClassificacao;
-use App\Models\LigaRodada;
+use App\Models\Jogador;
 use App\Models\Partida;
+use App\Models\Rodada;
 use Illuminate\Http\Request;
 
 class PartidaController extends Controller
@@ -19,7 +19,7 @@ class PartidaController extends Controller
 
     public function rodada($id)
     {
-        $rodada = LigaRodada::find($id);
+        $rodada = Rodada::find($id);
 
         if (!$rodada) {
             return null;
@@ -142,7 +142,7 @@ class PartidaController extends Controller
 
         $liga       = $partida->liga;
         $rodada_id  = $partida->rodada_id;
-        $resultado  = $partida->resultado();
+        $resultado  = $partida->temresultado;
 
         $partida->palpites()->delete();
 

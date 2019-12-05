@@ -18,7 +18,7 @@ class Partida extends Model
 
     public function rodada()
     {
-        return $this->belongsTo(LigaRodada::class, 'rodada_id')->with('liga');
+        return $this->belongsTo(Rodada::class, 'rodada_id')->with('liga');
     }
 
     public function palpites()
@@ -70,13 +70,7 @@ class Partida extends Model
     public function getDescricaoAttribute()
     {
         if (isset($this->golsmandante) && isset($this->golsvisitante)) {
-            if ($this->golsmandante > $this->golsvisitante) {
-                return '<strong>' . $this->mandante . '</strong> ' . $this->golsmandante . '-' . $this->golsvisitante . ' ' . $this->visitante;
-            } elseif ($this->golsmandante < $this->golsvisitante) {
-                return $this->mandante . ' ' . $this->golsmandante . '-' . $this->golsvisitante . ' <strong>' . $this->visitante . '</strong>';
-            } else {
-                return $this->mandante . ' ' . $this->golsmandante . '-' . $this->golsvisitante . ' ' . $this->visitante;
-            }
+            return $this->mandante . ' ' . $this->golsmandante . '-' . $this->golsvisitante . ' ' . $this->visitante;
         } else {
             return $this->mandante . ' - ' . $this->visitante;
         }

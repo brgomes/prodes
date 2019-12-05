@@ -1,7 +1,7 @@
 <?php
 
 use App\Helpers\Registry;
-use App\Models\LigaRodada;
+use App\Models\Rodada;
 //use Illuminate\Support\Facades\Storage;
 //use Intervention\Image\Facades\Image;
 use GuzzleHttp\Client;
@@ -686,7 +686,7 @@ function elapsed_time($first, $second = null, $inverse = false, $short = false, 
 
 function rodadas($liga_id)
 {
-    return LigaRodada::where('liga_id', $liga_id)
+    return Rodada::where('liga_id', $liga_id)
             ->orderBy('datafim', 'DESC')
             ->with('partidas')
             ->get()
