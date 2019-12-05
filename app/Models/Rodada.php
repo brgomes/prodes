@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LigaRodada extends Model
+class Rodada extends Model
 {
-    protected $table 	= 'liga_rodada';
+    protected $table 	= 'rodada';
     protected $fillable = ['liga_id', 'numero', 'datainicio', 'datafim', 'dataconsolidacao', 'created_by', 'updated_by'];
 
     public function liga()
@@ -21,7 +21,7 @@ class LigaRodada extends Model
 
     public function classificacao()
     {
-        return $this->hasMany(RodadaClassificacao::class, 'rodada_id')->orderBy('posicao');
+        return $this->hasMany(Classificacao::class, 'rodada_id')->orderBy('posicao');
     }
 
     public function palpites()

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LigaValidationRequest;
+use App\Models\Classificacao;
+use App\Models\Jogador;
 use App\Models\Liga;
-use App\Models\LigaClassificacao;
-use App\Models\LigaRodada;
 use App\Models\Palpite;
-use App\Models\RodadaClassificacao;
+use App\Models\Rodada;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -16,19 +16,17 @@ use Illuminate\Http\Request;
 class LigaController extends Controller
 {
     protected $liga;
-    protected $ligaClassificacao;
+    protected $jogador;
 
-    public function __construct(Liga $liga, LigaClassificacao $ligaClassificacao)
+    public function __construct(Liga $liga, Jogador $jogador)
     {
-        $this->liga                 = $liga;
-        $this->ligaClassificacao    = $ligaClassificacao;
+        $this->liga     = $liga;
+        $this->jogador  = $jogador;
     }
 
     public function index()
     {
-        $ligas = LigaClassificacao::addSelect(['datafim' => Liga::select('datafim')
-                    ->where('id', 'liga_classificacao.id')
-                ])
+        $ligas = Jogador::addSelect(['datafim' => Liga::select('datafim')->where('id', 'jogador.liga_id')])
                 ->where('usuario_id', auth()->user()->id)
                 ->with('liga')->orderBy('datafim', 'DESC')->get();
 
@@ -83,14 +81,13 @@ class LigaController extends Controller
                 $rodada = $liga->rodada();
             }
 
-            //dd($liga);
-            //dd($rodada);
-
             if ($liga->id != $rodada->liga_id) {
                 return redirect()->back();
             }
 
-            return view('ligas.show', compact('classificacao', 'liga', 'rodada', 'rodada_id'));
+            $user_id = auth()->user()->id;
+
+            return view('ligas.show', compact('classificacao', 'liga', 'rodada', 'rodada_id', 'user_id'));
         }
 
         return redirect()->back();

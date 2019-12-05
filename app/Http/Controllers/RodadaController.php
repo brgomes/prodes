@@ -17,7 +17,7 @@ class RodadaController extends Controller
         $this->ligaRodada = $ligaRodada;
     }
 
-    public function liga($id)
+    public function liga($id, $admin = true)
     {
         $liga = Liga::find($id);
 
@@ -25,14 +25,16 @@ class RodadaController extends Controller
             return null;
         }
 
-        if (!auth()->user()->adminLiga($liga->id)) {
-            return null;
+        if ($admin) {
+            if (!auth()->user()->adminLiga($liga->id)) {
+                return null;
+            }
         }
 
         return $liga;
     }
 
-    public function rodada($id)
+    public function rodada($id, $admin = true)
     {
         $rodada = LigaRodada::with(['liga', 'partidas'])->find($id);
 
@@ -40,8 +42,10 @@ class RodadaController extends Controller
             return null;
         }
 
-        if (!auth()->user()->adminLiga($rodada->liga_id)) {
-            return null;
+        if ($admin) {
+            if (!auth()->user()->adminLiga($rodada->liga_id)) {
+                return null;
+            }
         }
 
         return $rodada;
@@ -125,5 +129,12 @@ class RodadaController extends Controller
         $liga->update(['consolidar' => true]);
 
         return redirect()->route('ligas.show', $liga->id)->with('success', __('message.rodada-excluida'));
+    }
+
+    public function tabela($id)
+    {
+        $rodada = $this->rodada($id, false);
+
+        return view('rodadas.tabela', compact('rodada'));
     }
 }

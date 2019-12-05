@@ -110,6 +110,7 @@ return [
 	'remover-admin'				=> 'Remover da administração',
 	'ver-palpites'				=> 'Ver palpites',
 	'cancelada'					=> 'Cancelada',
+	'tabela-resultado'			=> 'Tabela de resultado',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

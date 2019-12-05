@@ -12,26 +12,26 @@ class Liga extends Model
 
     public function rodadas()
     {
-        return $this->hasMany(LigaRodada::class)->with(['partidas', 'classificacao']);
+        return $this->hasMany(Rodada::class)->with(['partidas', 'classificacao']);
     }
 
-    public function classificacao()
+    public function jogadores()
     {
-        return $this->hasMany(LigaClassificacao::class)->orderBy('posicao');
+        return $this->hasMany(Jogador::class)->orderBy('posicao');
     }
 
     public function administradores()
     {
-        return $this->hasMany(LigaClassificacao::class)->where('admin', true);
+        return $this->hasMany(Jogador::class)->where('admin', true);
     }
 
     public function rodada($id = null)
     {
         if (isset($id)) {
-            return LigaRodada::with(['partidas', 'classificacao'])->where('liga_id', $this->id)->find($id);
+            return Rodada::with(['partidas', 'classificacao'])->where('liga_id', $this->id)->find($id);
         }
 
-        $liga = LigaRodada::where('liga_id', $this->id)
+        $liga = Rodada::where('liga_id', $this->id)
                 ->where('datainicio', '>=', Carbon::now()->setTimezone(config('app.timezone')))
                 ->orderBy('datafim')
                 ->with(['partidas', 'classificacao'])
@@ -41,7 +41,7 @@ class Liga extends Model
             return $liga;
         }
 
-        return LigaRodada::where('liga_id', $this->id)
+        return Rodada::where('liga_id', $this->id)
                 ->where('datainicio', '<=', Carbon::now()->setTimezone(config('app.timezone')))
                 ->orderBy('datafim', 'DESC')
                 ->with(['partidas', 'classificacao'])
@@ -50,7 +50,7 @@ class Liga extends Model
 
     public function rankear()
     {
-        $itens = LigaClassificacao::where('liga_id', $this->id)
+        $itens = Jogador::where('liga_id', $this->id)
                     ->orderBy('pontosganhos', 'DESC')
                     ->orderBy('rodadasvencidas', 'DESC')
                     ->orderBy('aproveitamento', 'DESC')

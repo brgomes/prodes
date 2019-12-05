@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RodadaClassificacao extends Model
+class Classificacao extends Model
 {
     public $timestamps = false;
 
-    protected $table 	= 'rodada_classificacao';
-    protected $fillable = ['liga_id', 'rodada_id', 'usuario_id', 'posicao', 'pontosdisputados', 'pontosganhos', 'aproveitamento', 'lider'];
+    protected $table 	= 'classificacao';
+    protected $fillable = ['liga_id', 'rodada_id', 'jogador_id', 'posicao', 'pontosdisputados', 'pontosganhos', 'aproveitamento', 'lider'];
 
     public function liga()
     {
@@ -21,13 +21,13 @@ class RodadaClassificacao extends Model
         return $this->belongsTo(LigaRodada::class);
     }
 
-    public function usuario()
+    public function jogador()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Jogador::class);
     }
 
     public function getAproveitamentofAttribute()
     {
-        return number_format($this->aproveitamento, 0);
+        return number_format($this->aproveitamento, 1);
     }
 }

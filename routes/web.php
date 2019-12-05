@@ -19,8 +19,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
 	Route::post('rodadas/consolidar/{rodada}', 'RodadaController@consolidar')->name('rodadas.consolidar');
 	Route::delete('rodadas/{rodada}', 'RodadaController@destroy')->name('rodadas.destroy');
+	Route::get('rodadas/tabela-resultado/{rodada}', 'RodadaController@tabela')->name('rodadas.tabela-resultado');
 
 	Route::post('palpitar/{rodada}', 'PalpiteController@salvar')->name('palpitar');
+	Route::get('palpites/{usuario}/{rodada}', 'PalpiteController@show')->name('palpites.show');
 
 	Route::resource('partidas', 'PartidaController');
 });

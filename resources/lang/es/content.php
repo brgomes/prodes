@@ -110,6 +110,7 @@ return [
 	'remover-admin'				=> 'Remover de la administración',
 	'ver-palpites'				=> 'Ver apuestas',
 	'cancelada'					=> 'Cancelada',
+	'tabela-resultado'			=> 'Tabla de resultado',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

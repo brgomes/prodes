@@ -70,20 +70,23 @@
 							<h2>{{ __('content.rodadas') }}</h2>
 						</div>
 						<div class="col-sm-1">
-							@if ($classificacao->admin)
-								<div class="dropdown">
-									<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+							<div class="dropdown">
+								<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
-									<div class="dropdown-menu" aria-labelledby="dropdown2">
+								<div class="dropdown-menu" aria-labelledby="dropdown2">
+									<a class="dropdown-item" href="{{ route('rodadas.tabela-resultado', $rodada->id) }}" target="_blank">{{ __('content.tabela-resultado') }}</a>
+
+									@if ($classificacao->admin)
+										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaRodada">{{ __('content.nova-rodada') }}</a>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirRodada">{{ __('content.excluir-rodada') }}</a>
-									</div>
+									@endif
 								</div>
-							@endif
+							</div>
 						</div>
 					</div>
 				</div>
@@ -255,12 +258,20 @@
 								<th>{{ __('content.jogador') }}</th>
 								<th>{{ __('content.pontos') }}</th>
 								<th>%</th>
-								<th></th>
+
+								@if ($classificacao->admin)
+									<th></th>
+								@endif
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($rodada->classificacao as $item)
-								<tr>
+								@if ($item->usuario->id == $user_id)
+									<tr class="table-success">
+								@else
+									<tr>
+								@endif
+
 									<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
 									<td>
 										<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
@@ -272,23 +283,22 @@
 									</td>
 									<td>{{ $item->pontosganhos }}</td>
 									<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
-									<td>
-										<div class="dropdown">
-											<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
-											<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
-												@if ($classificacao->admin)
+									@if ($classificacao->admin)
+										<td>
+											<div class="dropdown">
+												<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+
+												<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
 													@if ($item->usuario->adminLiga($liga->id))
 														<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->usuario->id]) }}">{{ __('content.remover-admin') }}</a>
 													@else
 														<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->usuario->id]) }}">{{ __('content.setar-como-admin') }}</a>
 													@endif
-												@endif
-
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalPalpites{{ $item->id }}">{{ __('content.ver-palpites') }}</a>
+												</div>
 											</div>
-										</div>
-									</td>
+										</td>
+									@endif
 								</tr>
 							@endforeach
 						</tbody>
@@ -487,7 +497,12 @@
 							</thead>
 							<tbody>
 								@foreach ($liga->classificacao as $item)
-									<tr>
+									@if ($item->usuario->id == $user_id)
+										<tr class="table-success">
+									@else
+										<tr>
+									@endif
+
 										<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
 										<td>
 											<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>

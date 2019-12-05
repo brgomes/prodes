@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Partida extends Model
 {
-    protected $table 	= 'liga_partida';
+    protected $table 	= 'partida';
     protected $fillable = ['liga_id', 'rodada_id', 'datapartida', 'mandante', 'golsmandante', 'visitante',
                             'golsvisitante', 'sigla', 'cancelada', 'temresultado', 'created_by', 'updated_by'];
 
