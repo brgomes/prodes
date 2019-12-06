@@ -51,9 +51,10 @@ class LigaController extends Controller
                 'usuario_id'        => $user->id,
                 'admin'             => 1,
                 'rodadasjogadas'    => 0,
+                'created_at'        => Carbon::now()->setTimezone(config('app.timezone')),
             ];
 
-            if ($this->ligaClassificacao->create($data)) {
+            if ($this->jogador->create($data)) {
                 DB::commit();
 
                 return redirect()->route('ligas.index');
@@ -81,11 +82,11 @@ class LigaController extends Controller
                 $rodada = $liga->rodada();
             }
 
-            if ($liga->id != $rodada->liga_id) {
-                return redirect()->back();
+            if (isset($rodada)) {
+                if ($liga->id != $rodada->liga_id) {
+                    return redirect()->back();
+                }
             }
-
-            $liga->rankear();
 
             $classificacao = $liga->jogadores()->orderBy('posicao')->get();
 

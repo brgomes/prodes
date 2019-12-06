@@ -23,9 +23,11 @@
 									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#classificacao">{{ __('content.classificacao') }}</a>
 
 									@if ($jogador->admin)
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
-										<div class="dropdown-divider"></div>
+										@if (isset($rodada))
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
+											<div class="dropdown-divider"></div>
+										@endif
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirLiga">{{ __('content.excluir-liga') }}</a>
 									@endif
 								</div>
@@ -74,16 +76,24 @@
 								<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 								<div class="dropdown-menu" aria-labelledby="dropdown2">
-									<a class="dropdown-item" href="{{ route('rodadas.tabela-resultado', $rodada->id) }}">{{ __('content.tabela-resultado') }}</a>
+									@if (isset($rodada))
+										<a class="dropdown-item" href="{{ route('rodadas.tabela-resultado', $rodada->id) }}">{{ __('content.tabela-resultado') }}</a>
+									@endif
 
 									@if ($jogador->admin)
-										<div class="dropdown-divider"></div>
+										@if (isset($rodada))
+											<div class="dropdown-divider"></div>
+										@endif
+
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaRodada">{{ __('content.nova-rodada') }}</a>
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirRodada">{{ __('content.excluir-rodada') }}</a>
+
+										@if (isset($rodada))
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirRodada">{{ __('content.excluir-rodada') }}</a>
+										@endif
 									@endif
 								</div>
 							</div>
@@ -92,135 +102,216 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						{{ Form::select('rodada_id', rodadas($liga->id), $rodada->id, ['id' => 'select-rodada']) }}
+						@if (isset($rodada))
+							{{ Form::select('rodada_id', rodadas($liga->id), $rodada->id, ['id' => 'select-rodada']) }}
+						@endif
 					</div>
 				</div>
 
-				{{ Form::open(['route' => ['palpitar', $rodada->id]]) }}
-					<div class="table-responsive">
+				@if (isset($rodada))
+					{{ Form::open(['route' => ['palpitar', $rodada->id]]) }}
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>{{ __('content.data') }}</th>
+										<th class="text-right">{{ __('content.mandante') }}</th>
+										<th class="text-center">{{ __('content.empate') }}</th>
+										<th>{{ __('content.visitante') }}</th>
+										<th class="text-center">{{ __('content.resultado') }}</th>
+
+										@if ($jogador->admin)
+											<th>{{ __('content.sigla') }}</th>
+											<th></th>
+										@endif
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($rodada->partidas as $i => $partida)
+										@if ($partida->temresultado)
+											@if ($partida->cancelada)
+												<tr class="table-active">
+											@else
+												@if ($partida->palpite)
+													@if ($partida->palpite->consolidado)
+														@if ($partida->palpite->palpite == $partida->vencedor)
+															<tr class="table-success">
+														@else
+															<tr class="table-danger">
+														@endif
+													@else
+														<tr class="table-warning">
+													@endif
+												@else
+													<tr>
+												@endif
+											@endif
+										@else
+											<tr>
+										@endif
+
+											<td>{{ $i+1 }}</td>
+											<td>
+												{{ datetime($partida->datapartida, __('content.formato-datahora')) }}
+												{!! Form::hidden('partidas[]', $partida->id) !!}
+											</td>
+											<td class="text-right">
+												<small class="text-secondary">{{ $partida->percentualMandante() }}%</small>
+												@if ($partida->aberta())
+													<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
+
+													@if ($partida->palpite)
+														{!! Form::radio('palpite-' . $partida->id, 'M', ($partida->palpite->palpite == 'M'), ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+													@else
+														{!! Form::radio('palpite-' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+													@endif
+												@else
+													@if ($partida->palpite)
+														@if ($partida->palpite->palpite == 'M')
+															<strong>{{ $partida->mandante }}</strong>
+															<i class="fas fa-check-circle"></i>
+														@else
+															{{ $partida->mandante }}
+														@endif
+													@else
+														{{ $partida->mandante }}
+													@endif
+												@endif
+											</td>
+											<td class="text-center">
+												@if ($partida->aberta())
+													@if ($partida->palpite)
+														{!! Form::radio('palpite-' . $partida->id, 'E', ($partida->palpite->palpite == 'E'), ['class' => 'palpite']) !!}
+													@else
+														{!! Form::radio('palpite-' . $partida->id, 'E', null, ['class' => 'palpite']) !!}
+													@endif
+												@else
+													@if ($partida->palpite)
+														@if ($partida->palpite->palpite == 'E')
+															<i class="fas fa-check-circle"></i>
+														@endif
+													@endif
+												@endif
+											</td>
+											<td>
+												@if ($partida->aberta())
+													@if ($partida->palpite)
+														{!! Form::radio('palpite-' . $partida->id, 'V', ($partida->palpite->palpite == 'V'), ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
+													@else
+														{!! Form::radio('palpite-' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
+													@endif
+
+													<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
+												@else
+													@if ($partida->palpite)
+														@if ($partida->palpite->palpite == 'V')
+															<strong>{{ $partida->visitante }}</strong>
+															<i class="fas fa-check-circle"></i>
+														@else
+															{{ $partida->visitante }}
+														@endif
+													@else
+														{{ $partida->visitante }}
+													@endif
+												@endif
+												<small class="text-secondary">{{ $partida->percentualVisitante() }}%</small>
+											</td>
+											<td class="text-center">
+												@if ($partida->temresultado)
+													<span class="text-secondary">
+														{!! $partida->resultado !!}
+													</span>
+												@endif
+											</td>
+
+											@if ($jogador->admin)
+												<td>{{ $partida->sigla }}</td>
+												<td>
+													<div class="dropdown">
+														<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_partida{{ $partida->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+
+														<div class="dropdown-menu" aria-labelledby="dd_partida{{ $partida->id }}">
+															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{{ __('content.editar-partida') }}</a>
+															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">{{ __('content.excluir-partida') }}</a>
+														</div>
+													</div>
+												</td>
+											@endif
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+
+						<button type="submit" class="btn btn-secondary mt-3">Salvar apostas</button>
+					{{ Form::close() }}
+				@endif
+			</div>
+		</div>
+
+
+		@if (isset($rodada))
+			@if ($jogador->admin)
+				@foreach ($rodada->partidas as $partida)
+					@include('partidas._edit', ['partida' => $partida])
+					@include('partidas._delete', ['partida' => $partida])
+				@endforeach
+			@endif
+		@endif
+
+
+		<div class="col-sm-5 mt-4">
+			@if (isset($rodada))
+				<div class="wrapper">
+					<div class="wrapper-title bg-dark">
+						<h2>{{ __('content.classificacao-da-rodada') }}</h2>
+					</div>
+				  	<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>{{ __('content.data') }}</th>
-									<th class="text-right">{{ __('content.mandante') }}</th>
-									<th class="text-center">{{ __('content.empate') }}</th>
-									<th>{{ __('content.visitante') }}</th>
-									<th class="text-center">{{ __('content.resultado') }}</th>
+									<th></th>
+									<th>{{ __('content.jogador') }}</th>
+									<th>{{ __('content.pontos') }}</th>
+									<th>%</th>
 
 									@if ($jogador->admin)
-										<th>{{ __('content.sigla') }}</th>
 										<th></th>
 									@endif
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($rodada->partidas as $i => $partida)
-									@if ($partida->temresultado)
-										@if ($partida->cancelada)
-											<tr class="table-active">
-										@else
-											@if ($partida->palpite)
-												@if ($partida->palpite->consolidado)
-													@if ($partida->palpite->palpite == $partida->vencedor)
-														<tr class="table-success">
-													@else
-														<tr class="table-danger">
-													@endif
-												@else
-													<tr class="table-warning">
-												@endif
-											@else
-												<tr>
-											@endif
-										@endif
+								@foreach ($rodada->classificacao as $item)
+									@if ($item->jogador_id == $jogador->id)
+										<tr class="table-success">
 									@else
 										<tr>
 									@endif
 
-										<td>{{ $i+1 }}</td>
+										<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
 										<td>
-											{{ datetime($partida->datapartida, __('content.formato-datahora')) }}
-											{!! Form::hidden('partidas[]', $partida->id) !!}
-										</td>
-										<td class="text-right">
-											<small class="text-secondary">{{ $partida->percentualMandante() }}%</small>
-											@if ($partida->aberta())
-												<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
+											<span class="{{ $item->jogador->usuario->bandeira }}" title="{{ $item->jogador->usuario->pais->nome }}"></span>
+											{{ $item->jogador->usuario->primeironome . ' ' . $item->jogador->usuario->sobrenome }}
 
-												@if ($partida->palpite)
-													{!! Form::radio('palpite-' . $partida->id, 'M', ($partida->palpite->palpite == 'M'), ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
-												@else
-													{!! Form::radio('palpite-' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
-												@endif
-											@else
-												@if ($partida->palpite)
-													@if ($partida->palpite->palpite == 'M')
-														<strong>{{ $partida->mandante }}</strong>
-														<i class="fas fa-check-circle"></i>
-													@else
-														{{ $partida->mandante }}
-													@endif
-												@else
-													{{ $partida->mandante }}
-												@endif
+											@if ($item->jogador->admin)
+												<span class="fas fa-star text-warning" title="Admin"></span>
 											@endif
 										</td>
-										<td class="text-center">
-											@if ($partida->aberta())
-												@if ($partida->palpite)
-													{!! Form::radio('palpite-' . $partida->id, 'E', ($partida->palpite->palpite == 'E'), ['class' => 'palpite']) !!}
-												@else
-													{!! Form::radio('palpite-' . $partida->id, 'E', null, ['class' => 'palpite']) !!}
-												@endif
-											@else
-												@if ($partida->palpite)
-													@if ($partida->palpite->palpite == 'E')
-														<i class="fas fa-check-circle"></i>
-													@endif
-												@endif
-											@endif
-										</td>
-										<td>
-											@if ($partida->aberta())
-												@if ($partida->palpite)
-													{!! Form::radio('palpite-' . $partida->id, 'V', ($partida->palpite->palpite == 'V'), ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
-												@else
-													{!! Form::radio('palpite-' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
-												@endif
-
-												<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
-											@else
-												@if ($partida->palpite)
-													@if ($partida->palpite->palpite == 'V')
-														<strong>{{ $partida->visitante }}</strong>
-														<i class="fas fa-check-circle"></i>
-													@else
-														{{ $partida->visitante }}
-													@endif
-												@else
-													{{ $partida->visitante }}
-												@endif
-											@endif
-											<small class="text-secondary">{{ $partida->percentualVisitante() }}%</small>
-										</td>
-										<td class="text-center">
-											@if ($partida->temresultado)
-												<span class="text-secondary">
-													{!! $partida->resultado !!}
-												</span>
-											@endif
-										</td>
+										<td>{{ $item->pontosganhos }}</td>
+										<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
 
 										@if ($jogador->admin)
-											<td>{{ $partida->sigla }}</td>
 											<td>
 												<div class="dropdown">
-													<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_partida{{ $partida->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+													<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
-													<div class="dropdown-menu" aria-labelledby="dd_partida{{ $partida->id }}">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{{ __('content.editar-partida') }}</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">{{ __('content.excluir-partida') }}</a>
+													<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
+														@if ($item->jogador->admin)
+															<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.remover-admin') }}</a>
+														@else
+															<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.setar-como-admin') }}</a>
+														@endif
 													</div>
 												</div>
 											</td>
@@ -229,82 +320,9 @@
 								@endforeach
 							</tbody>
 						</table>
-					</div>
-
-					<button type="submit" class="btn btn-secondary mt-3">Salvar apostas</button>
-				{{ Form::close() }}
-			</div>
-		</div>
-
-
-		@if ($jogador->admin)
-			@foreach ($rodada->partidas as $partida)
-				@include('partidas._edit', ['partida' => $partida])
-				@include('partidas._delete', ['partida' => $partida])
-			@endforeach
-		@endif
-
-
-		<div class="col-sm-5 mt-4">
-			<div class="wrapper">
-				<div class="wrapper-title bg-dark">
-					<h2>{{ __('content.classificacao-da-rodada') }}</h2>
+				  	</div>
 				</div>
-			  	<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th></th>
-								<th>{{ __('content.jogador') }}</th>
-								<th>{{ __('content.pontos') }}</th>
-								<th>%</th>
-
-								@if ($jogador->admin)
-									<th></th>
-								@endif
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($rodada->classificacao as $item)
-								@if ($item->jogador_id == $jogador->id)
-									<tr class="table-success">
-								@else
-									<tr>
-								@endif
-
-									<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
-									<td>
-										<span class="{{ $item->jogador->usuario->bandeira }}" title="{{ $item->jogador->usuario->pais->nome }}"></span>
-										{{ $item->jogador->usuario->primeironome . ' ' . $item->jogador->usuario->sobrenome }}
-
-										@if ($item->jogador->admin)
-											<span class="fas fa-star text-warning" title="Admin"></span>
-										@endif
-									</td>
-									<td>{{ $item->pontosganhos }}</td>
-									<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
-
-									@if ($jogador->admin)
-										<td>
-											<div class="dropdown">
-												<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-
-												<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
-													@if ($item->jogador->admin)
-														<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.remover-admin') }}</a>
-													@else
-														<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.setar-como-admin') }}</a>
-													@endif
-												</div>
-											</div>
-										</td>
-									@endif
-								</tr>
-							@endforeach
-						</tbody>
-					</table>
-			  	</div>
-			</div>
+			@endif
 		</div>
 	</div>
 
@@ -335,97 +353,99 @@
 		{{ Form::close() }}
 
 
-		{{ Form::model($rodada, ['route' => ['rodadas.update', $rodada->id], 'method' => 'put']) }}
-			<div class="modal fade" id="editarRodada">
-				<div class="modal-dialog">
-					<div class="modal-content">
-		  				<div class="modal-header">
-		    				<h5 class="modal-title">{{ __('content.editar-rodada') }}</h5>
-		    				<button type="button" class="close" data-dismiss="modal">
-		      					<span aria-hidden="true">&times;</span>
-		    				</button>
-		  				</div>
-		  				<div class="modal-body">
-							@include('rodadas._form')
-		  				</div>
-		  				<div class="modal-footer">
-		  					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
-		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-		  				</div>
+		@if (isset($rodada))
+			{{ Form::model($rodada, ['route' => ['rodadas.update', $rodada->id], 'method' => 'put']) }}
+				<div class="modal fade" id="editarRodada">
+					<div class="modal-dialog">
+						<div class="modal-content">
+			  				<div class="modal-header">
+			    				<h5 class="modal-title">{{ __('content.editar-rodada') }}</h5>
+			    				<button type="button" class="close" data-dismiss="modal">
+			      					<span aria-hidden="true">&times;</span>
+			    				</button>
+			  				</div>
+			  				<div class="modal-body">
+								@include('rodadas._form')
+			  				</div>
+			  				<div class="modal-footer">
+			  					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
+			    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+			  				</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		{{ Form::close() }}
+			{{ Form::close() }}
 
 
-    	{{ Form::open(['route' => 'partidas.store']) }}
-			<div class="modal fade" id="novaPartida">
-	  			<div class="modal-dialog">
-	    			<div class="modal-content">
-	      				<div class="modal-header">
-	        				<h5 class="modal-title">{{ __('content.nova-partida') }}</h5>
-	        				<button type="button" class="close" data-dismiss="modal">
-	          					<span aria-hidden="true">&times;</span>
-	        				</button>
-	      				</div>
-	      				<div class="modal-body">
-	    					@include('partidas._form')
-	      				</div>
-	      				<div class="modal-footer">
-	      					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
-	        				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.cancelar') }}</button>
-	      				</div>
-	    			</div>
-	  			</div>
-			</div>
-		{{ Form::close() }}
+	    	{{ Form::open(['route' => 'partidas.store']) }}
+				<div class="modal fade" id="novaPartida">
+		  			<div class="modal-dialog">
+		    			<div class="modal-content">
+		      				<div class="modal-header">
+		        				<h5 class="modal-title">{{ __('content.nova-partida') }}</h5>
+		        				<button type="button" class="close" data-dismiss="modal">
+		          					<span aria-hidden="true">&times;</span>
+		        				</button>
+		      				</div>
+		      				<div class="modal-body">
+		    					@include('partidas._form')
+		      				</div>
+		      				<div class="modal-footer">
+		      					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
+		        				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.cancelar') }}</button>
+		      				</div>
+		    			</div>
+		  			</div>
+				</div>
+			{{ Form::close() }}
 
 
-		{{ Form::open(['route' => ['ligas.consolidar', $rodada->liga_id, $rodada->id]]) }}
-			<div class="modal fade" id="consolidarLiga">
-				<div class="modal-dialog">
-					<div class="modal-content">
-		  				<div class="modal-header">
-		    				<h5 class="modal-title">{{ __('content.consolidar') }}</h5>
-		    				<button type="button" class="close" data-dismiss="modal">
-		      					<span aria-hidden="true">&times;</span>
-		    				</button>
-		  				</div>
-		  				<div class="modal-body">
-							{{ __('message.confirma-consolidacao') }}
-		  				</div>
-		  				<div class="modal-footer">
-		  					<button type="submit" class="btn btn-success">{{ __('content.consolidar') }}</button>
-		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-		  				</div>
+			{{ Form::open(['route' => ['ligas.consolidar', $rodada->liga_id, $rodada->id]]) }}
+				<div class="modal fade" id="consolidarLiga">
+					<div class="modal-dialog">
+						<div class="modal-content">
+			  				<div class="modal-header">
+			    				<h5 class="modal-title">{{ __('content.consolidar') }}</h5>
+			    				<button type="button" class="close" data-dismiss="modal">
+			      					<span aria-hidden="true">&times;</span>
+			    				</button>
+			  				</div>
+			  				<div class="modal-body">
+								{{ __('message.confirma-consolidacao') }}
+			  				</div>
+			  				<div class="modal-footer">
+			  					<button type="submit" class="btn btn-success">{{ __('content.consolidar') }}</button>
+			    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+			  				</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		{{ Form::close() }}
+			{{ Form::close() }}
 
 
-		{{ Form::open(['route' => ['rodadas.destroy', $rodada->id], 'method' => 'delete']) }}
-			<div class="modal fade" id="modalExcluirRodada">
-				<div class="modal-dialog">
-					<div class="modal-content">
-		  				<div class="modal-header">
-		    				<h5 class="modal-title">{{ __('content.excluir-rodada') }}</h5>
-		    				<button type="button" class="close" data-dismiss="modal">
-		      					<span aria-hidden="true">&times;</span>
-		    				</button>
-		  				</div>
-		  				<div class="modal-body">
-							<p>{{ __('message.confirma-exclusao-rodada') }} {{ $rodada->numero }}?</p>
-							<p class="text-danger"><small>{{ __('message.acao-nao-pode-ser-desfeita') }}</small></p>
-		  				</div>
-		  				<div class="modal-footer">
-		  					<button type="submit" class="btn btn-danger">{{ __('content.excluir') }}</button>
-		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-		  				</div>
+			{{ Form::open(['route' => ['rodadas.destroy', $rodada->id], 'method' => 'delete']) }}
+				<div class="modal fade" id="modalExcluirRodada">
+					<div class="modal-dialog">
+						<div class="modal-content">
+			  				<div class="modal-header">
+			    				<h5 class="modal-title">{{ __('content.excluir-rodada') }}</h5>
+			    				<button type="button" class="close" data-dismiss="modal">
+			      					<span aria-hidden="true">&times;</span>
+			    				</button>
+			  				</div>
+			  				<div class="modal-body">
+								<p>{{ __('message.confirma-exclusao-rodada') }} {{ $rodada->numero }}?</p>
+								<p class="text-danger"><small>{{ __('message.acao-nao-pode-ser-desfeita') }}</small></p>
+			  				</div>
+			  				<div class="modal-footer">
+			  					<button type="submit" class="btn btn-danger">{{ __('content.excluir') }}</button>
+			    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
+			  				</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		{{ Form::close() }}
+			{{ Form::close() }}
+		@endif
 
 
 		{{ Form::open(['route' => ['ligas.destroy', $liga->id], 'method' => 'delete']) }}
