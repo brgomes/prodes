@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LigaRodada;
+use App\Models\Jogador;
 use App\Models\Palpite;
 use App\Models\Partida;
+use App\Models\Rodada;
 use Illuminate\Http\Request;
 
 class PalpiteController extends Controller
 {
 	protected $palpite;
+    protected $jogador;
 
-	public function __construct(Palpite $palpite)
+	public function __construct(Palpite $palpite, Jogador $jogador)
 	{
 		$this->palpite = $palpite;
+        $this->jogador = $jogador;
 	}
 
 	public function rodada($id)
     {
-        $rodada = LigaRodada::with('liga')->find($id);
+        $rodada = Rodada::with('liga')->find($id);
 
         if (!$rodada) {
             return null;
@@ -27,11 +30,17 @@ class PalpiteController extends Controller
         return $rodada;
     }
 
+    public function jogador($liga_id)
+    {
+        return Jogador::where('liga_id', $liga_id)
+                ->where('usuario_id', auth()->user()->id)
+                ->first();
+    }
+
     public function salvar(Request $request, $rodada_id)
     {
     	$data 		= $request->all();
     	$rodada 	= $this->rodada($rodada_id);
-    	$usuario 	= auth()->user();
 
     	if (!$rodada) {
     		return redirect()->back();
@@ -42,11 +51,11 @@ class PalpiteController extends Controller
     	}
 
     	foreach ($request->partidas as $partida_id) {
-    		$key = 'palpite-' . $partida_id;
+            $key        = 'palpite-' . $partida_id;
+            $partida    = Partida::with('rodada')->find($partida_id);
+            $jogador    = $this->jogador($partida->liga_id);
 
-    		$partida = Partida::with('rodada')->find($partida_id);
-
-    		if (!$usuario->participaDaLiga($partida->rodada->liga_id)) {
+    		if (!$jogador) {
     			continue;
     		}
 
@@ -56,7 +65,8 @@ class PalpiteController extends Controller
 
     		if (array_key_exists($key, $data)) {
     			$where = [
-	    			'usuario_id' 	=> $usuario->id,
+	    			'usuario_id' 	=> $jogador->usuario_id,
+                    'jogador_id'    => $jogador->id,
                     'rodada_id'     => $partida->rodada_id,
 	    			'partida_id'	=> $partida->id,
 	    		];
@@ -68,7 +78,7 @@ class PalpiteController extends Controller
 
 	    		$this->palpite->updateOrCreate($where, $values);
 	    	} else {
-	    		$this->palpite->where('usuario_id', $usuario->id)->where('partida_id', $partida->id)->delete();
+	    		$this->palpite->where('jogador_id', $jogador->id)->where('partida_id', $partida->id)->delete();
 	    	}
     	}
 
