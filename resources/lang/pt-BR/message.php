@@ -19,4 +19,7 @@ return [
 	'acao-nao-pode-ser-desfeita'	=> 'Esta ação não pode ser desfeita.',
 	'liga-excluida'					=> 'A liga foi excluída com sucesso.',
 	'rodada-excluida'				=> 'A rodada foi excluída com sucesso.',
+	'entrar-na-liga'				=> 'Confirma entrada na liga ',
+	'liga-nao-encontrada'			=> 'Nenhuma liga encontrada para o código informado!',
+	'acao-nao-pode-ser-executada'	=> 'A ação não pôde ser executada. Entre em contato com o administrador do sistema.',
 ];

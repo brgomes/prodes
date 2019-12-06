@@ -19,4 +19,7 @@ return [
 	'acao-nao-pode-ser-desfeita'	=> 'This action cannot be undone.',
 	'liga-excluida'					=> 'League successfully deleted.',
 	'rodada-excluida'				=> 'Round successfully deleted.',
+	'entrar-na-liga'				=> 'Confirm entrance into league ',
+	'liga-nao-encontrada'			=> 'No league found for the code entered!',
+	'acao-nao-pode-ser-executada'	=> 'The action could not be performed. Contact the system administrator.',
 ];

@@ -19,4 +19,7 @@ return [
 	'acao-nao-pode-ser-desfeita'	=> 'Esta acción no se puede deshacer.',
 	'liga-excluida'					=> 'La liga fue eliminada.',
 	'rodada-excluida'				=> 'La jornada fue eliminada.',
+	'entrar-na-liga'				=> 'Confirmar entrada en la liga ',
+	'liga-nao-encontrada'			=> 'Ninguna liga encontrada para el código ingresado!',
+	'acao-nao-pode-ser-executada'	=> 'La acción no se pudo realizar. Entre en contacto con el administrador del sistema.',
 ];

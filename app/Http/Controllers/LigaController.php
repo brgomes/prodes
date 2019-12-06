@@ -326,7 +326,49 @@ class LigaController extends Controller
 
     public function pesquisar(Request $request)
     {
-        $liga = Liga::where('codigo', (int) $request->q)->first();
-        dd($liga);
+        $liga = $this->liga->where('codigo', (int) $request->q)->first();
+
+        if ($liga) {
+            $jogador = $this->jogador->where('liga_id', $liga->id)->where('usuario_id', auth()->user()->id)->first();
+        } else {
+            $jogador = null;
+        }
+        
+        return view('ligas.pesquisa', compact('liga', 'jogador'));
+    }
+
+    public function entrar($liga_id)
+    {
+        $liga = $this->liga->find($liga_id);
+
+        if (!$liga) {
+            return redirect()->back();
+        }
+
+        $user       = auth()->user();
+        $jogador    = $this->jogador->where('liga_id', $liga_id)->where('usuario_id', $user->id)->first();
+
+        if ($jogador) {
+            return redirect()->route('ligas.show', $liga->id);
+        }
+
+        $data = [
+            'liga_id'           => $liga->id,
+            'usuario_id'        => $user->id,
+            'admin'             => false,
+            'rodadasjogadas'    => 0,
+            'rodadasvencidas'   => 0,
+            'pontosdisputados'  => 0,
+            'pontosganhos'      => 0,
+            'created_at'        => Carbon::now()->setTimezone(config('app.timezone')),
+        ];
+
+        try {
+            $this->jogador->create($data);
+
+            return redirect()->route('ligas.show', $liga->id);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', __('message.acao-nao-pode-ser-executada'));
+        }
     }
 }

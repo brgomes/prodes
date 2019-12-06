@@ -72,8 +72,10 @@
 								@endif
 							</td>
 							<td>
-								<a href="#" data-toggle="modal" data-target="#modalEditarLiga{{ $liga->liga->id }}"><i class="fas fa-pencil-alt text-success" title="{{ __('content.editar') }}"></i></a>
-								@include('ligas._edit', ['liga' => $liga->liga, 'name' => 'modalEditarLiga'])
+								@if ($liga->admin)
+									<a href="#" data-toggle="modal" data-target="#modalEditarLiga{{ $liga->liga->id }}"><i class="fas fa-pencil-alt text-success" title="{{ __('content.editar') }}"></i></a>
+									@include('ligas._edit', ['liga' => $liga->liga, 'name' => 'modalEditarLiga'])
+								@endif
 							</td>
 						</tr>
 					@endforeach

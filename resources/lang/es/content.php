@@ -115,6 +115,11 @@ return [
 	'sigla-palpiteM'			=> 'L',
 	'sigla-palpiteE'			=> 'E',
 	'sigla-palpiteV'			=> 'V',
+	'pesquisa-de-liga'			=> 'Búsqueda de liga',
+	'participar-da-liga'		=> 'Participar de la liga',
+	'sim'						=> 'Sí',
+	'nao'						=> 'No',
+	'ja-participa'				=> 'Ya participa',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

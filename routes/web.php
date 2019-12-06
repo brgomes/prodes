@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('ligas/setar-admin/{liga}/{usuario}', 'LigaController@setarAdmin')->name('ligas.setar-admin');
 	Route::get('ligas/remover-admin/{liga}/{usuario}', 'LigaController@removerAdmin')->name('ligas.remover-admin');
 	Route::get('pesquisar-liga', 'LigaController@pesquisar')->name('ligas.pesquisar');
+	Route::post('ligas/entrar/{liga}', 'LigaController@entrar')->name('ligas.entrar');
 
 	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
