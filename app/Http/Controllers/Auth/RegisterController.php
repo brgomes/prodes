@@ -85,7 +85,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        dd($data);
         $data['password']   = Hash::make($data['password']);
         $data['ativo']      = 1;
         $data['admin']      = 0;
