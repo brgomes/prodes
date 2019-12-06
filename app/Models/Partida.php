@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Registry;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +10,7 @@ class Partida extends Model
 {
     protected $table 	= 'partida';
     protected $fillable = ['liga_id', 'rodada_id', 'datapartida', 'mandante', 'golsmandante', 'visitante',
-                            'golsvisitante', 'sigla', 'cancelada', 'temresultado', 'created_by', 'updated_by'];
+        'golsvisitante', 'sigla', 'cancelada', 'temresultado', 'created_by', 'updated_by'];
 
     public function liga()
     {
@@ -95,7 +96,15 @@ class Partida extends Model
 
     public function percentualMandante()
     {
-        $palpites = Palpite::where('partida_id', $this->id)->get();
+        $var = 'palpites-partida' . $this->id;
+
+        if (Registry::isRegistered($var)) {
+            $palpites = Registry::get($var);
+        } else {
+            $palpites = Palpite::where('partida_id', $this->id)->get();
+
+            Registry::set($var, $palpites);
+        }
 
         if ($palpites->count() == 0) {
             return 0;
@@ -114,7 +123,15 @@ class Partida extends Model
 
     public function percentualVisitante()
     {
-        $palpites = Palpite::where('partida_id', $this->id)->get();
+        $var = 'palpites-partida' . $this->id;
+
+        if (Registry::isRegistered($var)) {
+            $palpites = Registry::get($var);
+        } else {
+            $palpites = Palpite::where('partida_id', $this->id)->get();
+
+            Registry::set($var, $palpites);
+        }
 
         if ($palpites->count() == 0) {
             return 0;

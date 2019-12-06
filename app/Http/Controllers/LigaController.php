@@ -85,6 +85,8 @@ class LigaController extends Controller
                 return redirect()->back();
             }
 
+            $liga->rankear();
+
             $classificacao = $liga->jogadores()->orderBy('posicao')->get();
 
             return view('ligas.show', compact('jogador', 'liga', 'rodada', 'rodada_id', 'classificacao'));
@@ -225,7 +227,9 @@ class LigaController extends Controller
                 }
             }
 
-            if ($pontosDisputadosLiga > 0) {
+            if ($pontosDisputadosLiga == 0) {
+                $aproveitamentoLiga = 0;
+            } else {
                 $aproveitamentoLiga = round((($pontosGanhosLiga * 100) / $pontosDisputadosLiga), 2);
             }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rodada extends Model
 {
     protected $table 	= 'rodada';
-    protected $fillable = ['liga_id', 'numero', 'datainicio', 'datafim', 'dataconsolidacao', 'created_by', 'updated_by'];
+    protected $fillable = ['liga_id', 'numero', 'datainicio', 'datafim', 'consolidar', 'dataconsolidacao', 'created_by', 'updated_by'];
 
     public function liga()
     {
@@ -51,9 +51,12 @@ class Rodada extends Model
 
     public function rankear()
     {
-        $itens = Classificacao::where('rodada_id', $this->id)
+        $itens = Classificacao::addSelect(['primeironome' => Usuario::select('primeironome')->whereColumn('usuario.id', 'jogador.usuario_id')])
+                    ->join('jogador', 'jogador.id', '=', 'classificacao.jogador_id')
+                    ->where('rodada_id', $this->id)
                     ->orderBy('pontosganhos', 'DESC')
                     ->orderBy('aproveitamento', 'DESC')
+                    ->orderBy('primeironome')
                     ->get();
 
         if ($itens->count() == 0) {

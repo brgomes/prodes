@@ -50,10 +50,12 @@ class Liga extends Model
 
     public function rankear()
     {
-        $itens = Jogador::where('liga_id', $this->id)
+        $itens = Jogador::addSelect(['primeironome' => Usuario::select('primeironome')->whereColumn('usuario.id', 'jogador.usuario_id')])
+                    ->where('liga_id', $this->id)
                     ->orderBy('pontosganhos', 'DESC')
                     ->orderBy('rodadasvencidas', 'DESC')
                     ->orderBy('aproveitamento', 'DESC')
+                    ->orderBy('primeironome')
                     ->get();
 
         $i = 1;

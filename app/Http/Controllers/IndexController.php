@@ -11,6 +11,17 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    /*protected $user;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->user = auth()->user();
+
+            return $next($request);
+        });
+    }*/
+
     public function index()
     {
     	return view('index');
@@ -36,7 +47,10 @@ class IndexController extends Controller
         	'pt-BR' => 'Português',
         ];
 
-    	return view('perfil', compact('paises', 'timezones', 'idiomas'));
+        //$user = $this->user;
+        $user = auth()->user();
+
+    	return view('perfil', compact('user', 'paises', 'timezones', 'idiomas'));
     }
 
     public function salvarPerfil(MeuPerfilValidationRequest $request)
