@@ -92,4 +92,42 @@ class Partida extends Model
 
         return true;
     }
+
+    public function percentualMandante()
+    {
+        $palpites = Palpite::where('partida_id', $this->id)->get();
+
+        if ($palpites->count() == 0) {
+            return 0;
+        }
+
+        $count = 0;
+
+        foreach ($palpites as $palpite) {
+            if ($palpite->palpite == 'M') {
+                $count++;
+            }
+        }
+
+        return round(($count * 100) / $palpites->count(), 0);
+    }
+
+    public function percentualVisitante()
+    {
+        $palpites = Palpite::where('partida_id', $this->id)->get();
+
+        if ($palpites->count() == 0) {
+            return 0;
+        }
+
+        $count = 0;
+
+        foreach ($palpites as $palpite) {
+            if ($palpite->palpite == 'V') {
+                $count++;
+            }
+        }
+
+        return round(($count * 100) / $palpites->count(), 0);
+    }
 }

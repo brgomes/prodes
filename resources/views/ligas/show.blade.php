@@ -8,7 +8,7 @@
 				<div class="wrapper-title bg-dark">
 					<div class="row">
 						<div class="col-sm-11">
-							<h2>{{ $liga->nome }}</h2>
+							<h2><a href="{{ route('ligas.show', $liga->id) }}">{{ $liga->nome }}</a></h2>
 							{!! Form::hidden('liga_id', $liga->id, ['id' => 'liga_id']) !!}
 						</div>
 						<div class="col-sm-1">
@@ -144,6 +144,7 @@
 											{!! Form::hidden('partidas[]', $partida->id) !!}
 										</td>
 										<td class="text-right">
+											<small class="text-secondary">{{ $partida->percentualMandante() }}%</small>
 											@if ($partida->aberta())
 												<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
 
@@ -201,6 +202,7 @@
 													{{ $partida->visitante }}
 												@endif
 											@endif
+											<small class="text-secondary">{{ $partida->percentualVisitante() }}%</small>
 										</td>
 										<td class="text-center">
 											@if ($partida->temresultado)
