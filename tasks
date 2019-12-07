@@ -1,4 +1,6 @@
-- Ver com o Paul a questão do cadastro das equipes para cada liga para poderem ser selecionadas no cadastro de campeões
+- Ver com o Paul a questão do cadastro das equipes para cada liga para poderem ser selecionadas no cadastro de campeões.
+Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
+o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
 
 - Criar dispositivo para usuários saberem que existem partidas a palpitar
 
@@ -12,9 +14,6 @@ campeões
 - Criar tipos de ligas que permitem palpitar no vencedor ou no placar da partida. Criar também campos para informar a
 pontuação em caso de acerto: se a liga for por vencedor, informar a pontuação em caso de acerto; se a liga for por placar
 informar a pontuação em caso de acerto do placar e a pontuação em caso de acerto do vencedor
-
-- Permitir cadastrar, dentro da liga, perguntas com pontuação para o caso de acerto. Essas perguntas serão consolidadas no
-final da liga, quando o administrador cadastrar as respostas corretas
 
 - Criar, no cadastro da liga, opção para liberar ou não o palpite coringa. Se ele estiver ativo o jogador ganha o dobro
 dos pontos em caso de acerto do palpite
