@@ -2,12 +2,6 @@
 Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
 o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
 
-- Criar dispositivo para usuários saberem que existem partidas a palpitar
-
-- Adicionar captcha no login da aplicação
-
-- Na tabela de resultados, se o usuário for administrador da liga, permití-lo ver os palpites antes das partidas começarem
-
 - A liga deve ter data limite para o ingresso de novos jogadores. Essa data também servirá para editar as respostas dos
 campeões
 
@@ -17,6 +11,10 @@ informar a pontuação em caso de acerto do placar e a pontuação em caso de ac
 
 - Criar, no cadastro da liga, opção para liberar ou não o palpite coringa. Se ele estiver ativo o jogador ganha o dobro
 dos pontos em caso de acerto do palpite
+
+- Adicionar captcha no login da aplicação
+
+- Criar dispositivo para usuários saberem que existem partidas a palpitar
 
 - Adicionar AdSense ao sistema
 

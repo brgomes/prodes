@@ -135,6 +135,7 @@ class RodadaController extends Controller
     public function tabela($id)
     {
         $rodada = $this->rodada($id, false);
+        $admin  = auth()->user()->adminLiga($rodada->liga_id);
 
         $jogadores = $rodada->liga->jogadores()
                         ->addSelect(['primeironome' => Usuario::select('primeironome')->whereColumn('usuario.id', 'jogador.usuario_id')])
@@ -143,7 +144,7 @@ class RodadaController extends Controller
                         ->orderBy('sobrenome')
                         ->get();
 
-        return view('rodadas.tabela', compact('rodada', 'jogadores'));
+        return view('rodadas.tabela', compact('rodada', 'jogadores', 'admin'));
     }
 
     /*public function consolidar($rodada_id)

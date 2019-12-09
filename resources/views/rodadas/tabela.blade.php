@@ -32,9 +32,9 @@
 							<td>{{ $jogador->usuario->primeironome . ' ' . $jogador->usuario->sobrenome }}</td>
 
 							@foreach ($rodada->partidas as $partida)
-								@if ($partida->aberta())
+								@if (!$admin && $partida->aberta())
 									<td></td>
-								@elseif (!$partida->temresultado)
+								@elseif (!$partida->temresultado && !$admin)
 									<td></td>
 								@else
 									@if ($palpite = $jogador->palpite($partida->id))
@@ -48,10 +48,12 @@
 													{{ __('content.sigla-palpite' . $palpite->palpite) }}
 												</td>
 											@endif
-										@else
+										@elseif ($admin)
 											<td class="text-center">
 												{{ __('content.sigla-palpite' . $palpite->palpite) }}
 											</td>
+										@else
+											<td></td>
 										@endif
 									@else
 										<td></td>
