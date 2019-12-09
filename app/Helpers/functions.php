@@ -11,8 +11,8 @@ function tiposLiga($tipo = null)
 {
     $tipos = [
         ''  => '-- SELECIONE --',
-        'P' => 'Por placar',
-        'V' => 'Por vencedor',
+        'P' => __('content.liga-por-placar'),
+        'V' => __('content.liga-por-vencedor'),
     ];
 
     if (isset($tipo)) {

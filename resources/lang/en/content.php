@@ -125,6 +125,8 @@ return [
 	'pontos-acerto-placar'		=> 'Points on hitting scoreboard',
 	'pontos-acerto-vencedor'	=> 'Points on hitting winner',
 	'habilitar-coringa'			=> 'Enable joker',
+	'liga-por-placar'			=> 'By scoreboard',
+	'liga-por-vencedor'			=> 'By winner',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

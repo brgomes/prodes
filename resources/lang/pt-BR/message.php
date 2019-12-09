@@ -23,4 +23,5 @@ return [
 	'liga-nao-encontrada'			=> 'Nenhuma liga encontrada para o código informado!',
 	'acao-nao-pode-ser-executada'	=> 'A ação não pôde ser executada. Entre em contato com o administrador do sistema.',
 	'explicacao-coringa'			=> 'O jogador poderá selecionar uma partida por rodada e esta valerá o dobro dos pontos.',
+	'admin-ve-palpites'				=> 'Administradores podem ver os palpites antes da consolidação da rodada.',
 ];

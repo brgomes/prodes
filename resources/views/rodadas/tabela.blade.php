@@ -2,6 +2,12 @@
 
 @section('content')
 
+	@if ($admin)
+		<div class="alert alert-info mb-4">
+			{{ __('message.admin-ve-palpites') }}
+		</div>
+	@endif
+
 	<div class="wrapper">
 		<div class="wrapper-title bg-dark">
 			<div class="row text-center">

@@ -125,6 +125,8 @@ return [
 	'pontos-acerto-placar'		=> 'Pontos ao acertar placar',
 	'pontos-acerto-vencedor'	=> 'Pontos ao acertar vencedor',
 	'habilitar-coringa'			=> 'Habilitar coringa',
+	'liga-por-placar'			=> 'Por placar',
+	'liga-por-vencedor'			=> 'Por vencedor',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

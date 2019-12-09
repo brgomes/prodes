@@ -23,4 +23,5 @@ return [
 	'liga-nao-encontrada'			=> 'No league found for the code entered!',
 	'acao-nao-pode-ser-executada'	=> 'The action could not be performed. Contact the system administrator.',
 	'explicacao-coringa'			=> 'The player may select one match per round and it will be worth twice the points.',
+	'admin-ve-palpites'				=> 'Managers can see the guesses before the round consolidates.',
 ];
