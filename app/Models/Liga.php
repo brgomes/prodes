@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Liga extends Model
 {
     protected $table 	= 'liga';
-    protected $fillable = ['nome', 'codigo', 'datainicio', 'datafim', 'regulamento', 'consolidar', 'dataconsolidacao', 'created_by', 'updated_by'];
+    protected $fillable = ['nome', 'codigo', 'tipo', 'datainicio', 'datafim', 'regulamento', 'datalimiteentrada',
+        'pontosacertoplacar', 'pontosacertovencedor', 'temcoringa', 'consolidar', 'dataconsolidacao', 'created_by', 'updated_by'];
 
     public function rodadas()
     {

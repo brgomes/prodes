@@ -22,4 +22,5 @@ return [
 	'entrar-na-liga'				=> 'Confirmar entrada en la liga ',
 	'liga-nao-encontrada'			=> 'Ninguna liga encontrada para el código ingresado!',
 	'acao-nao-pode-ser-executada'	=> 'La acción no se pudo realizar. Entre en contacto con el administrador del sistema.',
+	'explicacao-coringa'			=> 'El jugador puede seleccionar un partido por ronda y valdrá el doble de puntos.',
 ];

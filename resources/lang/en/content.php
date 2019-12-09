@@ -120,6 +120,11 @@ return [
 	'sim'						=> 'Yes',
 	'nao'						=> 'No',
 	'ja-participa'				=> 'Already participate',
+	'tipo-de-liga'				=> 'League type',
+	'data-limite-entrada-liga'	=> 'League entry deadline',
+	'pontos-acerto-placar'		=> 'Points on hitting scoreboard',
+	'pontos-acerto-vencedor'	=> 'Points on hitting winner',
+	'habilitar-coringa'			=> 'Enable joker',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

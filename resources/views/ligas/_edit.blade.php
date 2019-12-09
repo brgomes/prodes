@@ -1,5 +1,5 @@
-{{ Form::model($liga, ['route' => ['ligas.update', $liga->id], 'method' => 'put']) }}
-	<div class="modal fade" id="modalEditarLiga{{ $liga->id }}">
+{!! Form::model($liga, ['route' => ['ligas.update', $liga->id], 'method' => 'put']) !!}
+	<div class="modal fade" id="modalEditarLiga">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -18,4 +18,4 @@
 	        </div>
 	    </div>
 	</div>
-{{ Form::close() }}
+{!! Form::close() !!}

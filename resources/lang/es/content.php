@@ -120,6 +120,11 @@ return [
 	'sim'						=> 'Sí',
 	'nao'						=> 'No',
 	'ja-participa'				=> 'Ya participa',
+	'tipo-de-liga'				=> 'Tipo de liga',
+	'data-limite-entrada-liga'	=> 'Fecha límite de entrada a la liga',
+	'pontos-acerto-placar'		=> 'Puntos para acertar marcador',
+	'pontos-acerto-vencedor'	=> 'Pontos para acertar ganador',
+	'habilitar-coringa'			=> 'Habilitar comodín',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

@@ -2,6 +2,9 @@
 Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
 o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
 
+- Remover excesso de modals na página da liga, habilitando o preenchimento de um form único via javascript, como no site
+da Boa Sorte Imobiliária (Flávio)
+
 - A liga deve ter data limite para o ingresso de novos jogadores. Essa data também servirá para editar as respostas dos
 campeões
 

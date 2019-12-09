@@ -39,6 +39,7 @@ class LigaController extends Controller
         $user = auth()->user();
 
         $data['codigo']     = mt_rand(100000, 999999);
+        $data['temcoringa'] = array_key_exists('temcoringa', $data);
         $data['created_by'] = $user->id;
         $data['updated_by'] = $user->id;
 
@@ -108,9 +109,12 @@ class LigaController extends Controller
             $liga = $temp->liga;
             $data = $request->all();
 
+            $data['temcoringa'] = array_key_exists('temcoringa', $data);
             $data['updated_by'] = auth()->user()->id;
 
             $liga->update($data);
+
+            return redirect()->route('ligas.show', $liga->id);
         }
 
         return redirect()->route('ligas.index');

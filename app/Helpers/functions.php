@@ -7,6 +7,21 @@ use App\Models\Rodada;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 
+function tiposLiga($tipo = null)
+{
+    $tipos = [
+        ''  => '-- SELECIONE --',
+        'P' => 'Por placar',
+        'V' => 'Por vencedor',
+    ];
+
+    if (isset($tipo)) {
+        return $tipos[$tipo];
+    }
+
+    return $tipos;
+}
+
 function parseLocale()
 {
     // Busca a primeira rota da URL

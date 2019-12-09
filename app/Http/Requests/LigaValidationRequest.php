@@ -14,9 +14,12 @@ class LigaValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'          => 'required|max:50',
-            'datainicio'    => 'required|date',
-            'datafim'       => 'required|date',
+            'nome'                  => 'required|max:50',
+            'datainicio'            => 'required|date',
+            'datafim'               => 'required|date|after:datainicio',
+            'datalimiteentrada'     => 'date|after:datainicio|before:datafim',
+            'pontosacertoplacar'    => 'required|number',
+            'pontosacertovencedor'  => 'required|number',
         ];
     }
 }

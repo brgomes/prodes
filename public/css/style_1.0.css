@@ -7,6 +7,12 @@ body {
     color: #566787;
 }
 
+input:required, input:required:focus,
+textarea:required, textarea:required:focus,
+select:required, select:required:focus {
+    border-left: 2px solid red;
+}
+
 
 
 

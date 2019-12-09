@@ -17,7 +17,7 @@
 
 								<div class="dropdown-menu" aria-labelledby="dropdown1">
 									@if ($liga->regulamento)
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#regulamento">{{ __('content.regulamento') }}</a>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalRegulamento">{{ __('content.regulamento') }}</a>
 									@endif
 
 									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#classificacao">{{ __('content.classificacao') }}</a>
@@ -25,6 +25,7 @@
 									@if ($jogador->admin)
 										@if (isset($rodada))
 											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarLiga">{{ __('content.editar-liga') }}</a>
 											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
 											<div class="dropdown-divider"></div>
 										@endif
@@ -328,7 +329,9 @@
 
 
 	@if ($jogador->admin)
-		{{ Form::open(['route' => ['rodadas.store', $liga->id]]) }}
+		@include('ligas._edit', ['liga' => $liga])
+
+		{!! Form::open(['route' => ['rodadas.store', $liga->id]]) !!}
 			<div class="modal fade" id="novaRodada">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -350,7 +353,7 @@
 					</div>
 				</div>
 			</div>
-		{{ Form::close() }}
+		{!! Form::close() !!}
 
 
 		@if (isset($rodada))
@@ -474,7 +477,7 @@
 
 
 	@if ($liga->regulamento)
-		<div class="modal fade" id="regulamento">
+		<div class="modal fade" id="modalRegulamento">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 	  				<div class="modal-header">
