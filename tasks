@@ -4,12 +4,9 @@ o administrador informa a opção correta para consolidar. Na própria pergunta 
 
 - Implementar ajax e remover modal no seguintes cadastros:
 
-1. Edição de rodada
-2. Exclusão de rodada
-3. Cadastro de rodada
-4. Edição de liga
-5. Exclusão de liga
-6. Classificação da rodada
+1. Edição de liga
+2. Exclusão de liga
+3. Classificação da rodada
 
 
 - A liga deve ter data limite para o ingresso de novos jogadores. Essa data também servirá para editar as respostas dos

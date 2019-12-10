@@ -16,9 +16,12 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('pesquisar-liga', 'LigaController@pesquisar')->name('ligas.pesquisar');
 	Route::post('ligas/entrar/{liga}', 'LigaController@entrar')->name('ligas.entrar');
 
+	Route::get('rodadas/{liga}/create', 'RodadaController@create')->name('rodadas.create');
 	Route::post('rodadas/{liga}', 'RodadaController@store')->name('rodadas.store');
+	Route::get('rodadas/{rodada}/edit', 'RodadaController@edit')->name('rodadas.edit');
 	Route::put('rodadas/{rodada}', 'RodadaController@update')->name('rodadas.update');
 	Route::post('rodadas/consolidar/{rodada}', 'RodadaController@consolidar')->name('rodadas.consolidar');
+	Route::get('rodadas/{rodada}/delete', 'RodadaController@delete')->name('rodadas.delete');
 	Route::delete('rodadas/{rodada}', 'RodadaController@destroy')->name('rodadas.destroy');
 	Route::get('rodadas/tabela-resultado/{rodada}', 'RodadaController@tabela')->name('rodadas.tabela-resultado');
 

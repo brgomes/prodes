@@ -10,7 +10,7 @@
 	</div>
 	<div class="form-group col-sm-4">
 		<label for="horainicial">{{ __('content.hora-inicial') }}</label>
-		{!! Form::text('horainicial', null, ['class' => 'form-control time', 'id' => 'horainicial', 'required']) !!}
+		{!! Form::time('horainicial', null, ['class' => 'form-control', 'id' => 'horainicial', 'required']) !!}
 		<small class="form-text text-muted">
 		  	{{ __('content.desc-formato-hora') }}
 		</small>
@@ -24,7 +24,7 @@
 	</div>
 	<div class="form-group col-sm-4">
 		<label for="horafinal">{{ __('content.hora-final') }}</label>
-		{!! Form::text('horafinal', null, ['class' => 'form-control time', 'id' => 'horafinal', 'required']) !!}
+		{!! Form::time('horafinal', null, ['class' => 'form-control', 'id' => 'horafinal', 'required']) !!}
 		<small class="form-text text-muted">
 		  	{{ __('content.desc-formato-hora') }}
 		</small>

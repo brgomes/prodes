@@ -86,14 +86,14 @@
 											<div class="dropdown-divider"></div>
 										@endif
 
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaRodada">{{ __('content.nova-rodada') }}</a>
+										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('rodadas.create', $liga->id) }}">{{ __('content.nova-rodada') }}</a>
 
 										@if (isset($rodada))
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
+											<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('rodadas.edit', $rodada->id) }}">{{ __('content.editar-rodada') }}</a>
 											<div class="dropdown-divider"></div>
 											<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('partidas.create', $rodada->id) }}">{{ __('content.nova-partida') }}</a>
 											<div class="dropdown-divider"></div>
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirRodada">{{ __('content.excluir-rodada') }}</a>
+											<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('rodadas.delete', $rodada->id) }}">{{ __('content.excluir-rodada') }}</a>
 										@endif
 									@endif
 								</div>
@@ -324,55 +324,7 @@
 	@if ($jogador->admin)
 		@include('ligas._edit', ['liga' => $liga])
 
-		{!! Form::open(['route' => ['rodadas.store', $liga->id]]) !!}
-			<div class="modal fade" id="novaRodada">
-				<div class="modal-dialog">
-					<div class="modal-content">
-		  				<div class="modal-header">
-		    				<h5 class="modal-title">{{ __('content.nova-rodada') }}</h5>
-		    				<button type="button" class="close" data-dismiss="modal">
-		      					<span aria-hidden="true">&times;</span>
-		    				</button>
-		  				</div>
-		  				<div class="modal-body">
-							@include('rodadas._form')
-		  				</div>
-		  				<div class="modal-footer">
-		  					{!! Form::hidden('liga_id', $liga->id) !!}
-
-		  					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
-		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-		  				</div>
-					</div>
-				</div>
-			</div>
-		{!! Form::close() !!}
-
-
 		@if (isset($rodada))
-			{{ Form::model($rodada, ['route' => ['rodadas.update', $rodada->id], 'method' => 'put']) }}
-				<div class="modal fade" id="editarRodada">
-					<div class="modal-dialog">
-						<div class="modal-content">
-			  				<div class="modal-header">
-			    				<h5 class="modal-title">{{ __('content.editar-rodada') }}</h5>
-			    				<button type="button" class="close" data-dismiss="modal">
-			      					<span aria-hidden="true">&times;</span>
-			    				</button>
-			  				</div>
-			  				<div class="modal-body">
-								@include('rodadas._form')
-			  				</div>
-			  				<div class="modal-footer">
-			  					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
-			    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-			  				</div>
-						</div>
-					</div>
-				</div>
-			{{ Form::close() }}
-
-
 			{{ Form::open(['route' => ['ligas.consolidar', $rodada->liga_id, $rodada->id]]) }}
 				<div class="modal fade" id="consolidarLiga">
 					<div class="modal-dialog">
@@ -388,30 +340,6 @@
 			  				</div>
 			  				<div class="modal-footer">
 			  					<button type="submit" class="btn btn-success">{{ __('content.consolidar') }}</button>
-			    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-			  				</div>
-						</div>
-					</div>
-				</div>
-			{{ Form::close() }}
-
-
-			{{ Form::open(['route' => ['rodadas.destroy', $rodada->id], 'method' => 'delete']) }}
-				<div class="modal fade" id="modalExcluirRodada">
-					<div class="modal-dialog">
-						<div class="modal-content">
-			  				<div class="modal-header">
-			    				<h5 class="modal-title">{{ __('content.excluir-rodada') }}</h5>
-			    				<button type="button" class="close" data-dismiss="modal">
-			      					<span aria-hidden="true">&times;</span>
-			    				</button>
-			  				</div>
-			  				<div class="modal-body">
-								<p>{{ __('message.confirma-exclusao-rodada') }} {{ $rodada->numero }}?</p>
-								<p class="text-danger"><small>{{ __('message.acao-nao-pode-ser-desfeita') }}</small></p>
-			  				</div>
-			  				<div class="modal-footer">
-			  					<button type="submit" class="btn btn-danger">{{ __('content.excluir') }}</button>
 			    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
 			  				</div>
 						</div>

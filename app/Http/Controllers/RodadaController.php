@@ -52,21 +52,33 @@ class RodadaController extends Controller
         return $rodada;
     }
 
-    public function store(RodadaValidationRequest $request, $liga)
+    public function create($liga_id)
+    {
+        $liga = $this->liga($liga_id);
+
+        if (!$liga) {
+            return response()->json(['message' => 'Liga não encontrada.'], 404);
+        }
+
+        return view('rodadas.create', compact('liga'));
+    }
+
+    public function store(RodadaValidationRequest $request, $liga_id)
     {
         $data = $request->all();
         $user = auth()->user();
 
-        $data['datainicio'] = $request->datainicial . ' ' . $request->horainicial . ':00';
-        $data['datafim']    = $request->datafinal . ' ' . $request->horafinal . ':00';
-        $data['created_by'] = $user->id;
-        $data['updated_by'] = $user->id;
-
-        $liga = $this->liga($liga);
+        $liga = $this->liga($liga_id);
 
         if (!$liga) {
             return redirect()->back();
         }
+
+        $data['liga_id']    = $liga->id;
+        $data['datainicio'] = $request->datainicial . ' ' . $request->horainicial . ':00';
+        $data['datafim']    = $request->datafinal . ' ' . $request->horafinal . ':00';
+        $data['created_by'] = $user->id;
+        $data['updated_by'] = $user->id;
 
         if ($data['datainicio'] < $liga->datainicio . ' 00:00:00') {
             return redirect()->back()->with('warning', __('message.datainicio-rodada-liga'))->withInput();
@@ -77,10 +89,21 @@ class RodadaController extends Controller
         }
 
         if ($this->rodada->create($data)) {
-            return redirect()->route('ligas.show', $request->liga_id);
+            return redirect()->route('ligas.show', $liga->id);
         }
 
         return redirect()->back()->with('error', __('message.erro'));
+    }
+
+    public function edit($id)
+    {
+        $rodada = $this->rodada($id);
+
+        if (!$rodada) {
+            return response()->json(['message' => 'Rodada não encontrada.'], 404);
+        }
+
+        return view('rodadas.edit', compact('rodada'));
     }
 
     public function update(RodadaValidationRequest $request, $id)
@@ -110,6 +133,17 @@ class RodadaController extends Controller
         }
 
         return redirect()->back()->with('error', __('message.erro'));
+    }
+
+    public function delete($id)
+    {
+        $rodada = $this->rodada($id);
+
+        if (!$rodada) {
+            return response()->json(['message' => 'Rodada não encontrada.'], 404);
+        }
+
+        return view('rodadas.delete', compact('rodada'));
     }
 
     public function destroy($id)
