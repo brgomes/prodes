@@ -18,15 +18,19 @@
 								<div class="dropdown-menu" aria-labelledby="dropdown1">
 									@if ($liga->regulamento)
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalRegulamento">{{ __('content.regulamento') }}</a>
-										<div class="dropdown-divider"></div>
+
+										@if ($jogador->admin)
+											<div class="dropdown-divider"></div>
+										@endif
 									@endif
 
 									@if ($jogador->admin)
 										@if (isset($rodada))
-											<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.edit', $liga->id) }}">{{ __('content.editar-liga') }}</a>
 											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
 											<div class="dropdown-divider"></div>
 										@endif
+
+										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.edit', $liga->id) }}">{{ __('content.editar-liga') }}</a>
 										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.delete', $liga->id) }}">{{ __('content.excluir-liga') }}</a>
 									@endif
 								</div>

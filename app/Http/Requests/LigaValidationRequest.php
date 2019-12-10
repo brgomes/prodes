@@ -17,9 +17,9 @@ class LigaValidationRequest extends FormRequest
             'nome'                  => 'required|max:50',
             'datainicio'            => 'required|date',
             'datafim'               => 'required|date|after:datainicio',
-            'datalimiteentrada'     => 'date|after:datainicio|before:datafim',
-            'pontosacertoplacar'    => 'required|number',
-            'pontosacertovencedor'  => 'required|number',
+            'datalimiteentrada'     => 'nullable|date|after:datainicio|before:datafim',
+            'pontosacertoplacar'    => 'required|numeric',
+            'pontosacertovencedor'  => 'required|numeric',
         ];
     }
 }
