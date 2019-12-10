@@ -49,6 +49,112 @@ class Liga extends Model
                 ->first();
     }
 
+    public function consolidar()
+    {
+        $jogadores  = $this->jogadores;
+        $rodadas    = $this->rodadas;
+
+        foreach ($jogadores as $jogador) {
+            $pontosDisputadosLiga   = 0;
+            $pontosGanhosLiga       = 0;
+            $rodadasJogadas         = 0;
+            $totalPartidasLiga      = 0;
+
+            foreach ($rodadas as $rodada) {
+                $pontosDisputadosRodada = 0;
+                $pontosGanhosRodada     = 0;
+                $totalPartidasRodada    = 0;
+
+                $totalPartidasRodada    += $rodada->partidas->count();
+                $totalPartidasLiga      += $totalPartidasRodada;
+
+                $palpites = Palpite::where('rodada_id', $rodada->id)
+                            ->where('jogador_id', $jogador->id)
+                            ->with('partida')
+                            ->get();
+
+                if ($palpites->count() == 0) {
+                    $aproveitamentoRodada = null;
+                } else {
+                    foreach ($palpites as $palpite) {
+                        if ($palpite->partida->temresultado) {
+                            $pontosDisputadosLiga++;
+                            $pontosDisputadosRodada++;
+
+                            if ($palpite->palpite == $palpite->partida->vencedor) {
+                                $pontosGanhosLiga++;
+                                $pontosGanhosRodada++;
+
+                                $pontuacao = 1;
+                            } else {
+                                $pontuacao = 0;
+                            }
+
+                            $palpite->update(['consolidado' => true, 'pontos' => $pontuacao]);
+                        } else {
+                            $palpite->update(['consolidado' => false, 'pontos' => null]);
+                        }
+                    }
+
+                    if ($pontosDisputadosRodada > 0) {
+                        $rodadasJogadas++;
+
+                        $aproveitamentoRodada = round((($pontosGanhosRodada * 100) / $pontosDisputadosRodada), 2);
+                    }
+                }
+
+                if ($pontosDisputadosRodada > 0) {
+                    $where = [
+                        'liga_id'       => $rodada->liga_id,
+                        'rodada_id'     => $rodada->id,
+                        'jogador_id'    => $jogador->id,
+                    ];
+
+                    $values = [
+                        'pontosdisputados'  => $pontosDisputadosRodada,
+                        'pontosganhos'      => $pontosGanhosRodada,
+                        'aproveitamento'    => $aproveitamentoRodada,
+                    ];
+
+                    Classificacao::updateOrCreate($where, $values);
+                }
+            }
+
+            if ($pontosDisputadosLiga == 0) {
+                $aproveitamentoLiga = 0;
+            } else {
+                $aproveitamentoLiga = round((($pontosGanhosLiga * 100) / $pontosDisputadosLiga), 2);
+            }
+
+            $jogador->update([
+                'rodadasjogadas'    => $rodadasJogadas,
+                'pontosdisputados'  => $pontosDisputadosLiga,
+                'pontosganhos'      => $pontosGanhosLiga,
+                'aproveitamento'    => $aproveitamentoLiga,
+            ]);
+        }
+
+        foreach ($rodadas as $rodada) {
+            $rodada->rankear();
+        }
+
+        // Se a rodada já não tiver partidas abertas, calcula a quantidade de vencedores
+        foreach ($jogadores as $jogador) {
+            $liderancas = Classificacao::where('liga_id', $this->id)
+                            ->where('jogador_id', $jogador->id)
+                            ->where('lider', 1)
+                            ->get();
+
+            $jogador->update(['rodadasvencidas' => $liderancas->count()]);
+        }
+
+        $this->rankear();
+
+        $this->update(['consolidar' => false, 'dataconsolidacao' => Carbon::now()->setTimezone(config('app.timezone'))]);
+
+        return true;
+    }
+
     public function rankear()
     {
         $itens = Jogador::addSelect(['primeironome' => Usuario::select('primeironome')->whereColumn('usuario.id', 'jogador.usuario_id')])

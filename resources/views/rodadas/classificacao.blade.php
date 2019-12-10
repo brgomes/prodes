@@ -30,7 +30,7 @@
 								{{ $item->jogador->usuario->primeironome . ' ' . $item->jogador->usuario->sobrenome }}
 
 								@if ($item->jogador->admin)
-									<span class="fas fa-star text-warning" title="Admin"></span>
+									<span class="fas fa-star text-warning" title="{{ __('content.administrador') }}"></span>
 								@endif
 							</td>
 							<td class="text-center">{{ $item->pontosganhos }}</td>
