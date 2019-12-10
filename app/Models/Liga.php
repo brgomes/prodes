@@ -63,10 +63,7 @@ class Liga extends Model
             foreach ($rodadas as $rodada) {
                 $pontosDisputadosRodada = 0;
                 $pontosGanhosRodada     = 0;
-                $totalPartidasRodada    = 0;
-
-                $totalPartidasRodada    += $rodada->partidas->count();
-                $totalPartidasLiga      += $totalPartidasRodada;
+                $totalPartidasLiga      += $rodada->partidas->count();
 
                 $palpites = Palpite::where('rodada_id', $rodada->id)
                             ->where('jogador_id', $jogador->id)
@@ -78,16 +75,60 @@ class Liga extends Model
                 } else {
                     foreach ($palpites as $palpite) {
                         if ($palpite->partida->temresultado) {
-                            $pontosDisputadosLiga++;
-                            $pontosDisputadosRodada++;
+                            if ($this->tipo == 'P') {
+                                $pontosDisputadosLiga   += $this->pontosacertoplacar;
+                                $pontosDisputadosRodada += $this->pontosacertoplacar;
 
-                            if ($palpite->palpite == $palpite->partida->vencedor) {
-                                $pontosGanhosLiga++;
-                                $pontosGanhosRodada++;
+                                $golsM = (int) $palpite->partida->golsmandante;
+                                $golsV = (int) $palpite->partida->golsvisitante;
 
-                                $pontuacao = 1;
-                            } else {
-                                $pontuacao = 0;
+                                if (($palpite->palpitegolsm == $golsM) && ($palpite->palpitegolsv == $golsV)) {
+                                    $pontosGanhosLiga   += $this->pontosacertoplacar;
+                                    $pontosGanhosRodada += $this->pontosacertoplacar;
+
+                                    $pontuacao = $this->pontosacertoplacar;
+                                } else {
+                                    if ($golsM > $golsV) {
+                                        $vencedor = 'M';
+                                    } elseif ($golsV > $golsM) {
+                                        $vencedor = 'V';
+                                    } else {
+                                        $vencedor = 'E';
+                                    }
+
+                                    if ($palpite->palpitegolsm > $palpitegolsv) {
+                                        $palpite_vencedor = 'M';
+                                    } elseif ($palpite->palpitegolsv > $palpitegolsm) {
+                                        $palpite_vencedor = 'V';
+                                    } else {
+                                        $palpite_vencedor = 'E';
+                                    }
+
+                                    if ($vencedor == $palpite_vencedor) {
+                                        $pontosGanhosLiga   += $this->pontosacertovencedor;
+                                        $pontosGanhosRodada += $this->pontosacertovencedor;
+
+                                        $pontuacao = $this->pontosacertovencedor;
+                                    } else {
+                                        $pontuacao = 0;
+                                    }
+                                }
+                            } elseif ($this->tipo == 'V') {
+                                $pontosDisputadosLiga   += $this->pontosacertovencedor;
+                                $pontosDisputadosRodada += $this->pontosacertovencedor;
+
+                                if ($palpite->palpite == $palpite->partida->vencedor) {
+                                    $pontosGanhosLiga   += $this->pontosacertovencedor;
+                                    $pontosGanhosRodada += $this->pontosacertovencedor;
+
+                                    $pontuacao = $this->pontosacertovencedor;
+                                } else {
+                                    $pontuacao = 0;
+                                }
+                            }
+
+                            if (($this->temcoringa == 1) && ($palpite->coringa == 1)) {
+                                $pontuacao *= 2;
                             }
 
                             $palpite->update(['consolidado' => true, 'pontos' => $pontuacao]);
