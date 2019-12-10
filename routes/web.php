@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('palpites/{usuario}/{rodada}', 'PalpiteController@show')->name('palpites.show');
 
 	Route::resource('partidas', 'PartidaController');
+	Route::get('partidas/{rodada}/create', 'PartidaController@create')->name('partidas.create');
+	Route::get('partidas/{partida}/delete', 'PartidaController@delete')->name('partidas.delete');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

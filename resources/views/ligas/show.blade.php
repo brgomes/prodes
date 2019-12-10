@@ -91,7 +91,7 @@
 										@if (isset($rodada))
 											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarRodada">{{ __('content.editar-rodada') }}</a>
 											<div class="dropdown-divider"></div>
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#novaPartida">{{ __('content.nova-partida') }}</a>
+											<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('partidas.create', $rodada->id) }}">{{ __('content.nova-partida') }}</a>
 											<div class="dropdown-divider"></div>
 											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirRodada">{{ __('content.excluir-rodada') }}</a>
 										@endif
@@ -233,8 +233,8 @@
 														<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_partida{{ $partida->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 														<div class="dropdown-menu" aria-labelledby="dd_partida{{ $partida->id }}">
-															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarPartida{{ $partida->id }}">{{ __('content.editar-partida') }}</a>
-															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirPartida{{ $partida->id }}">{{ __('content.excluir-partida') }}</a>
+															<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('partidas.edit', $partida->id) }}">{{ __('content.editar-partida') }}</a>
+															<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('partidas.delete', $partida->id) }}">{{ __('content.excluir-partida') }}</a>
 														</div>
 													</div>
 												</td>
@@ -250,16 +250,6 @@
 				@endif
 			</div>
 		</div>
-
-
-		@if (isset($rodada))
-			@if ($jogador->admin)
-				@foreach ($rodada->partidas as $partida)
-					@include('partidas._edit', ['partida' => $partida])
-					@include('partidas._delete', ['partida' => $partida])
-				@endforeach
-			@endif
-		@endif
 
 
 		<div class="col-sm-5 mt-4">
@@ -328,6 +318,9 @@
 	</div>
 
 
+	<div class="modal fade" id="ajaxModal"></div>
+
+
 	@if ($jogador->admin)
 		@include('ligas._edit', ['liga' => $liga])
 
@@ -376,29 +369,6 @@
 			  				</div>
 						</div>
 					</div>
-				</div>
-			{{ Form::close() }}
-
-
-	    	{{ Form::open(['route' => 'partidas.store']) }}
-				<div class="modal fade" id="novaPartida">
-		  			<div class="modal-dialog">
-		    			<div class="modal-content">
-		      				<div class="modal-header">
-		        				<h5 class="modal-title">{{ __('content.nova-partida') }}</h5>
-		        				<button type="button" class="close" data-dismiss="modal">
-		          					<span aria-hidden="true">&times;</span>
-		        				</button>
-		      				</div>
-		      				<div class="modal-body">
-		    					@include('partidas._form')
-		      				</div>
-		      				<div class="modal-footer">
-		      					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
-		        				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.cancelar') }}</button>
-		      				</div>
-		    			</div>
-		  			</div>
 				</div>
 			{{ Form::close() }}
 

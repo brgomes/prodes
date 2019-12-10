@@ -2,8 +2,15 @@
 Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
 o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
 
-- Remover excesso de modals na página da liga, habilitando o preenchimento de um form único via javascript, como no site
-da Boa Sorte Imobiliária (Flávio)
+- Implementar ajax e remover modal no seguintes cadastros:
+
+1. Edição de rodada
+2. Exclusão de rodada
+3. Cadastro de rodada
+4. Edição de liga
+5. Exclusão de liga
+6. Classificação da rodada
+
 
 - A liga deve ter data limite para o ingresso de novos jogadores. Essa data também servirá para editar as respostas dos
 campeões
@@ -16,6 +23,8 @@ informar a pontuação em caso de acerto do placar e a pontuação em caso de ac
 dos pontos em caso de acerto do palpite
 
 - Adicionar captcha no login da aplicação
+
+- Exibir classificação da liga na página da liga (e não a da rodada). Migrar a classificação da rodada para o modal
 
 - Criar dispositivo para usuários saberem que existem partidas a palpitar
 

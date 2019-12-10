@@ -47,6 +47,17 @@ class PartidaController extends Controller
         return $partida;
     }
 
+    public function create($rodada_id)
+    {
+        $rodada = $this->rodada($rodada_id);
+
+        if (!$rodada) {
+            return response()->json(['message' => 'Rodada não encontrada.'], 404);
+        }
+
+        return view('partidas.create', compact('rodada'));
+    }
+
     public function store(PartidaValidationRequest $request)
     {
         $data   = $request->all();
@@ -83,6 +94,19 @@ class PartidaController extends Controller
         }
 
         return redirect()->back()->with('error', __('message.erro'));
+    }
+
+    public function edit($id)
+    {
+        $partida = $this->partida($id);
+
+        if (!$partida) {
+            return response()->json(['message' => 'Partida não encontrada.'], 404);
+        }
+
+        $rodada = $this->rodada($partida->rodada_id);
+
+        return view('partidas.edit', compact('partida', 'rodada'));
     }
 
     public function update(PartidaValidationRequest $request, $id)
@@ -130,6 +154,17 @@ class PartidaController extends Controller
         }
 
         return redirect()->back()->with('error', __('message.erro'));
+    }
+
+    public function delete($id)
+    {
+        $partida = $this->partida($id);
+
+        if (!$partida) {
+            return response()->json(['message' => 'Partida não encontrada.'], 404);
+        }
+
+        return view('partidas.delete', compact('partida'));
     }
 
     public function destroy($id)

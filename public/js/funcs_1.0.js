@@ -49,4 +49,23 @@ $(document).ready(function() {
 
     $('.palpite[type="radio"]').uncheckableRadio();
 
+    $('.ajax-modal').click(function() {
+        var url = $(this).data('url');
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            //data: {userid: userid},
+            success: function(response) {
+                $('#ajaxModal').html(response);
+                $('#ajaxModal').modal('show'); 
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
+
+        return false;
+    });
+
 });
