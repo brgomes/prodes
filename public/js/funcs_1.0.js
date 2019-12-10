@@ -49,7 +49,9 @@ $(document).ready(function() {
 
     $('.palpite[type="radio"]').uncheckableRadio();
 
-    $('.ajax-modal').click(function() {
+    $('.ajax-modal').click(function(event) {
+        event.preventDefault();
+
         var url = $(this).data('url');
 
         $.ajax({
@@ -65,7 +67,7 @@ $(document).ready(function() {
             }
         });
 
-        return false;
+        //return false;
     });
 
 });
