@@ -120,9 +120,18 @@
 									<tr>
 										<th>#</th>
 										<th>{{ __('content.data') }}</th>
-										<th class="text-right">{{ __('content.mandante') }}</th>
-										<th class="text-center">{{ __('content.empate') }}</th>
-										<th>{{ __('content.visitante') }}</th>
+
+										@if ($liga->tipo == 'P')
+											<th class="text-right">{{ __('content.mandante') }}</th>
+											<th class="text-center"></th>
+											<th class="text-center"></th>
+											<th>{{ __('content.visitante') }}</th>
+										@elseif ($liga->tipo == 'V')
+											<th class="text-right">{{ __('content.mandante') }}</th>
+											<th class="text-center">{{ __('content.empate') }}</th>
+											<th>{{ __('content.visitante') }}</th>
+										@endif
+
 										<th class="text-center">{{ __('content.resultado') }}</th>
 
 										@if ($jogador->admin)
@@ -160,67 +169,108 @@
 												{{ datetime($partida->datapartida, __('content.formato-datahora')) }}
 												{!! Form::hidden('partidas[]', $partida->id) !!}
 											</td>
-											<td class="text-right">
-												<small class="text-secondary">{{ $partida->percentualMandante() }}%</small>
-												@if ($partida->aberta())
-													<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
 
-													@if ($partida->palpite)
-														{!! Form::radio('palpite-' . $partida->id, 'M', ($partida->palpite->palpite == 'M'), ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+											@if ($liga->tipo == 'P')
+												<td class="text-right">
+													{{ $partida->mandante }}
+												</td>
+												<td class="text-center">
+													@if ($partida->aberta())
+														@if ($partida->palpite)
+															{{ Form::number('palpitem-' . $partida->id, $partida->palpite->palpitegolsm, ['class' => 'form-control', 'style' => 'width:70px']) }}
+														@else
+															{{ Form::number('palpitem-' . $partida->id, null, ['class' => 'form-control', 'style' => 'width:70px']) }}
+														@endif
 													@else
-														{!! Form::radio('palpite-' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+														@if ($partida->palpite)
+															{{ $partida->palpite->palpitegolsm }}
+														@else
+															-
+														@endif
 													@endif
-												@else
-													@if ($partida->palpite)
-														@if ($partida->palpite->palpite == 'M')
-															<strong>{{ $partida->mandante }}</strong>
-															<i class="fas fa-check-circle"></i>
+												</td>
+												<td class="text-center">
+													@if ($partida->aberta())
+														@if ($partida->palpite)
+															{{ Form::number('palpitev-' . $partida->id, $partida->palpite->palpitegolsv, ['class' => 'form-control', 'style' => 'width:70px']) }}
+														@else
+															{{ Form::number('palpitev-' . $partida->id, null, ['class' => 'form-control', 'style' => 'width:70px']) }}
+														@endif
+													@else
+														@if ($partida->palpite)
+															{{ $partida->palpite->palpitegolsv }}
+														@else
+															-
+														@endif
+													@endif
+												</td>
+												<td>
+													{{ $partida->visitante }}
+												</td>
+											@elseif ($liga->tipo == 'V')
+												<td class="text-right">
+													<small class="text-secondary">{{ $partida->percentualMandante() }}%</small>
+													@if ($partida->aberta())
+														<label for="palpiteM{{ $partida->id }}">{{ $partida->mandante }}</label>
+
+														@if ($partida->palpite)
+															{!! Form::radio('palpite-' . $partida->id, 'M', ($partida->palpite->palpite == 'M'), ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+														@else
+															{!! Form::radio('palpite-' . $partida->id, 'M', null, ['id' => 'palpiteM' . $partida->id, 'class' => 'palpite']) !!}
+														@endif
+													@else
+														@if ($partida->palpite)
+															@if ($partida->palpite->palpite == 'M')
+																<strong>{{ $partida->mandante }}</strong>
+																<i class="fas fa-check-circle"></i>
+															@else
+																{{ $partida->mandante }}
+															@endif
 														@else
 															{{ $partida->mandante }}
 														@endif
-													@else
-														{{ $partida->mandante }}
 													@endif
-												@endif
-											</td>
-											<td class="text-center">
-												@if ($partida->aberta())
-													@if ($partida->palpite)
-														{!! Form::radio('palpite-' . $partida->id, 'E', ($partida->palpite->palpite == 'E'), ['class' => 'palpite']) !!}
+												</td>
+												<td class="text-center">
+													@if ($partida->aberta())
+														@if ($partida->palpite)
+															{!! Form::radio('palpite-' . $partida->id, 'E', ($partida->palpite->palpite == 'E'), ['class' => 'palpite']) !!}
+														@else
+															{!! Form::radio('palpite-' . $partida->id, 'E', null, ['class' => 'palpite']) !!}
+														@endif
 													@else
-														{!! Form::radio('palpite-' . $partida->id, 'E', null, ['class' => 'palpite']) !!}
-													@endif
-												@else
-													@if ($partida->palpite)
-														@if ($partida->palpite->palpite == 'E')
-															<i class="fas fa-check-circle"></i>
+														@if ($partida->palpite)
+															@if ($partida->palpite->palpite == 'E')
+																<i class="fas fa-check-circle"></i>
+															@endif
 														@endif
 													@endif
-												@endif
-											</td>
-											<td>
-												@if ($partida->aberta())
-													@if ($partida->palpite)
-														{!! Form::radio('palpite-' . $partida->id, 'V', ($partida->palpite->palpite == 'V'), ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
-													@else
-														{!! Form::radio('palpite-' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
-													@endif
+												</td>
+												<td>
+													@if ($partida->aberta())
+														@if ($partida->palpite)
+															{!! Form::radio('palpite-' . $partida->id, 'V', ($partida->palpite->palpite == 'V'), ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
+														@else
+															{!! Form::radio('palpite-' . $partida->id, 'V', null, ['id' => 'palpiteV' . $partida->id, 'class' => 'palpite']) !!}
+														@endif
 
-													<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
-												@else
-													@if ($partida->palpite)
-														@if ($partida->palpite->palpite == 'V')
-															<strong>{{ $partida->visitante }}</strong>
-															<i class="fas fa-check-circle"></i>
+														<label for="palpiteV{{ $partida->id }}">{{ $partida->visitante }}</label>
+													@else
+														@if ($partida->palpite)
+															@if ($partida->palpite->palpite == 'V')
+																<strong>{{ $partida->visitante }}</strong>
+																<i class="fas fa-check-circle"></i>
+															@else
+																{{ $partida->visitante }}
+															@endif
 														@else
 															{{ $partida->visitante }}
 														@endif
-													@else
-														{{ $partida->visitante }}
 													@endif
-												@endif
-												<small class="text-secondary">{{ $partida->percentualVisitante() }}%</small>
-											</td>
+													<small class="text-secondary">{{ $partida->percentualVisitante() }}%</small>
+												</td>
+											@endif
+
 											<td class="text-center">
 												@if ($partida->temresultado)
 													<span class="text-secondary">
