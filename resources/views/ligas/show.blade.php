@@ -18,18 +18,16 @@
 								<div class="dropdown-menu" aria-labelledby="dropdown1">
 									@if ($liga->regulamento)
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalRegulamento">{{ __('content.regulamento') }}</a>
+										<div class="dropdown-divider"></div>
 									@endif
-
-									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#classificacao">{{ __('content.classificacao') }}</a>
 
 									@if ($jogador->admin)
 										@if (isset($rodada))
-											<div class="dropdown-divider"></div>
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarLiga">{{ __('content.editar-liga') }}</a>
+											<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.edit', $liga->id) }}">{{ __('content.editar-liga') }}</a>
 											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
 											<div class="dropdown-divider"></div>
 										@endif
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalExcluirLiga">{{ __('content.excluir-liga') }}</a>
+										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.delete', $liga->id) }}">{{ __('content.excluir-liga') }}</a>
 									@endif
 								</div>
 							</div>
@@ -79,6 +77,7 @@
 								<div class="dropdown-menu" aria-labelledby="dropdown2">
 									@if (isset($rodada))
 										<a class="dropdown-item" href="{{ route('rodadas.tabela-resultado', $rodada->id) }}">{{ __('content.tabela-resultado') }}</a>
+										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('rodadas.classificacao', $rodada->id) }}">{{ __('content.classificacao-da-rodada') }}</a>
 									@endif
 
 									@if ($jogador->admin)
@@ -253,67 +252,67 @@
 
 
 		<div class="col-sm-5 mt-4">
-			@if (isset($rodada))
-				<div class="wrapper">
-					<div class="wrapper-title bg-dark">
-						<h2>{{ __('content.classificacao-da-rodada') }}</h2>
-					</div>
-				  	<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th></th>
-									<th>{{ __('content.jogador') }}</th>
-									<th>{{ __('content.pontos') }}</th>
-									<th>%</th>
+			<div class="wrapper">
+				<div class="wrapper-title bg-dark">
+					<h2>{{ __('content.classificacao-da-liga') }}</h2>
+				</div>
+			  	<div class="table-responsive">
+			  		<table class="table table-striped">
+						<thead>
+							<tr>
+								<th></th>
+								<th>{{ __('content.jogador') }}</th>
+								<th class="text-center">{{ __('content.sigla-pontos') }}</th>
+								<th class="text-center">{{ __('content.sigla-rodadas-vencidas') }}</th>
+								<th class="text-center">%</th>
+
+								@if ($jogador->admin)
+									<th class="text-center"></th>
+								@endif
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($classificacao as $item)
+								@if ($item->id == $jogador->id)
+									<tr class="table-success">
+								@else
+									<tr>
+								@endif
+
+									<td>@if ($item->posicao) {{ $item->posicao }}º @else - @endif</td>
+									<td>
+										<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
+										{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
+
+										@if ($item->admin)
+											<span class="fas fa-star text-warning" title="Admin"></span>
+										@endif
+									</td>
+									<td class="text-center">{{ $item->pontosganhos }}</td>
+									<td class="text-center">{{ $item->rodadasvencidas }}</td>
+									<td class="text-center">@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
 
 									@if ($jogador->admin)
-										<th></th>
+										<td class="text-center">
+											<div class="dropdown">
+												<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+
+												<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
+													@if ($item->admin)
+														<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->usuario_id]) }}">{{ __('content.remover-admin') }}</a>
+													@else
+														<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->usuario_id]) }}">{{ __('content.setar-como-admin') }}</a>
+													@endif
+												</div>
+											</div>
+										</td>
 									@endif
 								</tr>
-							</thead>
-							<tbody>
-								@foreach ($rodada->classificacao as $item)
-									@if ($item->jogador_id == $jogador->id)
-										<tr class="table-success">
-									@else
-										<tr>
-									@endif
-
-										<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
-										<td>
-											<span class="{{ $item->jogador->usuario->bandeira }}" title="{{ $item->jogador->usuario->pais->nome }}"></span>
-											{{ $item->jogador->usuario->primeironome . ' ' . $item->jogador->usuario->sobrenome }}
-
-											@if ($item->jogador->admin)
-												<span class="fas fa-star text-warning" title="Admin"></span>
-											@endif
-										</td>
-										<td>{{ $item->pontosganhos }}</td>
-										<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
-
-										@if ($jogador->admin)
-											<td>
-												<div class="dropdown">
-													<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-
-													<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
-														@if ($item->jogador->admin)
-															<a class="dropdown-item" href="{{ route('ligas.remover-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.remover-admin') }}</a>
-														@else
-															<a class="dropdown-item" href="{{ route('ligas.setar-admin', [$liga->id, $item->jogador->usuario_id]) }}">{{ __('content.setar-como-admin') }}</a>
-														@endif
-													</div>
-												</div>
-											</td>
-										@endif
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-				  	</div>
-				</div>
-			@endif
+							@endforeach
+						</tbody>
+					</table>
+			  	</div>
+			</div>
 		</div>
 	</div>
 
@@ -322,8 +321,6 @@
 
 
 	@if ($jogador->admin)
-		@include('ligas._edit', ['liga' => $liga])
-
 		@if (isset($rodada))
 			{{ Form::open(['route' => ['ligas.consolidar', $rodada->liga_id, $rodada->id]]) }}
 				<div class="modal fade" id="consolidarLiga">
@@ -347,30 +344,6 @@
 				</div>
 			{{ Form::close() }}
 		@endif
-
-
-		{{ Form::open(['route' => ['ligas.destroy', $liga->id], 'method' => 'delete']) }}
-			<div class="modal fade" id="modalExcluirLiga">
-				<div class="modal-dialog">
-					<div class="modal-content">
-		  				<div class="modal-header">
-		    				<h5 class="modal-title">{{ __('content.excluir-liga') }}</h5>
-		    				<button type="button" class="close" data-dismiss="modal">
-		      					<span aria-hidden="true">&times;</span>
-		    				</button>
-		  				</div>
-		  				<div class="modal-body">
-							<p>{{ __('message.confirma-exclusao-liga') }} <strong>{{ $liga->nome }}</strong>?</p>
-							<p class="text-danger"><small>{{ __('message.acao-nao-pode-ser-desfeita') }}</small></p>
-		  				</div>
-		  				<div class="modal-footer">
-		  					<button type="submit" class="btn btn-danger">{{ __('content.excluir') }}</button>
-		    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-		  				</div>
-					</div>
-				</div>
-			</div>
-		{{ Form::close() }}
 	@endif
 
 
@@ -394,56 +367,6 @@
 			</div>
 		</div>
 	@endif
-
-	<div class="modal fade" id="classificacao">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-  				<div class="modal-header">
-    				<h5 class="modal-title">{{ __('content.classificacao') }}</h5>
-    				<button type="button" class="close" data-dismiss="modal">
-      					<span aria-hidden="true">&times;</span>
-    				</button>
-  				</div>
-  				<div class="modal-body">
-  					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th></th>
-									<th>{{ __('content.jogador') }}</th>
-									<th>{{ __('content.pontos') }}</th>
-									<th>{{ __('content.rodadas-vencidas') }}</th>
-									<th>%</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach ($classificacao as $item)
-									@if ($item->id == $jogador->id)
-										<tr class="table-success">
-									@else
-										<tr>
-									@endif
-
-										<td>@if ($item->posicao) {{ $item->posicao }} @else - @endif</td>
-										<td>
-											<span class="{{ $item->usuario->bandeira }}" title="{{ $item->usuario->pais->nome }}"></span>
-											{{ $item->usuario->primeironome . ' ' . $item->usuario->sobrenome }}
-										</td>
-										<td>{{ $item->pontosganhos }}</td>
-										<td>{{ $item->rodadasvencidas }}</td>
-										<td>@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
-  				</div>
-  				<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.fechar') }}</button>
-  				</div>
-			</div>
-		</div>
-	</div>
 
 @stop
 

@@ -6,9 +6,11 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::post('perfil/senha', 'IndexController@salvarSenha')->name('salvar-senha');
 
 	Route::get('ligas', 'LigaController@index')->name('ligas.index');
-	Route::get('ligas/{liga}/{rodada?}', 'LigaController@show')->name('ligas.show');
+	Route::get('ligas/{liga}/show/{rodada?}', 'LigaController@show')->name('ligas.show');
+	Route::get('ligas/{liga}/edit', 'LigaController@edit')->name('ligas.edit');
 	Route::post('ligas', 'LigaController@store')->name('ligas.store');
 	Route::put('ligas/{liga}', 'LigaController@update')->name('ligas.update');
+	Route::get('ligas/{liga}/delete', 'LigaController@delete')->name('ligas.delete');
 	Route::delete('ligas/{liga}', 'LigaController@destroy')->name('ligas.destroy');
 	Route::post('ligas/consolidar/{liga}/{rodada}', 'LigaController@consolidar')->name('ligas.consolidar');
 	Route::get('ligas/setar-admin/{liga}/{usuario}', 'LigaController@setarAdmin')->name('ligas.setar-admin');
@@ -24,6 +26,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('rodadas/{rodada}/delete', 'RodadaController@delete')->name('rodadas.delete');
 	Route::delete('rodadas/{rodada}', 'RodadaController@destroy')->name('rodadas.destroy');
 	Route::get('rodadas/tabela-resultado/{rodada}', 'RodadaController@tabela')->name('rodadas.tabela-resultado');
+	Route::get('rodadas/{rodada}/classificacao', 'RodadaController@classificacao')->name('rodadas.classificacao');
 
 	Route::post('palpitar/{rodada}', 'PalpiteController@salvar')->name('palpitar');
 	Route::get('palpites/{usuario}/{rodada}', 'PalpiteController@show')->name('palpites.show');

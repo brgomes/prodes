@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#select-rodada').change(function() {
         var liga_id = $('#liga_id').val();
         
-        location.href = '/ligas/' + liga_id + '/' + $(this).val();
+        location.href = '/ligas/' + liga_id + '/show/' + $(this).val();
     });
 
     if ($.isFunction($.fn.mask)) {

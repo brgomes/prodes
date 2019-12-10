@@ -181,6 +181,22 @@ class RodadaController extends Controller
         return view('rodadas.tabela', compact('rodada', 'jogadores', 'admin'));
     }
 
+    public function classificacao($rodada_id)
+    {
+        $rodada = $this->rodada($rodada_id, false);
+
+        if (!$rodada) {
+            return response()->json(['message' => 'Rodada não encontrada.'], 404);
+        }
+
+        $jogador = Jogador::where('usuario_id', auth()->user()->id)
+                    ->where('liga_id', $rodada->liga_id)
+                    ->with('liga')
+                    ->first();
+
+        return view('rodadas.classificacao', compact('rodada', 'jogador'));
+    }
+
     /*public function consolidar($rodada_id)
     {
         $rodada = $this->rodada($rodada_id);

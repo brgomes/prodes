@@ -24,6 +24,23 @@ class LigaController extends Controller
         $this->jogador  = $jogador;
     }
 
+    public function liga($id, $admin = true)
+    {
+        $liga = Liga::find($id);
+
+        if (!$liga) {
+            return null;
+        }
+
+        if ($admin) {
+            if (!auth()->user()->adminLiga($liga->id)) {
+                return null;
+            }
+        }
+
+        return $liga;
+    }
+
     public function index()
     {
         $ligas = Jogador::addSelect(['datafim' => Liga::select('datafim')->whereColumn('id', 'jogador.liga_id')])
@@ -97,6 +114,17 @@ class LigaController extends Controller
         return redirect()->back();
     }
 
+    public function edit($id)
+    {
+        $liga = $this->liga($id);
+
+        if (!$liga) {
+            return response()->json(['message' => 'Liga não encontrada.'], 404);
+        }
+
+        return view('ligas.edit', compact('liga'));
+    }
+
     public function update(Request $request, $id)
     {
         $temp = Jogador::where('usuario_id', auth()->user()->id)
@@ -118,6 +146,17 @@ class LigaController extends Controller
         }
 
         return redirect()->route('ligas.index');
+    }
+
+    public function delete($id)
+    {
+        $liga = $this->liga($id);
+
+        if (!$liga) {
+            return response()->json(['message' => 'Liga não encontrada.'], 404);
+        }
+
+        return view('ligas.delete', compact('liga'));
     }
 
     public function destroy($id)

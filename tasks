@@ -1,13 +1,8 @@
+- Refazer script que consolida a liga, considerando agora os tipos de liga
+
 - Ver com o Paul a questão do cadastro das equipes para cada liga para poderem ser selecionadas no cadastro de campeões.
 Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
 o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
-
-- Implementar ajax e remover modal no seguintes cadastros:
-
-1. Edição de liga
-2. Exclusão de liga
-3. Classificação da rodada
-
 
 - A liga deve ter data limite para o ingresso de novos jogadores. Essa data também servirá para editar as respostas dos
 campeões
@@ -20,8 +15,6 @@ informar a pontuação em caso de acerto do placar e a pontuação em caso de ac
 dos pontos em caso de acerto do palpite
 
 - Adicionar captcha no login da aplicação
-
-- Exibir classificação da liga na página da liga (e não a da rodada). Migrar a classificação da rodada para o modal
 
 - Criar dispositivo para usuários saberem que existem partidas a palpitar
 
