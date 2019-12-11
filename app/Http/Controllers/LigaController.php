@@ -107,10 +107,11 @@ class LigaController extends Controller
             }
 
             $classificacao      = $liga->jogadores()->orderBy('posicao')->get();
+            $palpites           = $rodada->palpites->where('jogador_id', $jogador->id);
             $habilita_coringa   = true;
 
-            if ($rodada->palpites->count() > 0) {
-                foreach ($rodada->palpites as $palpite) {
+            if ($palpites->count() > 0) {
+                foreach ($palpites as $palpite) {
                     if ($palpite->coringa) {
                         if (!$palpite->partida->aberta()) {
                             $habilita_coringa = false;
