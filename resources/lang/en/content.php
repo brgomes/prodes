@@ -131,6 +131,7 @@ return [
 	'habilitar-coringa'			=> 'Enable joker',
 	'liga-por-placar'			=> 'By scoreboard',
 	'liga-por-vencedor'			=> 'By winner',
+	'coringa'					=> 'Joker',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

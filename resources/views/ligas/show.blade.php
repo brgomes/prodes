@@ -132,6 +132,10 @@
 											<th>{{ __('content.visitante') }}</th>
 										@endif
 
+										@if ($liga->temcoringa)
+											<th class="text-center">{{ __('content.coringa') }}</th>
+										@endif
+
 										<th class="text-center">{{ __('content.resultado') }}</th>
 
 										@if ($jogador->admin)
@@ -268,6 +272,27 @@
 														@endif
 													@endif
 													<small class="text-secondary">{{ $partida->percentualVisitante() }}%</small>
+												</td>
+											@endif
+
+											@if ($liga->temcoringa)
+												<td class="text-center">
+													@if ($partida->aberta())
+														@if ($habilita_coringa)
+															@if ($partida->palpite)
+																{{ Form::radio('coringa', $partida->id, $partida->palpite->coringa, ['class' => 'palpite']) }}
+															@else
+																{{ Form::radio('coringa', $partida->id, null, ['class' => 'palpite']) }}
+															@endif
+														@endif
+													@else
+														@if ($partida->palpite)
+															@if ($partida->palpite->coringa)
+																<i class="fas fa-check-circle"></i>
+															@endif
+														@else
+														@endif
+													@endif
 												</td>
 											@endif
 

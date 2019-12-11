@@ -5,13 +5,6 @@ o administrador informa a opção correta para consolidar. Na própria pergunta 
 - A liga deve ter data limite para o ingresso de novos jogadores. Essa data também servirá para editar as respostas dos
 campeões
 
-- Criar tipos de ligas que permitem palpitar no vencedor ou no placar da partida. Criar também campos para informar a
-pontuação em caso de acerto: se a liga for por vencedor, informar a pontuação em caso de acerto; se a liga for por placar
-informar a pontuação em caso de acerto do placar e a pontuação em caso de acerto do vencedor
-
-- Criar, no cadastro da liga, opção para liberar ou não o palpite coringa. Se ele estiver ativo o jogador ganha o dobro
-dos pontos em caso de acerto do palpite
-
 - Adicionar captcha no login da aplicação
 
 - Criar dispositivo para usuários saberem que existem partidas a palpitar

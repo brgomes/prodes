@@ -131,6 +131,7 @@ return [
 	'habilitar-coringa'			=> 'Habilitar coringa',
 	'liga-por-placar'			=> 'Por placar',
 	'liga-por-vencedor'			=> 'Por vencedor',
+	'coringa'					=> 'Coringa',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

@@ -106,9 +106,21 @@ class LigaController extends Controller
                 }
             }
 
-            $classificacao = $liga->jogadores()->orderBy('posicao')->get();
+            $classificacao      = $liga->jogadores()->orderBy('posicao')->get();
+            $habilita_coringa   = true;
 
-            return view('ligas.show', compact('jogador', 'liga', 'rodada', 'rodada_id', 'classificacao'));
+            if ($rodada->palpites->count() > 0) {
+                foreach ($rodada->palpites as $palpite) {
+                    if ($palpite->coringa) {
+                        if (!$palpite->partida->aberta()) {
+                            $habilita_coringa = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return view('ligas.show', compact('jogador', 'liga', 'rodada', 'rodada_id', 'classificacao', 'habilita_coringa'));
         }
 
         return redirect()->back();

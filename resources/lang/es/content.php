@@ -131,6 +131,7 @@ return [
 	'habilitar-coringa'			=> 'Habilitar comodín',
 	'liga-por-placar'			=> 'Por placar',
 	'liga-por-vencedor'			=> 'Por ganador',
+	'coringa'					=> 'Comodín',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',
