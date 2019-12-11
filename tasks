@@ -2,12 +2,16 @@
 Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
 o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
 
-- A liga deve ter data limite para o ingresso de novos jogadores. Essa data também servirá para editar as respostas dos
-campeões
+- Criar o cadastro de grupos de respostas dentro da liga
 
-- Adicionar captcha no login da aplicação
+- Criar o cadastro de perguntas dentro da liga
+
+- Ao entrar na liga, se houver perguntas para a liga dentro do prazo cadastrado na pergunta, exibir as perguntas para o
+jogador responder
 
 - Fazer a consolidação dos pontos bônus
+
+- Adicionar captcha no login da aplicação
 
 - Criar dispositivo para usuários saberem que existem partidas a palpitar
 

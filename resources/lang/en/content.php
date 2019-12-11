@@ -117,6 +117,8 @@ return [
 	'sigla-palpiteE'			=> 'D',
 	'sigla-palpiteV'			=> 'A',
 	'sigla-pontos'				=> 'P',
+	'sigla-bonus'				=> 'B',
+	'sigla-total'				=> 'T',
 	'sigla-rodadas-vencidas'	=> 'WR',
 	'sigla-aproveitamento'		=> 'A',
 	'pesquisa-de-liga'			=> 'League search',

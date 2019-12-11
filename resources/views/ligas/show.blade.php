@@ -344,6 +344,8 @@
 								<th></th>
 								<th>{{ __('content.jogador') }}</th>
 								<th class="text-center">{{ __('content.sigla-pontos') }}</th>
+								<th class="text-center">{{ __('content.sigla-bonus') }}</th>
+								<th class="text-center">{{ __('content.sigla-total') }}</th>
 								<th class="text-center">{{ __('content.sigla-rodadas-vencidas') }}</th>
 								<th class="text-center">%</th>
 
@@ -370,6 +372,8 @@
 										@endif
 									</td>
 									<td class="text-center">{{ $item->pontosganhos }}</td>
+									<td class="text-center">{{ $item->bonusganhos }}</td>
+									<td class="text-center">{{ $item->totalpontos }}</td>
 									<td class="text-center">{{ $item->rodadasvencidas }}</td>
 									<td class="text-center">@if ($item->aproveitamento) {{ $item->aproveitamentof . '%' }} @else - @endif</td>
 
