@@ -34,10 +34,14 @@
 									<button class="btn btn-primary" data-toggle="modal" data-target="#regulamento"><i class="far fa-file-alt"></i> {{ __('content.regulamento') }}</button>
 								@endif
 
-								@if ($jogador)
-									<button class="btn btn-secondary" disabled><i class="far fa-times-circle"></i> {{ __('content.ja-participa') }}</button>
+								@if ($liga->podeEntrar())
+									@if ($jogador)
+										<button class="btn btn-secondary" disabled><i class="far fa-times-circle"></i> {{ __('content.ja-participa') }}</button>
+									@else
+										<button class="btn btn-success" data-toggle="modal" data-target="#participar"><i class="fas fa-sign-in-alt"></i> {{ __('content.participar-da-liga') }}</button>
+									@endif
 								@else
-									<button class="btn btn-success" data-toggle="modal" data-target="#participar"><i class="fas fa-sign-in-alt"></i> {{ __('content.participar-da-liga') }}</button>
+									<button class="btn btn-secondary" disabled><i class="far fa-times-circle"></i> {{ __('content.fora-do-prazo') }}</button>
 								@endif
 							</td>
 						</tr>

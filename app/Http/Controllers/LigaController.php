@@ -310,6 +310,8 @@ class LigaController extends Controller
             return redirect()->route('ligas.show', $liga->id);
         }
 
+        // Verificar se há perguntas a serem respondidas
+
         $data = [
             'liga_id'           => $liga->id,
             'usuario_id'        => $user->id,

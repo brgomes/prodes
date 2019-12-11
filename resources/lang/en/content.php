@@ -132,6 +132,7 @@ return [
 	'liga-por-placar'			=> 'By scoreboard',
 	'liga-por-vencedor'			=> 'By winner',
 	'coringa'					=> 'Joker',
+	'fora-do-prazo'				=> 'Out of time',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

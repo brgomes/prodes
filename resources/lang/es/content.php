@@ -132,6 +132,7 @@ return [
 	'liga-por-placar'			=> 'Por placar',
 	'liga-por-vencedor'			=> 'Por ganador',
 	'coringa'					=> 'Comodín',
+	'fora-do-prazo'				=> 'Fuera de tiempo',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

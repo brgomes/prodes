@@ -132,6 +132,7 @@ return [
 	'liga-por-placar'			=> 'Por placar',
 	'liga-por-vencedor'			=> 'Por vencedor',
 	'coringa'					=> 'Coringa',
+	'fora-do-prazo'				=> 'Fora do prazo',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

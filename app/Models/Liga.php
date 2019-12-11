@@ -26,6 +26,19 @@ class Liga extends Model
         return $this->hasMany(Jogador::class)->where('admin', true);
     }
 
+    public function podeEntrar()
+    {
+        if (null === $this->datalimiteentrada) {
+            return true;
+        }
+
+        if ($this->datalimiteentrada . ' 23:59:59' < Carbon::now()->setTimezone(config('app.timezone'))) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function rodada($id = null)
     {
         if (isset($id)) {
