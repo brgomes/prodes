@@ -317,6 +317,9 @@ class LigaController extends Controller
             'rodadasvencidas'   => 0,
             'pontosdisputados'  => 0,
             'pontosganhos'      => 0,
+            'bonusdisputados'   => 0,
+            'bonusganhos'       => 0,
+            'totalpontos'       => 0,
             'created_at'        => Carbon::now()->setTimezone(config('app.timezone')),
         ];
 

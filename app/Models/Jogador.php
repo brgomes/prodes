@@ -9,8 +9,8 @@ class Jogador extends Model
     public $timestamps = false;
 
     protected $table 	= 'jogador';
-    protected $fillable = ['liga_id', 'usuario_id', 'admin', 'rodadasjogadas', 'rodadasvencidas',
-        'pontosdisputados', 'pontosganhos', 'posicao', 'aproveitamento', 'created_at'];
+    protected $fillable = ['liga_id', 'usuario_id', 'admin', 'rodadasjogadas', 'rodadasvencidas', 'pontosdisputados',
+        'pontosganhos', 'bonusdisputados', 'bonusganhos', 'totalpontos', 'posicao', 'aproveitamento', 'created_at'];
 
     public function liga()
     {

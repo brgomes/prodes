@@ -57,8 +57,11 @@ class Liga extends Model
         foreach ($jogadores as $jogador) {
             $pontosDisputadosLiga   = 0;
             $pontosGanhosLiga       = 0;
+            $bonusDisputados        = 0;
+            $bonusGanhos            = 0;
             $rodadasJogadas         = 0;
             $totalPartidasLiga      = 0;
+            $totalPontos            = 0;
 
             foreach ($rodadas as $rodada) {
                 $pontosDisputadosRodada = 0;
@@ -172,10 +175,15 @@ class Liga extends Model
                 $aproveitamentoLiga = round((($pontosGanhosLiga * 100) / $pontosDisputadosLiga), 2);
             }
 
+            // Calcular AQUI os pontos bônus
+
+            $totalPontos = $pontosGanhosLiga + $bonusGanhos;
+
             $jogador->update([
                 'rodadasjogadas'    => $rodadasJogadas,
                 'pontosdisputados'  => $pontosDisputadosLiga,
                 'pontosganhos'      => $pontosGanhosLiga,
+                'totalpontos'       => $totalPontos,
                 'aproveitamento'    => $aproveitamentoLiga,
             ]);
         }
@@ -205,7 +213,7 @@ class Liga extends Model
     {
         $itens = Jogador::addSelect(['primeironome' => Usuario::select('primeironome')->whereColumn('usuario.id', 'jogador.usuario_id')])
                     ->where('liga_id', $this->id)
-                    ->orderBy('pontosganhos', 'DESC')
+                    ->orderBy('totalpontos', 'DESC')
                     ->orderBy('rodadasvencidas', 'DESC')
                     ->orderBy('aproveitamento', 'DESC')
                     ->orderBy('primeironome')
