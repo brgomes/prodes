@@ -6,8 +6,7 @@ o administrador informa a opção correta para consolidar. Na própria pergunta 
 
 - Criar o cadastro de perguntas dentro da liga
 
-- Ao entrar na liga, se houver perguntas para a liga dentro do prazo cadastrado na pergunta, exibir as perguntas para o
-jogador responder
+- Exibir alerta na página da liga se houver perguntas em aberto
 
 - Fazer a consolidação dos pontos bônus
 

@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::resource('partidas', 'PartidaController');
 	Route::get('partidas/{rodada}/create', 'PartidaController@create')->name('partidas.create');
 	Route::get('partidas/{partida}/delete', 'PartidaController@delete')->name('partidas.delete');
+
+	Route::get('ligas/{liga}/bonus', 'BonusController@index')->name('bonus.index');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

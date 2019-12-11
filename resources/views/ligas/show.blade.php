@@ -18,13 +18,13 @@
 								<div class="dropdown-menu" aria-labelledby="dropdown1">
 									@if ($liga->regulamento)
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalRegulamento">{{ __('content.regulamento') }}</a>
-
-										@if ($jogador->admin)
-											<div class="dropdown-divider"></div>
-										@endif
 									@endif
 
+									<a class="dropdown-item" href="{{ route('bonus.index', $liga->id) }}">{{ __('content.bonus-da-liga') }}</a>
+
 									@if ($jogador->admin)
+										<div class="dropdown-divider"></div>
+
 										@if (isset($rodada))
 											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#consolidarLiga">{{ __('content.consolidar') }}</a>
 											<div class="dropdown-divider"></div>
@@ -160,7 +160,7 @@
 															<tr class="table-warning">
 														@endif
 													@else
-														<tr class="table-info">
+														<tr class="table-secondary">
 													@endif
 												@else
 													<tr>

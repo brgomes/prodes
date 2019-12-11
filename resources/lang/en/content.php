@@ -135,6 +135,10 @@ return [
 	'liga-por-vencedor'			=> 'By winner',
 	'coringa'					=> 'Joker',
 	'fora-do-prazo'				=> 'Out of time',
+	'bonus-da-liga'				=> 'League bonus',
+	'editar-pergunta'			=> 'New question',
+	'excluir-pergunta'			=> 'Delete question',
+	'grupos-de-resposta'		=> 'Answer groups',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

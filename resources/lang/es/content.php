@@ -135,6 +135,10 @@ return [
 	'liga-por-vencedor'			=> 'Por ganador',
 	'coringa'					=> 'Comodín',
 	'fora-do-prazo'				=> 'Fuera de tiempo',
+	'bonus-da-liga'				=> 'Bonus de la liga',
+	'editar-pergunta'			=> 'Editar pregunta',
+	'excluir-pergunta'			=> 'Eliminar pregunta',
+	'grupos-de-resposta'		=> 'Grupos de respuesta',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',
