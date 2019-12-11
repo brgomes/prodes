@@ -45,18 +45,54 @@
 								@else
 									@if ($palpite = $jogador->palpite($partida->id))
 										@if ($palpite->consolidado)
-											@if ($partida->vencedor == $palpite->palpite)
+											@if ($palpite->nivelacerto == 'T')
 												<td class="text-center bg-success text-light">
-													<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
+													@if ($rodada->liga->tipo = 'P')
+														<strong>{{ $palpite->palpitegolsm . '-' . $palpite->palpitegolsv }}</strong>
+													@elseif ($rodada->liga->tipo = 'V')
+														<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
+													@endif
+
+													@if ($palpite->coringa)
+														*
+													@endif
+												</td>
+											@elseif ($palpite->nivelacerto == 'P')
+												<td class="text-center bg-warning text-light">
+													@if ($rodada->liga->tipo = 'P')
+														<strong>{{ $palpite->palpitegolsm . '-' . $palpite->palpitegolsv }}</strong>
+													@elseif ($rodada->liga->tipo = 'V')
+														<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
+													@endif
+
+													@if ($palpite->coringa)
+														*
+													@endif
 												</td>
 											@else
 												<td class="text-center bg-danger text-light">
-													{{ __('content.sigla-palpite' . $palpite->palpite) }}
+													@if ($rodada->liga->tipo = 'P')
+														<strong>{{ $palpite->palpitegolsm . '-' . $palpite->palpitegolsv }}</strong>
+													@elseif ($rodada->liga->tipo = 'V')
+														<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
+													@endif
+
+													@if ($palpite->coringa)
+														*
+													@endif
 												</td>
 											@endif
 										@elseif ($admin)
 											<td class="text-center">
-												{{ __('content.sigla-palpite' . $palpite->palpite) }}
+												@if ($rodada->liga->tipo == 'P')
+													{{ $palpite->palpitegolsm . '-' . $palpite->palpitegolsv }}
+												@elseif ($rodada->liga->tipo == 'V')
+													{{ __('content.sigla-palpite' . $palpite->palpite) }}
+												@endif
+
+												@if ($palpite->coringa)
+													*
+												@endif
 											</td>
 										@else
 											<td></td>

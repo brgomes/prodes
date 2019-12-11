@@ -12,6 +12,11 @@ $(document).ready(function() {
         $('body').removeClass('loaded');
     };
 
+    var finishLoading = function() {
+        //$('h1').css('color', '#000000');
+        $('body').addClass('loaded');
+    };
+
     $('form').submit(function() {
         var submit = $(this).find(':submit');
 
@@ -50,6 +55,7 @@ $(document).ready(function() {
     $('.palpite[type="radio"]').uncheckableRadio();
 
     $('.ajax-modal').click(function(event) {
+        startLoading();
         event.preventDefault();
 
         var url = $(this).data('url');
@@ -66,6 +72,8 @@ $(document).ready(function() {
                 alert(errorThrown);
             }
         });
+
+        finishLoading();
 
         //return false;
     });

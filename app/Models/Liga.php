@@ -86,7 +86,8 @@ class Liga extends Model
                                     $pontosGanhosLiga   += $this->pontosacertoplacar;
                                     $pontosGanhosRodada += $this->pontosacertoplacar;
 
-                                    $pontuacao = $this->pontosacertoplacar;
+                                    $pontuacao      = $this->pontosacertoplacar;
+                                    $nivelacerto    = 'T';
                                 } else {
                                     if ($golsM > $golsV) {
                                         $vencedor = 'M';
@@ -96,9 +97,9 @@ class Liga extends Model
                                         $vencedor = 'E';
                                     }
 
-                                    if ($palpite->palpitegolsm > $palpitegolsv) {
+                                    if ($palpite->palpitegolsm > $golsV) {
                                         $palpite_vencedor = 'M';
-                                    } elseif ($palpite->palpitegolsv > $palpitegolsm) {
+                                    } elseif ($palpite->palpitegolsv > $golsM) {
                                         $palpite_vencedor = 'V';
                                     } else {
                                         $palpite_vencedor = 'E';
@@ -108,9 +109,11 @@ class Liga extends Model
                                         $pontosGanhosLiga   += $this->pontosacertovencedor;
                                         $pontosGanhosRodada += $this->pontosacertovencedor;
 
-                                        $pontuacao = $this->pontosacertovencedor;
+                                        $pontuacao      = $this->pontosacertovencedor;
+                                        $nivelacerto    = 'P';
                                     } else {
-                                        $pontuacao = 0;
+                                        $pontuacao      = 0;
+                                        $nivelacerto    = 'Z';
                                     }
                                 }
                             } elseif ($this->tipo == 'V') {
@@ -121,9 +124,11 @@ class Liga extends Model
                                     $pontosGanhosLiga   += $this->pontosacertovencedor;
                                     $pontosGanhosRodada += $this->pontosacertovencedor;
 
-                                    $pontuacao = $this->pontosacertovencedor;
+                                    $pontuacao      = $this->pontosacertovencedor;
+                                    $nivelacerto    = 'T';
                                 } else {
-                                    $pontuacao = 0;
+                                    $pontuacao      = 0;
+                                    $nivelacerto    = 'Z';
                                 }
                             }
 
@@ -131,9 +136,9 @@ class Liga extends Model
                                 $pontuacao *= 2;
                             }
 
-                            $palpite->update(['consolidado' => true, 'pontos' => $pontuacao]);
+                            $palpite->update(['consolidado' => true, 'nivelacerto' => $nivelacerto, 'pontos' => $pontuacao]);
                         } else {
-                            $palpite->update(['consolidado' => false, 'pontos' => null]);
+                            $palpite->update(['consolidado' => false, 'nivelacerto' => null, 'pontos' => null]);
                         }
                     }
 

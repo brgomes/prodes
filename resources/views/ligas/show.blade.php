@@ -152,13 +152,15 @@
 											@else
 												@if ($partida->palpite)
 													@if ($partida->palpite->consolidado)
-														@if ($partida->palpite->palpite == $partida->vencedor)
+														@if ($partida->palpite->nivelacerto == 'T')
 															<tr class="table-success">
-														@else
+														@elseif ($partida->palpite->nivelacerto == 'Z')
 															<tr class="table-danger">
+														@elseif ($partida->palpite->nivelacerto == 'P')
+															<tr class="table-warning">
 														@endif
 													@else
-														<tr class="table-warning">
+														<tr class="table-info">
 													@endif
 												@else
 													<tr>
