@@ -47,9 +47,9 @@
 										@if ($palpite->consolidado)
 											@if ($palpite->nivelacerto == 'T')
 												<td class="text-center bg-success text-light">
-													@if ($rodada->liga->tipo = 'P')
+													@if ($rodada->liga->tipo == 'P')
 														<strong>{{ $palpite->palpitegolsm . '-' . $palpite->palpitegolsv }}</strong>
-													@elseif ($rodada->liga->tipo = 'V')
+													@elseif ($rodada->liga->tipo == 'V')
 														<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
 													@endif
 
@@ -59,9 +59,9 @@
 												</td>
 											@elseif ($palpite->nivelacerto == 'P')
 												<td class="text-center bg-warning text-light">
-													@if ($rodada->liga->tipo = 'P')
+													@if ($rodada->liga->tipo == 'P')
 														<strong>{{ $palpite->palpitegolsm . '-' . $palpite->palpitegolsv }}</strong>
-													@elseif ($rodada->liga->tipo = 'V')
+													@elseif ($rodada->liga->tipo == 'V')
 														<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
 													@endif
 
@@ -71,9 +71,9 @@
 												</td>
 											@else
 												<td class="text-center bg-danger text-light">
-													@if ($rodada->liga->tipo = 'P')
+													@if ($rodada->liga->tipo == 'P')
 														<strong>{{ $palpite->palpitegolsm . '-' . $palpite->palpitegolsv }}</strong>
-													@elseif ($rodada->liga->tipo = 'V')
+													@elseif ($rodada->liga->tipo == 'V')
 														<strong>{{ __('content.sigla-palpite' . $palpite->palpite) }}</strong>
 													@endif
 
