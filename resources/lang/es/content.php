@@ -92,7 +92,7 @@ return [
 	'data'						=> 'Día',
 	'hora'						=> 'Hora',
 	'sigla'						=> 'Acrónimo',
-	'mandante'					=> 'Anfitrión',
+	'mandante'					=> 'Local',
 	'empate'					=> 'Empate',
 	'visitante'					=> 'Visitante',
 	'gols'						=> 'Gols',
