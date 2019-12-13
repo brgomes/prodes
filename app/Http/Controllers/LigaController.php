@@ -106,7 +106,7 @@ class LigaController extends Controller
                 }
             }
 
-            $classificacao      = $liga->jogadores()->orderBy('posicao')->get();
+            $classificacao      = $liga->jogadores()->orderBy(DB::raw('ISNULL(posicao), posicao'), 'ASC')->get();
             $palpites           = $rodada->palpites->where('jogador_id', $jogador->id);
             $habilita_coringa   = true;
 

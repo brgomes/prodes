@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Rodada extends Model
@@ -21,7 +22,7 @@ class Rodada extends Model
 
     public function classificacao()
     {
-        return $this->hasMany(Classificacao::class, 'rodada_id')->orderBy('posicao');
+        return $this->hasMany(Classificacao::class, 'rodada_id')->orderBy(DB::raw('ISNULL(posicao), posicao'), 'ASC');
     }
 
     public function palpites()
