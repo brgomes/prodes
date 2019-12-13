@@ -8,6 +8,7 @@ use App\Models\BonusOpcao;
 use App\Models\BonusPergunta;
 use App\Models\Liga;
 use App\Models\Jogador;
+use App\Models\JogadorBonus;
 use Illuminate\Http\Request;
 
 class BonusController extends Controller
@@ -196,6 +197,51 @@ class BonusController extends Controller
 
     public function salvarRespostas(Request $request)
     {
-        dd($request->all());
+        $liga = $this->liga($request->liga_id);
+
+        if (!$liga) return redirect()->route('ligas.index');
+
+        $jogador = $this->jogador($liga->id);
+
+        if (!$jogador) return redirect()->route('ligas.index');
+
+        $perguntas = $request->perguntas;
+
+        if (count($perguntas) > 0) {
+            $data = $request->all();
+
+            foreach ($perguntas as $pergunta_id) {
+                $pergunta = $this->pergunta->find($pergunta_id);
+
+                if (!$pergunta) continue;
+
+                if ($pergunta->liga_id != $liga->id) continue;
+
+                $where = [
+                    'liga_id'       => $liga->id,
+                    'jogador_id'    => $jogador->id,
+                    'pergunta_id'   => $pergunta->id,
+                    'consolidado'   => false,
+                ];
+
+                $values = [];
+
+                for ($i=1; $i<=4; $i++) {
+                    $key = 'resposta' . $i . '_' . $pergunta->id;
+
+                    if (array_key_exists($key, $data)) {
+                        $values['opcao' . $i . '_id'] = $data[$key];
+                    } else {
+                        $values['opcao' . $i . '_id'] = null;
+                    }
+                }
+
+                $values['pontosganhos'] = 0;
+
+                JogadorBonus::updateOrCreate($where, $values);
+            }
+        }
+
+        return redirect()->route('bonus.index', $liga->id);
     }
 }

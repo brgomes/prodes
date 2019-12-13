@@ -76,6 +76,7 @@
 				@endforeach
 	  		</div>
 
+	  		{{ Form::hidden('liga_id', $liga->id )}}
 	  		<button type="submit" class="btn btn-primary">{{ __('content.salvar-respostas') }}</button>
 	  	{!! Form::close() !!}
 	@endif
