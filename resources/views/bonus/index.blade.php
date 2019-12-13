@@ -21,7 +21,6 @@
 
 									<div class="dropdown-menu" aria-labelledby="dropdown1">
 										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.edit', $liga->id) }}">{{ __('content.nova-pergunta') }}</a>
-										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.delete', $liga->id) }}">{{ __('content.grupos-de-resposta') }}</a>
 									</div>
 								</div>
 							@endif

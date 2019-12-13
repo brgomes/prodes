@@ -42,6 +42,8 @@ class BonusController extends Controller
 
     	$jogador = $this->jogador($liga->id);
 
+        
+
     	return view('bonus.index', compact('liga', 'jogador'));
     }
 }
