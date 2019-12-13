@@ -2,15 +2,13 @@
 Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
 o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
 
-- Carregas repostas das perguntas bônus
-
 - Exibir informação de perguntas inativas
+
+- Exibir informações nas perguntas, como data limite para resposta
 
 - Tratar quando for pergunta com mais de uma resposta
 
 - Exibir a informação de pontos consolidados na tela bônus
-
-- Exibir informações nas perguntas, como data limite para resposta
 
 - Exibir alerta na página da liga se houver perguntas em aberto
 

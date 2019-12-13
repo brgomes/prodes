@@ -66,10 +66,19 @@
 									</div>
 								</div>
 							</div>
-							@if ($pergunta->qtderespostas == 1)
-						    	<div class="form-group">
-						    		{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), null, ['class' => 'form-control']) }}
-						    	</div>
+
+							@if ($resposta = $jogador->resposta($pergunta->id))
+								@if ($pergunta->qtderespostas == 1)
+						    		<div class="form-group">
+						    			{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), $resposta->opcao1_id, ['class' => 'form-control']) }}
+						    		</div>	
+					    		@endif
+						    @else
+						    	@if ($pergunta->qtderespostas == 1)
+						    		<div class="form-group">
+						    			{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), null, ['class' => 'form-control']) }}
+						    		</div>
+						    	@endif
 						    @endif
 						</div>
 					</div>

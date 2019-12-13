@@ -46,4 +46,11 @@ class Jogador extends Model
 
         return null;
     }
+
+    public function resposta($pergunta_id)
+    {
+        return JogadorBonus::where('pergunta_id', $pergunta_id)
+                ->where('jogador_id', $this->id)
+                ->first();
+    }
 }
