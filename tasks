@@ -2,13 +2,23 @@
 Eu estou pensando em fazer o cadastro da pergunta e das suas opções. Cada jogador seleciona a sua opção e, na consolidação,
 o administrador informa a opção correta para consolidar. Na própria pergunta já terá o campo de pontuação em caso de acerto
 
-- Criar o cadastro de grupos de respostas dentro da liga
+- Salvar respostas das perguntas bônus
 
-- Criar o cadastro de perguntas dentro da liga
+- Carregas repostas das perguntas bônus
+
+- Exibir informação de perguntas inativas
+
+- Tratar quando for pergunta com mais de uma resposta
+
+- Exibir a informação de pontos consolidados na tela bônus
+
+- Exibir informações nas perguntas, como data limite para resposta
 
 - Exibir alerta na página da liga se houver perguntas em aberto
 
 - Fazer a consolidação dos pontos bônus
+
+- Exibir as informações de respostas certas (quadro verde) e erradas (quadro vermelho)
 
 - Adicionar captcha no login da aplicação
 

@@ -68,7 +68,7 @@
 							</div>
 							@if ($pergunta->qtderespostas == 1)
 						    	<div class="form-group">
-						    		{{ Form::select('resposta1' . $pergunta->id, $pergunta->pluckOpcoes(), null, ['class' => 'form-control']) }}
+						    		{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), null, ['class' => 'form-control']) }}
 						    	</div>
 						    @endif
 						</div>

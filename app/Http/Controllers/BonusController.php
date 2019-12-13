@@ -190,4 +190,12 @@ class BonusController extends Controller
 
         return redirect()->route('bonus.index', $liga->id);
     }
+
+
+
+
+    public function salvarRespostas(Request $request)
+    {
+        dd($request->all());
+    }
 }
