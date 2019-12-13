@@ -38,46 +38,47 @@
 	</div>
 
 	@if ($perguntas->count() > 0)
-		<div class="row">
-			@foreach ($perguntas as $pergunta)
-				<div class="col-sm-6">
-					<div class="wrapper mb-4">
-						<div class="wrapper-title bg-dark">
-							<div class="row">
-								<div class="col-sm-11">
-									<h2>{{ $pergunta->pergunta }}</h2>
-								</div>
-								<div class="col-sm-1">
-									@if ($jogador->admin)
-										<div class="dropdown">
-											<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+		{!! Form::open(['route' => 'bonus.salvar-respostas']) !!}
+			<div class="row">
+				@foreach ($perguntas as $pergunta)
+					<div class="col-sm-6">
+						<div class="wrapper mb-4">
+							<div class="wrapper-title bg-dark">
+								<div class="row">
+									<div class="col-sm-11">
+										<h2>{{ $pergunta->pergunta }}</h2>
+										{{ Form::hidden('perguntas[]', $pergunta->id) }}
+									</div>
+									<div class="col-sm-1">
+										@if ($jogador->admin)
+											<div class="dropdown">
+												<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
-											<div class="dropdown-menu" aria-labelledby="dropdown1">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.editar-pergunta') }}</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.adicionar-opcao') }}</a>
-												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.excluir-pergunta') }}</a>
+												<div class="dropdown-menu" aria-labelledby="dropdown1">
+													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.editar-pergunta') }}</a>
+													<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('bonus.nova-opcao', $pergunta->id) }}">{{ __('content.adicionar-opcao') }}</a>
+													<div class="dropdown-divider"></div>
+													<a class="dropdown-item ajax-modal" href="#">{{ __('content.excluir-opcao') }}</a>
+													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.excluir-pergunta') }}</a>
+												</div>
 											</div>
-										</div>
-									@endif
+										@endif
+									</div>
 								</div>
 							</div>
+							@if ($pergunta->qtderespostas == 1)
+						    	<div class="form-group">
+						    		{{ Form::select('resposta1' . $pergunta->id, $pergunta->pluckOpcoes(), null, ['class' => 'form-control']) }}
+						    	</div>
+						    @endif
 						</div>
-						<form>
-						    <div class="form-group col-md-3">
-						      	<label for="inputEmail4">{{ $pergunta->pergunta }}</label>
-						      	<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-						    </div>
-						    <div class="form-group col-md-3">
-						      	<label for="inputPassword4"></label>
-						      	<input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-						    </div>
-						</form>
 					</div>
-				</div>
-			@endforeach
-		@endif
-  	</div>
+				@endforeach
+	  		</div>
+
+	  		<button type="submit" class="btn btn-primary">{{ __('content.salvar-respostas') }}</button>
+	  	{!! Form::close() !!}
+	@endif
 
 	<div class="modal fade" id="ajaxModal"></div>
 

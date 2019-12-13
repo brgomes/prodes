@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OpcaoValidationRequest;
 use App\Http\Requests\PerguntaValidationRequest;
+use App\Models\BonusOpcao;
 use App\Models\BonusPergunta;
 use App\Models\Liga;
 use App\Models\Jogador;
@@ -11,10 +13,12 @@ use Illuminate\Http\Request;
 class BonusController extends Controller
 {
     protected $pergunta;
+    protected $opcao;
 
-    public function __construct(BonusPergunta $pergunta)
+    public function __construct(BonusPergunta $pergunta, BonusOpcao $opcao)
     {
         $this->pergunta = $pergunta;
+        $this->opcao    = $opcao;
     }
 
     public function liga($id, $admin = true)
@@ -60,11 +64,6 @@ class BonusController extends Controller
     	return view('bonus.index', compact('liga', 'jogador', 'perguntas'));
     }
 
-    public function novaPergunta($liga_id)
-    {
-        return view('bonus.nova-pergunta');
-    }
-
     public function inserirPergunta(PerguntaValidationRequest $request, $liga_id)
     {
         $liga = $this->liga($liga_id);
@@ -88,5 +87,33 @@ class BonusController extends Controller
         }
 
         return redirect()->back()->with('error', __('message.erro'));
+    }
+
+    public function novaOpcao($pergunta_id)
+    {
+        $pergunta = $this->pergunta->find($pergunta_id);
+
+        if (!$pergunta) return redirect()->route('ligas.index');
+
+        $liga = $this->liga($pergunta->liga_id);
+
+        if (!$liga) return redirect()->route('ligas.index');
+
+        return view('bonus.nova-opcao', compact('pergunta'));
+    }
+
+    public function inserirOpcao(OpcaoValidationRequest $request)
+    {
+        $pergunta = $this->pergunta->find($request->pergunta_id);
+
+        if (!$pergunta) return redirect()->route('ligas.index');
+
+        $liga = $this->liga($pergunta->liga_id);
+
+        if (!$liga) return redirect()->route('ligas.index');
+
+        $this->opcao->create($request->all());
+
+        return redirect()->route('bonus.index', $liga->id);
     }
 }

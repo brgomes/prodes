@@ -140,9 +140,13 @@ return [
 	'editar-pergunta'			=> 'Editar pregunta',
 	'excluir-pergunta'			=> 'Eliminar pregunta',
 	'grupos-de-resposta'		=> 'Grupos de respuesta',
+	'adicionar-opcao'			=> 'Agregar opción',
 	'pergunta'					=> 'Pregunta',
 	'data-limite-resposta'		=> 'Fecha limite para respuesta',
 	'qtde-respostas'			=> 'Numero de respuestas',
+	'selecione'					=> 'Seleccione',
+	'salvar-respostas'			=> 'Guardar respuestas',
+	'opcao'						=> 'Opción',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

@@ -17,21 +17,35 @@ class BonusPergunta extends Model
 
     public function opcaoCorreta1()
     {
-        return $this->belongsTo(GrupoOpcao::class, 'opcaocorreta1_id');
+        return $this->belongsTo(BonusOpcao::class, 'opcaocorreta1_id');
     }
 
     public function opcaoCorreta2()
     {
-        return $this->belongsTo(GrupoOpcao::class, 'opcaocorreta2_id');
+        return $this->belongsTo(BonusOpcao::class, 'opcaocorreta2_id');
     }
 
     public function opcaoCorreta3()
     {
-        return $this->belongsTo(GrupoOpcao::class, 'opcaocorreta3_id');
+        return $this->belongsTo(BonusOpcao::class, 'opcaocorreta3_id');
     }
 
     public function opcaoCorreta4()
     {
-        return $this->belongsTo(GrupoOpcao::class, 'opcaocorreta4_id');
+        return $this->belongsTo(BonusOpcao::class, 'opcaocorreta4_id');
+    }
+
+    public function opcoes()
+    {
+        return $this->hasMany(BonusOpcao::class, 'pergunta_id');
+    }
+
+    public function pluckOpcoes()
+    {
+        $opcoes = $this->opcoes()->orderBy('opcao')->pluck('opcao', 'id');
+
+        $opcoes->prepend('-- ' . strtoupper(__('content.selecione')) . ' --', '');
+
+        return $opcoes;
     }
 }
