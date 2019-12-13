@@ -48,6 +48,7 @@ return [
 	'email'						=> 'Correo electrónico',
 	'ultimo-acesso'				=> 'Último acceso',
 	'ativo'						=> 'Activo',
+	'ativa'						=> 'Activa',
 	'administrador'				=> 'Administrador',
 	'created-at'				=> 'Fecha de creación',
 	'data-inicial'				=> 'Fecha inicial',
@@ -139,6 +140,9 @@ return [
 	'editar-pergunta'			=> 'Editar pregunta',
 	'excluir-pergunta'			=> 'Eliminar pregunta',
 	'grupos-de-resposta'		=> 'Grupos de respuesta',
+	'pergunta'					=> 'Pregunta',
+	'data-limite-resposta'		=> 'Fecha limite para respuesta',
+	'qtde-respostas'			=> 'Numero de respuestas',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

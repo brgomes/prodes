@@ -24,4 +24,5 @@ return [
 	'acao-nao-pode-ser-executada'	=> 'La acción no se pudo realizar. Entre en contacto con el administrador del sistema.',
 	'explicacao-coringa'			=> 'El jugador puede seleccionar un partido por ronda y valdrá el doble de puntos.',
 	'admin-ve-palpites'				=> 'Los administradores pueden ver los prodes antes de que se consolida la jornada.',
+	'nenhuma-pergunta-bonus'		=> 'No hay preguntas bonus registradas para la liga.',
 ];

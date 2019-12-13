@@ -20,15 +20,47 @@
 									<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 									<div class="dropdown-menu" aria-labelledby="dropdown1">
-										<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('ligas.edit', $liga->id) }}">{{ __('content.nova-pergunta') }}</a>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.nova-pergunta') }}</a>
+										<a class="dropdown-item" href="#" data-url="{{ route('bonus.nova-pergunta', $liga->id) }}">{{ __('content.nova-pergunta') }}</a>
 									</div>
 								</div>
 							@endif
 						</div>
 					</div>
 				</div>
+
+				@if ($perguntas->count() == 0)
+					<div class="alert alert-info">{{ __('message.nenhuma-pergunta-bonus') }}</div>
+				@else
+				@endif
 			</div>
 	  	</div>
 	</div>
+
+	<div class="modal fade" id="ajaxModal"></div>
+
+	@if ($jogador->admin)
+		{{ Form::open(['route' => ['bonus.inserir-pergunta', $liga->id], 'method' => 'post']) }}
+			<div class="modal fade" id="modalNovaPergunta">
+	  			<div class="modal-dialog modal-lg">
+	    			<div class="modal-content">
+	      				<div class="modal-header">
+	        				<h5 class="modal-title">{{ __('content.nova-pergunta') }}</h5>
+	        				<button type="button" class="close" data-dismiss="modal">
+	          					<span aria-hidden="true">&times;</span>
+	        				</button>
+	      				</div>
+	      				<div class="modal-body">
+	    					@include('bonus._form-pergunta')
+	      				</div>
+	      				<div class="modal-footer">
+	      					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>
+	        				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('content.cancelar') }}</button>
+	      				</div>
+	    			</div>
+	  			</div>
+			</div>
+		{{ Form::close() }}
+	@endif
 
 @stop

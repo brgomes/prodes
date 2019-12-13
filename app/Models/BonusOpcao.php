@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BonusResposta extends Model
+class BonusOpcao extends Model
 {
     public $timestamps = false;
 

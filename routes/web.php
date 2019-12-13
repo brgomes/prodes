@@ -36,6 +36,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('partidas/{partida}/delete', 'PartidaController@delete')->name('partidas.delete');
 
 	Route::get('ligas/{liga}/bonus', 'BonusController@index')->name('bonus.index');
+	Route::get('ligas/{liga}/bonus/nova-pergunta', 'BonusController@novaPergunta')->name('bonus.nova-pergunta');
+	Route::post('ligas/{liga}/bonus/inserir-pergunta', 'BonusController@inserirPergunta')->name('bonus.inserir-pergunta');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

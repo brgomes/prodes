@@ -26,6 +26,11 @@ class Liga extends Model
         return $this->hasMany(Jogador::class)->where('admin', true);
     }
 
+    public function perguntas()
+    {
+        return $this->hasMany(BonusPergunta::class);
+    }
+
     public function podeEntrar()
     {
         if (null === $this->datalimiteentrada) {

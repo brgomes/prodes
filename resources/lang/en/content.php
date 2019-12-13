@@ -48,6 +48,7 @@ return [
 	'email'						=> 'Email',
 	'ultimo-acesso'				=> 'Last login',
 	'ativo'						=> 'Active',
+	'ativa'						=> 'Active',
 	'administrador'				=> 'Administrator',
 	'created-at'				=> 'Date created',
 	'data-inicial'				=> 'Initial date',
@@ -139,6 +140,9 @@ return [
 	'editar-pergunta'			=> 'New question',
 	'excluir-pergunta'			=> 'Delete question',
 	'grupos-de-resposta'		=> 'Answer groups',
+	'pergunta'					=> 'Question',
+	'data-limite-resposta'		=> 'Deadline for answer',
+	'qtde-respostas'			=> 'Number of answers',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

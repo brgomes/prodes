@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BonusOpcao extends Model
+class BonusPergunta extends Model
 {
     protected $table 	= 'bonus_pergunta';
     protected $fillable = ['liga_id', 'ativa', 'datalimiteresposta', 'pergunta', 'qtderespostas', 'opcaocorreta1_id',

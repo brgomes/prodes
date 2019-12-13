@@ -138,11 +138,23 @@ function datetime($value, $to)
     return $carbon->format($to);
 }
 
-function simnao($value)
+function simnao($value = null)
 {
-    $options = [0 => 'Não', 1 => 'Sim'];
+    $locale = app()->getLocale();
 
-    return $options[(int) $value];
+    if ($locale == 'pt-BR') {
+        $options = [0 => 'Não', 1 => 'Sim'];
+    } elseif ($locale == 'es') {
+        $options = [0 => 'No', 1 => 'Sí'];
+    } elseif ($locale == 'en') {
+        $options = [0 => 'No', 1 => 'Yes'];
+    }
+
+    if (isset($value)) {
+        return $options[(int) $value];
+    }
+
+    return $options;
 }
 
 function sexo($value)
