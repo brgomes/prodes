@@ -1,4 +1,4 @@
-{!! Form::open(['route' => 'bonus.inserir-opcao', 'method' => 'post']) !!}
+{!! Form::open(['route' => 'bonus.store-opcao', 'method' => 'post']) !!}
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

@@ -51,12 +51,12 @@
 									</div>
 									<div class="col-sm-1">
 										@if ($jogador->admin)
-											<div class="dropdown">
+											<div class="dropdown dropleft">
 												<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 												<div class="dropdown-menu" aria-labelledby="dropdown1">
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.editar-pergunta') }}</a>
-													<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('bonus.nova-opcao', $pergunta->id) }}">{{ __('content.adicionar-opcao') }}</a>
+													<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('bonus.edit-pergunta', $pergunta->id) }}">{{ __('content.editar-pergunta') }}</a>
+													<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('bonus.create-opcao', $pergunta->id) }}">{{ __('content.adicionar-opcao') }}</a>
 													<div class="dropdown-divider"></div>
 													<a class="dropdown-item ajax-modal" href="#">{{ __('content.excluir-opcao') }}</a>
 													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.excluir-pergunta') }}</a>
@@ -83,7 +83,7 @@
 	<div class="modal fade" id="ajaxModal"></div>
 
 	@if ($jogador->admin)
-		{{ Form::open(['route' => ['bonus.inserir-pergunta', $liga->id], 'method' => 'post']) }}
+		{{ Form::open(['route' => ['bonus.store-pergunta', $liga->id], 'method' => 'post']) }}
 			<div class="modal fade" id="modalNovaPergunta">
 	  			<div class="modal-dialog modal-lg">
 	    			<div class="modal-content">
@@ -94,7 +94,7 @@
 	        				</button>
 	      				</div>
 	      				<div class="modal-body">
-	    					@include('bonus._form-pergunta')
+	    					@include('bonus._form-pergunta', ['respostas' => false])
 	      				</div>
 	      				<div class="modal-footer">
 	      					<button type="submit" class="btn btn-success">{{ __('content.salvar') }}</button>

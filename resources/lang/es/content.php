@@ -147,6 +147,8 @@ return [
 	'selecione'					=> 'Seleccione',
 	'salvar-respostas'			=> 'Guardar respuestas',
 	'opcao'						=> 'Opción',
+	'resposta'					=> 'Respuesta',
+	'pontos-da-resposta'		=> 'Puntos de respuesta',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

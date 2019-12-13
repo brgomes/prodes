@@ -64,7 +64,10 @@ class BonusController extends Controller
     	return view('bonus.index', compact('liga', 'jogador', 'perguntas'));
     }
 
-    public function inserirPergunta(PerguntaValidationRequest $request, $liga_id)
+
+
+
+    public function storePergunta(PerguntaValidationRequest $request, $liga_id)
     {
         $liga = $this->liga($liga_id);
 
@@ -89,7 +92,7 @@ class BonusController extends Controller
         return redirect()->back()->with('error', __('message.erro'));
     }
 
-    public function novaOpcao($pergunta_id)
+    public function editPergunta($pergunta_id)
     {
         $pergunta = $this->pergunta->find($pergunta_id);
 
@@ -99,10 +102,41 @@ class BonusController extends Controller
 
         if (!$liga) return redirect()->route('ligas.index');
 
-        return view('bonus.nova-opcao', compact('pergunta'));
+        return view('bonus.edit-pergunta', compact('pergunta'));
     }
 
-    public function inserirOpcao(OpcaoValidationRequest $request)
+    public function updatePergunta(PerguntaValidationRequest $request)
+    {
+        $pergunta = $this->pergunta->find($request->pergunta_id);
+
+        if (!$pergunta) return redirect()->route('ligas.index');
+
+        $liga = $this->liga($pergunta->liga_id);
+
+        if (!$liga) return redirect()->route('ligas.index');
+
+        $pergunta->update($request->all());
+
+        return redirect()->route('bonus.index', $liga->id);
+    }
+
+
+
+
+    public function createOpcao($pergunta_id)
+    {
+        $pergunta = $this->pergunta->find($pergunta_id);
+
+        if (!$pergunta) return redirect()->route('ligas.index');
+
+        $liga = $this->liga($pergunta->liga_id);
+
+        if (!$liga) return redirect()->route('ligas.index');
+
+        return view('bonus.create-opcao', compact('pergunta'));
+    }
+
+    public function storeOpcao(OpcaoValidationRequest $request)
     {
         $pergunta = $this->pergunta->find($request->pergunta_id);
 

@@ -36,9 +36,13 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('partidas/{partida}/delete', 'PartidaController@delete')->name('partidas.delete');
 
 	Route::get('ligas/{liga}/bonus', 'BonusController@index')->name('bonus.index');
-	Route::get('ligas/bonus/{pergunta}/nova-opcao', 'BonusController@novaOpcao')->name('bonus.nova-opcao');
-	Route::post('ligas/{liga}/bonus/inserir-pergunta', 'BonusController@inserirPergunta')->name('bonus.inserir-pergunta');
-	Route::post('ligas/bonus/inserir-opcao', 'BonusController@inserirOpcao')->name('bonus.inserir-opcao');
+	Route::post('ligas/{liga}/bonus/store-pergunta', 'BonusController@storePergunta')->name('bonus.store-pergunta');
+	Route::get('ligas/bonus/{pergunta}/edit-pergunta', 'BonusController@editPergunta')->name('bonus.edit-pergunta');
+	Route::put('ligas/bonus/update-pergunta', 'BonusController@updatePergunta')->name('bonus.update-pergunta');
+
+	Route::get('ligas/bonus/{pergunta}/create-opcao', 'BonusController@createOpcao')->name('bonus.create-opcao');	
+	Route::post('ligas/bonus/store-opcao', 'BonusController@storeOpcao')->name('bonus.store-opcao');
+
 	Route::post('ligas/bonus/salvar-respostas', 'BonusController@salvarRespostas')->name('bonus.salvar-respostas');
 });
 
