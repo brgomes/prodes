@@ -15,8 +15,8 @@
 	</div>
 
 	<div class="form-group col-md-4">
-		<label for="ativo">{{ __('content.ativa') }}</label>
-		{{ Form::select('ativo', simnao(), null, ['class' => 'form-control', 'id' => 'ativo', 'required']) }}
+		<label for="ativa">{{ __('content.ativa') }}</label>
+		{{ Form::select('ativa', simnao(), null, ['class' => 'form-control', 'id' => 'ativa', 'required']) }}
 	</div>
 </div>
 

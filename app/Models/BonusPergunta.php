@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BonusPergunta extends Model
 {
     protected $table 	= 'bonus_pergunta';
-    protected $fillable = ['liga_id', 'ativa', 'datalimiteresposta', 'pergunta', 'qtderespostas', 'opcaocorreta1_id',
+    protected $fillable = ['liga_id', 'pergunta', 'datalimiteresposta', 'qtderespostas', 'ativa', 'consolidada', 'opcaocorreta1_id',
         'pontos1', 'opcaocorreta2_id', 'pontos2', 'opcaocorreta3_id', 'pontos3', 'opcaocorreta4_id', 'pontos4'];
 
     public function liga()
@@ -47,5 +47,20 @@ class BonusPergunta extends Model
         $opcoes->prepend('-- ' . strtoupper(__('content.selecione')) . ' --', '');
 
         return $opcoes;
+    }
+
+    public function resposta($jogador_id, $index)
+    {
+        $item = JogadorBonus::where('pergunta_id', $this->id)
+                ->where('jogador_id', $jogador_id)
+                ->first();
+
+        if (!$item) {
+            return null;
+        }
+
+        $key = 'opcao' . $index . '_id';
+
+        return $item->$key;
     }
 }

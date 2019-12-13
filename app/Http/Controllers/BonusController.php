@@ -9,6 +9,7 @@ use App\Models\BonusPergunta;
 use App\Models\Liga;
 use App\Models\Jogador;
 use App\Models\JogadorBonus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BonusController extends Controller
@@ -48,13 +49,12 @@ class BonusController extends Controller
 
     public function index($liga_id)
     {
-    	$liga = $this->liga($liga_id);
+    	$liga = $this->liga($liga_id, false);
 
-    	if (!$liga) {
-    		return redirect()->route('ligas.index');
-    	}
+    	if (!$liga) return redirect()->route('ligas.index');
 
-    	$jogador = $this->jogador($liga->id);
+    	$jogador   = $this->jogador($liga->id);
+        $hoje      = Carbon::now()->setTimezone(config('app.timezone'))->format('Y-m-d');
 
         if ($jogador->admin) {
             $perguntas = $liga->perguntas;
@@ -62,8 +62,11 @@ class BonusController extends Controller
             $perguntas = $liga->perguntas->where('ativa', 1);
         }
 
-    	return view('bonus.index', compact('liga', 'jogador', 'perguntas'));
+    	return view('bonus.index', compact('liga', 'jogador', 'perguntas', 'hoje'));
     }
+
+
+
 
 
 
@@ -164,6 +167,10 @@ class BonusController extends Controller
 
 
 
+
+
+
+
     public function createOpcao($pergunta_id)
     {
         $pergunta = $this->pergunta->find($pergunta_id);
@@ -195,9 +202,12 @@ class BonusController extends Controller
 
 
 
+
+
+
     public function salvarRespostas(Request $request)
     {
-        $liga = $this->liga($request->liga_id);
+        $liga = $this->liga($request->liga_id, false);
 
         if (!$liga) return redirect()->route('ligas.index');
 

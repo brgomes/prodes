@@ -67,19 +67,128 @@
 								</div>
 							</div>
 
-							@if ($resposta = $jogador->resposta($pergunta->id))
-								@if ($pergunta->qtderespostas == 1)
-						    		<div class="form-group">
-						    			{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), $resposta->opcao1_id, ['class' => 'form-control']) }}
-						    		</div>	
-					    		@endif
-						    @else
-						    	@if ($pergunta->qtderespostas == 1)
-						    		<div class="form-group">
-						    			{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), null, ['class' => 'form-control']) }}
-						    		</div>
-						    	@endif
-						    @endif
+							@if ($pergunta->ativa == '0')
+								<div class="alert alert-warning">
+									{{ __('message.pergunta-desabilitada') }}
+								</div>
+							@endif
+
+							@if ($pergunta->datalimiteresposta >= $hoje)
+								<p>
+									Responder até: {{ datetime($pergunta->datalimiteresposta, __('content.formato-data')) }}
+								</p>
+							@endif
+
+							@if ($pergunta->qtderespostas == 1)
+					    		<div class="form-group">
+					    			{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 1), ['class' => 'form-control']) }}
+
+					    			@if ($pergunta->pontos1)
+					    				<small class="form-text text-muted">
+									  		Vale {{ $pergunta->pontos1 }} pontos.
+										</small>
+									@endif
+
+									@if ($pergunta->consolidada)
+										@if ($pergunta->opcaocorreta1_id)
+											<br />
+											Resposta correta: {{ $pergunta->opcaoCorreta1->opcao }}
+											<br />
+											Pontos ganhos: 20
+										@endif
+									@endif
+					    		</div>
+					    	@elseif ($pergunta->qtderespostas == 2)
+					    		<div class="form-row">
+					    			<div class="form-group col-md-6">
+										{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 1), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos1)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos1 }} pontos.
+											</small>
+										@endif
+									</div>
+									<div class="form-group col-md-6">
+										{{ Form::select('resposta2_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 2), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos2)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos2 }} pontos.
+											</small>
+										@endif
+									</div>
+					    		</div>
+					    	@elseif ($pergunta->qtderespostas == 3)
+					    		<div class="form-row">
+					    			<div class="form-group col-md-4">
+										{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 1), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos1)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos1 }} pontos.
+											</small>
+										@endif
+									</div>
+									<div class="form-group col-md-4">
+										{{ Form::select('resposta2_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 2), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos2)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos2 }} pontos
+											</small>
+										@endif
+									</div>
+									<div class="form-group col-md-4">
+										{{ Form::select('resposta3_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 3), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos3)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos3 }} pontos
+											</small>
+										@endif
+									</div>
+					    		</div>
+					    	@elseif ($pergunta->qtderespostas == 4)
+					    		<div class="form-row">
+					    			<div class="form-group col-md-3">
+										{{ Form::select('resposta1_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 1), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos1)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos1 }} pontos
+											</small>
+										@endif
+									</div>
+									<div class="form-group col-md-3">
+										{{ Form::select('resposta2_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 2), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos2)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos2 }} pontos
+											</small>
+										@endif
+									</div>
+									<div class="form-group col-md-3">
+										{{ Form::select('resposta3_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 3), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos3)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos3 }} pontos
+											</small>
+										@endif
+									</div>
+									<div class="form-group col-md-3">
+										{{ Form::select('resposta4_' . $pergunta->id, $pergunta->pluckOpcoes(), $pergunta->resposta($jogador->id, 4), ['class' => 'form-control']) }}
+
+										@if ($pergunta->pontos4)
+						    				<small class="form-text text-muted">
+										  		Vale {{ $pergunta->pontos4 }} pontos
+											</small>
+										@endif
+									</div>
+					    		</div>
+				    		@endif
 						</div>
 					</div>
 				@endforeach

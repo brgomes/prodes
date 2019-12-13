@@ -25,4 +25,5 @@ return [
 	'explicacao-coringa'			=> 'O jogador poderá selecionar uma partida por rodada e esta valerá o dobro dos pontos.',
 	'admin-ve-palpites'				=> 'Administradores podem ver os palpites antes da consolidação da rodada.',
 	'nenhuma-pergunta-bonus'		=> 'Nenhuma pergunta bônus cadastrada para a liga.',
+	'pergunta-desabilitada'			=> 'Pergunta desabilitada.',
 ];
