@@ -58,7 +58,7 @@
 													<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('bonus.edit-pergunta', $pergunta->id) }}">{{ __('content.editar-pergunta') }}</a>
 													<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('bonus.create-opcao', $pergunta->id) }}">{{ __('content.adicionar-opcao') }}</a>
 													<div class="dropdown-divider"></div>
-													<a class="dropdown-item ajax-modal" href="#">{{ __('content.excluir-opcao') }}</a>
+													<a class="dropdown-item ajax-modal" href="#" data-url="{{ route('bonus.delete-opcoes', $pergunta->id) }}">{{ __('content.excluir-opcoes') }}</a>
 													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalNovaPergunta">{{ __('content.excluir-pergunta') }}</a>
 												</div>
 											</div>

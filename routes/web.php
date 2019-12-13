@@ -43,6 +43,9 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 	Route::get('ligas/bonus/{pergunta}/create-opcao', 'BonusController@createOpcao')->name('bonus.create-opcao');	
 	Route::post('ligas/bonus/store-opcao', 'BonusController@storeOpcao')->name('bonus.store-opcao');
 
+	Route::get('ligas/bonus/{pergunta}/delete-opcoes', 'BonusController@deleteOpcoes')->name('bonus.delete-opcoes');
+	Route::post('ligas/bonus/destroy-opcoes', 'BonusController@destroyOpcoes')->name('bonus.destroy-opcoes');
+
 	Route::post('ligas/bonus/salvar-respostas', 'BonusController@salvarRespostas')->name('bonus.salvar-respostas');
 });
 

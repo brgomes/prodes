@@ -149,6 +149,7 @@ return [
 	'opcao'						=> 'Option',
 	'resposta'					=> 'Answer',
 	'pontos-da-resposta'		=> 'Points of answer',
+	'excluir-opcoes'			=> 'Delete options',
 
 	'formato-datahora-completo'	=> 'm/d/Y H:i:s',
 	'formato-datahora'			=> 'm/d/Y H:i',

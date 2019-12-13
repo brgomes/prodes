@@ -120,6 +120,46 @@ class BonusController extends Controller
         return redirect()->route('bonus.index', $liga->id);
     }
 
+    public function deleteOpcoes($pergunta_id)
+    {
+        $pergunta = $this->pergunta->find($pergunta_id);
+
+        if (!$pergunta) return redirect()->route('ligas.index');
+
+        $liga = $this->liga($pergunta->liga_id);
+
+        if (!$liga) return redirect()->route('ligas.index');
+
+        return view('bonus.delete-opcoes', compact('pergunta'));
+    }
+
+    public function destroyOpcoes(Request $request)
+    {
+        $pergunta = $this->pergunta->find($request->pergunta_id);
+
+        if (!$pergunta) return redirect()->route('ligas.index');
+
+        $liga = $this->liga($pergunta->liga_id);
+
+        if (!$liga) return redirect()->route('ligas.index');
+
+        if (isset($request->opcoes)) {
+            $opcoes = $request->opcoes;
+
+            if (count($opcoes) > 0) {
+                foreach ($opcoes as $opcao_id) {
+                    $opcao = $this->opcao->find($opcao_id);
+
+                    if ($opcao->pergunta_id == $pergunta->id) {
+                        $opcao->delete();
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('bonus.index', $liga->id);
+    }
+
 
 
 
