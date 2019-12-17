@@ -55,8 +55,8 @@ $(document).ready(function() {
     $('.palpite[type="radio"]').uncheckableRadio();
 
     $('.ajax-modal').click(function(event) {
-        startLoading();
         event.preventDefault();
+        startLoading();
 
         var url = $(this).data('url');
 
@@ -67,13 +67,13 @@ $(document).ready(function() {
             success: function(response) {
                 $('#ajaxModal').html(response);
                 $('#ajaxModal').modal('show'); 
+                finishLoading();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert(errorThrown);
+                finishLoading();
             }
         });
-
-        finishLoading();
 
         //return false;
     });

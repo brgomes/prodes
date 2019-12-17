@@ -16,7 +16,7 @@
 						</div>
 						<div class="col-sm-1">
 							@if ($jogador->admin)
-								<div class="dropdown">
+								<div class="dropdown dropleft">
 									<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 									<div class="dropdown-menu" aria-labelledby="dropdown1">
