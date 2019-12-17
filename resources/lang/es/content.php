@@ -150,6 +150,7 @@ return [
 	'resposta'					=> 'Respuesta',
 	'pontos-da-resposta'		=> 'Puntos de respuesta',
 	'excluir-opcoes'			=> 'Eliminar opciones',
+	'responder-ate'				=> 'Respuesta hasta',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

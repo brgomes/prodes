@@ -51,16 +51,9 @@ class BonusPergunta extends Model
 
     public function resposta($jogador_id, $index)
     {
-        $item = JogadorBonus::where('pergunta_id', $this->id)
+        return JogadorBonus::where('pergunta_id', $this->id)
                 ->where('jogador_id', $jogador_id)
+                ->whereNotNull('opcao' . $index . '_id')
                 ->first();
-
-        if (!$item) {
-            return null;
-        }
-
-        $key = 'opcao' . $index . '_id';
-
-        return $item->$key;
     }
 }

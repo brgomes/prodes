@@ -12,7 +12,7 @@
 							{!! Form::hidden('liga_id', $liga->id, ['id' => 'liga_id']) !!}
 						</div>
 						<div class="col-sm-1">
-							<div class="dropdown">
+							<div class="dropdown dropleft">
 								<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 								<div class="dropdown-menu" aria-labelledby="dropdown1">
@@ -75,7 +75,7 @@
 							<h2>{{ __('content.rodadas') }}</h2>
 						</div>
 						<div class="col-sm-1">
-							<div class="dropdown">
+							<div class="dropdown dropleft">
 								<a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 								<div class="dropdown-menu" aria-labelledby="dropdown2">
@@ -309,7 +309,7 @@
 											@if ($jogador->admin)
 												<td>{{ $partida->sigla }}</td>
 												<td>
-													<div class="dropdown">
+													<div class="dropdown dropleft">
 														<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_partida{{ $partida->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 														<div class="dropdown-menu" aria-labelledby="dd_partida{{ $partida->id }}">
@@ -379,7 +379,7 @@
 
 									@if ($jogador->admin)
 										<td class="text-center">
-											<div class="dropdown">
+											<div class="dropdown dropleft">
 												<a class="btn dropdown-toggle dropdown-sm" href="#" role="button" id="dd_class{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
 												<div class="dropdown-menu" aria-labelledby="dd_class{{ $item->id }}">
