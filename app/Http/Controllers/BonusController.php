@@ -119,7 +119,13 @@ class BonusController extends Controller
 
         if (!$liga) return redirect()->route('ligas.index');
 
-        $pergunta->update($request->all());
+        $data = $request->all();
+
+        $data['consolidada'] = false;
+
+        if ($pergunta->update($data)) {
+            $pergunta->liga->update(['consolidar' => true]);
+        }
 
         return redirect()->route('bonus.index', $liga->id);
     }
@@ -231,7 +237,6 @@ class BonusController extends Controller
                     'liga_id'       => $liga->id,
                     'jogador_id'    => $jogador->id,
                     'pergunta_id'   => $pergunta->id,
-                    'consolidado'   => false,
                 ];
 
                 $values = [];
@@ -247,6 +252,7 @@ class BonusController extends Controller
                 }
 
                 $values['pontosganhos'] = 0;
+                $values['consolidado']  = false;
 
                 JogadorBonus::updateOrCreate($where, $values);
             }

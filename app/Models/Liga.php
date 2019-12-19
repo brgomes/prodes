@@ -69,6 +69,15 @@ class Liga extends Model
 
     public function consolidar()
     {
+        // Primeiramente consolida os bônus para no final só pegar os pontos
+        $perguntas = BonusPergunta::where('liga_id', $this->id)->where('ativa', 1)->get();
+
+        if ($perguntas->count() > 0) {
+            foreach ($perguntas as $pergunta) {
+                $pergunta->consolidar();
+            }
+        }
+
         $jogadores  = $this->jogadores;
         $rodadas    = $this->rodadas;
 
@@ -194,6 +203,17 @@ class Liga extends Model
             }
 
             // Calcular AQUI os pontos bônus
+            $bonus = JogadorBonus::where('liga_id', $this->id)
+                        ->where('consolidado', 1)
+                        ->where('jogador_id', $jogador->id)
+                        ->get();
+
+            if ($bonus->count() > 0) {
+                foreach ($bonus as $item) {
+                    $bonusDisputados    += $item->pontosdisputados;
+                    $bonusGanhos        += $item->pontosganhos;
+                }
+            }
 
             $totalPontos = $pontosGanhosLiga + $bonusGanhos;
 
@@ -201,10 +221,12 @@ class Liga extends Model
                 'rodadasjogadas'    => $rodadasJogadas,
                 'pontosdisputados'  => $pontosDisputadosLiga,
                 'pontosganhos'      => $pontosGanhosLiga,
+                'bonusdisputados'   => $bonusDisputados,
+                'bonusganhos'       => $bonusGanhos,
                 'totalpontos'       => $totalPontos,
                 'aproveitamento'    => $aproveitamentoLiga,
             ]);
-        }
+        } // endforeach ($jogadores as $jogador)
 
         foreach ($rodadas as $rodada) {
             $rodada->rankear();

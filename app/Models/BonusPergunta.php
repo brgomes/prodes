@@ -56,4 +56,43 @@ class BonusPergunta extends Model
                 ->whereNotNull('opcao' . $index . '_id')
                 ->first();
     }
+
+    public function consolidar()
+    {
+        $pontosdisputados   = 0;
+        $pontosganhos       = 0;
+
+        if ($this->qtderespostas == 1) {
+            if ($this->opcaocorreta1_id) {
+                $respostas = JogadorBonus::where('pergunta_id', $this->id)->get();
+
+                if ($respostas->count() > 0) {
+                    foreach ($respostas as $resposta) {
+                        if ($resposta->opcao1_id) {
+                            $pontos     = (int) $this->pontos1;
+                            $pontos1    = 0;
+
+                            $pontosdisputados += $pontos;
+
+                            if ($resposta->opcao1_id == $this->opcaocorreta1_id) {
+                                $pontos1 = $pontos;
+                                $pontosganhos += $pontos1;
+                            }
+
+                            $data = [
+                                'pontos1'           => $pontos1,
+                                'consolidado'       => true,
+                                'pontosdisputados'  => $pontosdisputados,
+                                'pontosganhos'      => $pontosganhos,
+                            ];
+
+                            $resposta->update($data);
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->update(['consolidada' => true]);
+    }
 }
