@@ -100,26 +100,30 @@ class LigaController extends Controller
                 $rodada = $liga->rodada();
             }
 
+            $habilita_coringa = $liga->temcoringa;
+
             if (isset($rodada)) {
                 if ($liga->id != $rodada->liga_id) {
                     return redirect()->back();
                 }
-            }
 
-            $classificacao      = $liga->jogadores()->orderBy(DB::raw('ISNULL(posicao), posicao'), 'ASC')->get();
-            $palpites           = $rodada->palpites->where('jogador_id', $jogador->id);
-            $habilita_coringa   = true;
+                $palpites = $rodada->palpites->where('jogador_id', $jogador->id);
 
-            if ($palpites->count() > 0) {
-                foreach ($palpites as $palpite) {
-                    if ($palpite->coringa) {
-                        if (!$palpite->partida->aberta()) {
-                            $habilita_coringa = false;
-                            break;
+                if ($habilita_coringa) {
+                    if ($palpites->count() > 0) {
+                        foreach ($palpites as $palpite) {
+                            if ($palpite->coringa) {
+                                if (!$palpite->partida->aberta()) {
+                                    $habilita_coringa = false;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
             }
+
+            $classificacao = $liga->jogadores()->orderBy(DB::raw('ISNULL(posicao), posicao'), 'ASC')->get();
 
             return view('ligas.show', compact('jogador', 'liga', 'rodada', 'rodada_id', 'classificacao', 'habilita_coringa'));
         }
