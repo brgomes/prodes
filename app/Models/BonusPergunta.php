@@ -64,10 +64,10 @@ class BonusPergunta extends Model
                 $respostas = JogadorBonus::where('pergunta_id', $this->id)->get();
 
                 if ($respostas->count() > 0) {
-                    $pontosdisputados   = 0;
-                    $pontosganhos       = 0;
-
                     foreach ($respostas as $resposta) {
+                        $pontosdisputados   = 0;
+                        $pontosganhos       = 0;
+
                         if ($resposta->opcao1_id) {
                             $pontos     = (int) $this->pontos1;
                             $pontos1    = 0;
