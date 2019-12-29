@@ -151,6 +151,8 @@ return [
 	'pontos-da-resposta'		=> 'Puntos de respuesta',
 	'excluir-opcoes'			=> 'Eliminar opciones',
 	'responder-ate'				=> 'Respuesta hasta',
+	'pontos-disputados'			=> 'Puntos jugados',
+	'pontos-ganhos'				=> 'Puntos ganados',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

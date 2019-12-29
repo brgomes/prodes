@@ -152,6 +152,8 @@ return [
 	'pontos-da-resposta'		=> 'Pontos da resposta',
 	'excluir-opcoes'			=> 'Excluir opções',
 	'responder-ate'				=> 'Responder até',
+	'pontos-disputados'			=> 'Pontos disputados',
+	'pontos-ganhos'				=> 'Pontos ganhos',
 
 	'formato-datahora-completo'	=> 'd/m/Y H:i:s',
 	'formato-datahora'			=> 'd/m/Y H:i',

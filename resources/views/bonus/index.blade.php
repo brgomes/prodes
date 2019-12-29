@@ -31,7 +31,14 @@
 				@if ($perguntas->count() == 0)
 					<div class="alert alert-info">{{ __('message.nenhuma-pergunta-bonus') }}</div>
 				@else
-					Colocar alguma coisa aqui
+					<div class="row">
+						<div class="col-sm-2">
+							{{ __('content.pontos-disputados') }}: {{ $jogador->bonusdisputados }}
+						</div>
+						<div class="col-sm-10">
+							{{ __('content.pontos-ganhos') }}: {{ $jogador->bonusganhos }}
+						</div>
+					</div>
 				@endif
 			</div>
 		</div>
