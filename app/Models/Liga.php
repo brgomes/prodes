@@ -202,7 +202,6 @@ class Liga extends Model
                 $aproveitamentoLiga = round((($pontosGanhosLiga * 100) / $pontosDisputadosLiga), 2);
             }
 
-            // Calcular AQUI os pontos bônus
             $bonus = JogadorBonus::where('liga_id', $this->id)
                         ->where('consolidado', 1)
                         ->where('jogador_id', $jogador->id)

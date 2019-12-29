@@ -59,14 +59,14 @@ class BonusPergunta extends Model
 
     public function consolidar()
     {
-        $pontosdisputados   = 0;
-        $pontosganhos       = 0;
-
         if ($this->qtderespostas == 1) {
             if ($this->opcaocorreta1_id) {
                 $respostas = JogadorBonus::where('pergunta_id', $this->id)->get();
 
                 if ($respostas->count() > 0) {
+                    $pontosdisputados   = 0;
+                    $pontosganhos       = 0;
+
                     foreach ($respostas as $resposta) {
                         if ($resposta->opcao1_id) {
                             $pontos     = (int) $this->pontos1;
