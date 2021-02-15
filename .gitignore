@@ -1,9 +1,13 @@
+/docker-compose/nginx/logs
+/docker-compose/php/logs
 /node_modules
 /public/hot
 /public/storage
 /storage
 /storage/*.key
 /vendor
+/Dockerfile
+/Makefile
 .env
 .env.backup
 .phpunit.result.cache
@@ -11,5 +15,6 @@ Homestead.json
 Homestead.yaml
 composer.lock
 database.sql
+/docker-compose.yaml
 npm-debug.log
 yarn-error.log

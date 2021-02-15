@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  prodes:
+    container_name: prodes-php
+    build: ./
+    working_dir: /var/www
+    volumes:
+      - ./docker-compose/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./docker-compose/php/logs:/var/log
+      - ./:/var/www
+    networks:
+      - localnet
+
+  nginx:
+    image: nginx:alpine
+    container_name: prodes-nginx
+    ports:
+      - 8088:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+      - ./docker-compose/nginx/logs:/var/log/nginx
+    networks:
+      - localnet
+
+networks:
+  localnet:
+    external: true
